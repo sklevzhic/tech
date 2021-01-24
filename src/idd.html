@@ -1,0 +1,577 @@
+    <div class="panel-group" id="intership_items">&nbsp;</div>
+
+    <div class="modal modalintership" role="dialog" tabindex="-1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content modal-content-intership">&nbsp;</div>
+        </div>
+    </div>
+    <script>
+        let internshipItems = document.querySelector('#intership_items');
+        let modalcurrent = document.querySelector('.modal-content-intership');
+        const interships = [
+            {
+                "inteID": 1,
+                "themeintersgip": "Беларускамоўная камунікатыўная прастора ва ўстанове дашкольнай адукацыі: формы і метады стварэння",
+                "dateintersgip": "18.01.2021",
+                "srcintersgip": "bkp.jpg",
+                "costintership": "65",
+                "durationintership": "12",
+                "formintership": "очная (дневная)",
+                "documentintership": "свидетельство о стажировке установленного образца на русском (английском) языке",
+                "contentintership": "<ul>\n<li>Нормативные правовые документы, регламентирующие квалификационные требования к работникам в сфере образования</li>\n<li>Нормативные правовые документы, регламентирующие оформление трудовых отношений с сотрудниками. </li>\n<li>Разработка проектов заявлений, приказов, должностных инструкций, докладных записок. </li>\n<ul>"
+            },
+            {
+                "inteID": 2,
+                "themeintersgip": "Делопроизводство по новым правилам",
+                "dateintersgip": "18.01.2021",
+                "srcintersgip": "dnp.jpg",
+                "costintership": "",
+                "durationintership": "",
+                "formintership": "",
+                "documentintership": "",
+                "contentintership": ""
+            },
+            {
+                "inteID": 3,
+                "themeintersgip": "Психолого-педагогическое сопровождение детей с расстройствами аутистического спектра в учреждениях образования",
+                "dateintersgip": "25.01.2020",
+                "srcintersgip": "ppsdr.jpg",
+                "costintership": "",
+                "durationintership": "",
+                "formintership": "",
+                "documentintership": "",
+                "contentintership": ""
+            },
+            {
+                "inteID": 4,
+                "themeintersgip": "Психолого-педагогическая диагностика нарушений развития детей младенческого и раннего возрастов",
+                "dateintersgip": "01.02.2021",
+                "srcintersgip": "razvitie%20detey.jpg",
+                "costintership": "",
+                "durationintership": "",
+                "formintership": "",
+                "documentintership": "",
+                "contentintership": ""
+            },
+            {
+                "inteID": 5,
+                "themeintersgip": "Психолого-педагогическое сопровождение семьи, воспитывающей ребенка с расстройствами аутистического спектра",
+                "dateintersgip": "февраль",
+                "srcintersgip": "%D0%A0%D0%BE%D0%B4%D0%B8%D1%82%D0%B5%D0%BB%D0%B8-%D0%B8-%D1%80%D0%B5%D0%B1%D0%B5%D0%BD%D0%BE%D0%BA.jpg",
+                "costintership": "",
+                "durationintership": "",
+                "formintership": "",
+                "documentintership": "",
+                "contentintership": ""
+            },
+            {
+                "inteID": 6,
+                "themeintersgip": "Школьная неуспеваемость: причины, диагностика, коррекция",
+                "dateintersgip": "идёт набор группы",
+                "srcintersgip": "%D0%9F%D1%80%D0%BE%D1%84%D0%B8%D0%BB%D0%B0%D0%BA%D1%82%D0%B8%D0%BA%D0%B0_%D0%BF%D1%81%D0%B8%D1%85%D0%BE%D1%8D%D0%BC%D0%BE%D1%86.jpg",
+                "costintership": "",
+                "durationintership": "",
+                "formintership": "",
+                "documentintership": "",
+                "contentintership": ""
+            },
+            {
+                "inteID": 7,
+                "themeintersgip": "Профилактика и преодоление психоэмоционального напряжения педагогических работников",
+                "dateintersgip": "идёт набор группы",
+                "srcintersgip": "ppp.jpg",
+                "costintership": "",
+                "durationintership": "",
+                "formintership": "",
+                "documentintership": "",
+                "contentintership": ""
+            },
+            {
+                "inteID": 8,
+                "themeintersgip": "В помощь учителю начальных классов: решение текстовых задач",
+                "dateintersgip": "идёт набор группы",
+                "srcintersgip": "pun.jpg",
+                "costintership": "",
+                "durationintership": "",
+                "formintership": "",
+                "documentintership": "",
+                "contentintership": ""
+            },
+            {
+                "inteID": 9,
+                "themeintersgip": "Кадровый менеджмент в учреждениях образования: правовые основы",
+                "dateintersgip": "идёт набор группы",
+                "srcintersgip": "kmv.jpg",
+                "costintership": "",
+                "durationintership": "",
+                "formintership": "",
+                "documentintership": "",
+                "contentintership": "<ul class=\"center\">\n\t<li style=\"text-align: justify;\">Нормативные правовые документы, регламентирующие квалификационные требования к работникам в сфере образования</li>\n\t<li style=\"text-align: justify;\">Нормативные правовые документы, регламентирующие оформление трудовых отношений с сотрудниками.</li>\n\t<li style=\"text-align: justify;\">Разработка проектов заявлений, приказов, должностных инструкций, докладных записок.</li>\n</ul>"
+            },
+            {
+                "inteID": 10,
+                "themeintersgip": "Интенсивные образовательные технологии в работе куратора учреждения среднего специального образования",
+                "dateintersgip": "идёт набор группы",
+                "srcintersgip": "iot.jpg",
+                "costintership": "",
+                "durationintership": "",
+                "formintership": "",
+                "documentintership": "",
+                "contentintership": ""
+            },
+            {
+                "inteID": 11,
+                "themeintersgip": "Дифференциальное исчисление в примерах и задачах",
+                "dateintersgip": "идёт набор группы",
+                "srcintersgip": "dip.jpg",
+                "costintership": "",
+                "durationintership": "",
+                "formintership": "",
+                "documentintership": "",
+                "contentintership": ""
+            },
+            {
+                "inteID": 12,
+                "themeintersgip": "Годовой план: от формулирования годовой задачи к системе контроля",
+                "dateintersgip": "идёт набор группы",
+                "srcintersgip": "Dollarphotoclub_63269304-700x612.jpg",
+                "costintership": "",
+                "durationintership": "",
+                "formintership": "",
+                "documentintership": "",
+                "contentintership": ""
+            },
+            {
+                "inteID": 13,
+                "themeintersgip": "Педагогическая песочница для познавательного развития детей дошкольного возраста",
+                "dateintersgip": "идёт набор группы",
+                "srcintersgip": "ppp.jpg",
+                "costintership": "",
+                "durationintership": "",
+                "formintership": "",
+                "documentintership": "",
+                "contentintership": ""
+            },
+            {
+                "inteID": 14,
+                "themeintersgip": "Формирование и развитие коммуникативной компетенции детей с расстройствами аутистического спектра",
+                "dateintersgip": "идёт набор группы",
+                "srcintersgip": "kommunikaciya_i.jpg",
+                "costintership": "",
+                "durationintership": "",
+                "formintership": "",
+                "documentintership": "",
+                "contentintership": ""
+            },
+            {
+                "inteID": 15,
+                "themeintersgip": "Документационное обеспечение управления учреждений образования",
+                "dateintersgip": "идёт набор группы",
+                "srcintersgip": "docob.png",
+                "costintership": "",
+                "durationintership": "",
+                "formintership": "",
+                "documentintership": "",
+                "contentintership": ""
+            },
+            {
+                "inteID": 16,
+                "themeintersgip": "Инновационный опыт организации дошкольного образования в Республике Беларусь",
+                "dateintersgip": "идёт набор группы",
+                "srcintersgip": "innov.jpg",
+                "costintership": "",
+                "durationintership": "",
+                "formintership": "",
+                "documentintership": "",
+                "contentintership": ""
+            },
+            {
+                "inteID": 17,
+                "themeintersgip": "Интерактивная доска: создание образовательного продукта",
+                "dateintersgip": "идёт набор группы",
+                "srcintersgip": "id.jpg",
+                "costintership": "",
+                "durationintership": "",
+                "formintership": "",
+                "documentintership": "",
+                "contentintership": ""
+            },
+            {
+                "inteID": 18,
+                "themeintersgip": "Кинотьюторинг как средство воспитания и саморазвития личности",
+                "dateintersgip": "идёт набор группы",
+                "srcintersgip": "%D0%BA%D0%B8%D0%BD%D0%BE%D1%82%D1%8E%D1%82%D0%B5%D1%80%D0%B8%D0%BD%D0%B3.jpg",
+                "costintership": "",
+                "durationintership": "",
+                "formintership": "",
+                "documentintership": "",
+                "contentintership": ""
+            },
+            {
+                "inteID": 19,
+                "themeintersgip": "Педагогический совет: планирование, проведение, оформление документации",
+                "dateintersgip": "идёт набор группы",
+                "srcintersgip": "ps.png",
+                "costintership": "",
+                "durationintership": "",
+                "formintership": "",
+                "documentintership": "",
+                "contentintership": ""
+            },
+            {
+
+                "inteID": "20",
+                "themeintersgip": "Педагогический опыт: теория и практика описания и представления",
+                "dateintersgip": "идёт набор группы",
+                "srcintersgip": "po.png",
+                "costintership": "",
+                "durationintership": "",
+                "formintership": "",
+                "documentintership": "",
+                "contentintership": ""
+            },
+            {
+                "inteID": "21",
+                "themeintersgip": "Ребенок и общество: содержание и реализация образовательной области",
+                "dateintersgip": "идёт набор группы",
+                "srcintersgip": "%D0%A0%D0%B5%D0%B1%D0%B5%D0%BD%D0%BE%D0%BA%20%D0%B8%20%D0%BE%D0%B1%D1%89%D0%B5%D1%81%D1%82%D0%B2%D0%BE.jpg",
+                "costintership": "",
+                "durationintership": "",
+                "formintership": "",
+                "documentintership": "",
+                "contentintership": ""
+            },
+            {
+                "inteID": 22,
+                "themeintersgip": "Целеполагание и планирование деятельности учреждения образования",
+                "dateintersgip": "идёт набор группы",
+                "srcintersgip": "celipl.png",
+                "costintership": "",
+                "durationintership": "",
+                "formintership": "",
+                "documentintership": "",
+                "contentintership": ""
+            }
+
+        ];
+
+
+        let InternshipArray = [];
+        let modalCurrent = [];
+
+        window.onload = function () {
+            renderInternship();
+
+            document.querySelector('.close').addEventListener('click', function () {
+                document.querySelector('.modalintership').style.display = 'none';
+            })
+            document.querySelectorAll('.specialnosti_item').forEach(el => {
+                el.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    modalcurrent.innerHTML = ``;
+                    let numberModal = this.getAttribute("data-idd");
+                    modalcurrent.append(showModal(numberModal)[0].generateModal())
+
+                })
+            })
+
+        }
+
+        function showModal(number) {
+            document.querySelector('.modalintership').style.display = 'block';
+
+            let curElem =  interships.filter(el => el.inteID == number);
+            modalCurrent[0] = new Modal(curElem[0]);
+            return  modalCurrent;
+        }
+
+
+
+        function generateInternship() {
+            interships.forEach(el => {
+                InternshipArray.push(new Button(el))
+            })
+            return InternshipArray;
+        }
+
+        function renderInternship() {
+            internshipItems.innerHTML = '';
+            generateInternship(interships).forEach(el => {
+                internshipItems.append(el.generateIntership1())
+            });
+        }
+
+
+        class Button {
+            constructor({ themeintersgip, dateintersgip, srcintersgip, formintership, costintership, inteID, documentintership,  durationintership, contentintership }) {
+                this.inteID = inteID;
+                this.themeintersgip = themeintersgip;
+                this.dateintersgip = dateintersgip;
+                this.srcintersgip = srcintersgip;
+                this.costintership = costintership;
+                this.documentintership = documentintership;
+                this.durationintership = durationintership;
+                this.formintership = formintership;
+                this.contentintership = contentintership;
+            }
+
+
+            generateIntership1() {
+                let template = '';
+                let button = document.createElement('div');
+
+                template += `
+                            <div class="specialnosti_item" data-idd="${this.inteID}">
+                                <figure class="specialnosti_img">
+                                    <img alt="" class="specimgint" src="/admin-panel/vendor/kcfinder/upload/images/internship/${this.srcintersgip}">
+                                 </figure>
+
+                                <div class="specialnosti_info">
+                                <p class="specialnosti_title">${this.themeintersgip}</p>
+
+                                <p class="specialnosti_date">Начало обучения: <span>${this.dateintersgip}</span></p>
+
+                                <ul class="specialnosti_btns">
+                                    <li class="specialnosti_btn specialnosti_btn--more">
+                                        <a class="battem2" href="/kadrovyi-menedzhment-v-uchrezhdeniyah-obrazovaniya-pravovye-osnovy">
+                                            <img src="/admin-panel/vendor/kcfinder/upload/images/internship/more.png">Подробнее
+                                        </a>
+                                    </li>
+                                    <li class="specialnosti_btn specialnosti_btn--order"><a class="battem1" href="/stazhirovka/zayavka-na-uchastie-v-stazhirovke"><img src="/admin-panel/vendor/kcfinder/upload/images/internship/order.png"> Оставить заявку</a></li>
+                                </ul>
+                                </div>
+                            </div>
+
+                            `;
+
+
+                button.innerHTML = template;
+                return button
+            }
+        }
+        class Modal {
+            constructor({ themeintersgip, dateintersgip, srcintersgip, formintership, costintership, inteID, documentintership,  durationintership, contentintership }) {
+                this.inteID = inteID;
+                this.themeintersgip = themeintersgip;
+                this.dateintersgip = dateintersgip;
+                this.srcintersgip = srcintersgip;
+                this.costintership = costintership;
+                this.documentintership = documentintership;
+                this.durationintership = durationintership;
+                this.formintership = formintership;
+                this.contentintership = contentintership;
+            }
+
+
+            generateModal() {
+                let template = '';
+                let modal = document.createElement('div');
+
+
+                template += `
+                            <div class="modal-header">
+                                <h5 class="modal-title">${this.themeintersgip}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Modal body text goes here.</p>
+                            </div>
+                            `;
+
+
+                modal.innerHTML = template;
+                return modal
+            }
+        }
+
+
+    </script>
+    <style type="text/css">
+
+        .specialnosti_item {
+        margin-bottom: 31px;
+        position: relative;
+    }
+
+    .specialnosti_img {
+        position: absolute;
+        width: 163px;
+        top: -8px;
+    }
+
+    .specialnosti_info {
+        width: 100%;
+        height: 100px;
+        background: #F5F5F5;
+        padding-left: 173px;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        cursor: default;
+    }
+
+    p.specialnosti_title {
+        background: inherit !important;
+        font-size: 17px !important;
+        padding-top: 21px;
+    }
+
+    .specialnosti_btns {
+        position: absolute;
+        display: flex;
+        bottom: -15px;
+        right: 0;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        margin-right: 8px;
+    }
+
+    .specialnosti_btn a {
+        display: flex;
+        padding: 10px 23px;
+        background: #f5bb35;
+        margin-left: 9px;
+        border-radius: 3px;
+        color: black !important;
+        font-size: 15px;
+    }
+
+    .specialnosti_img img {
+        max-width: 200px;
+    }
+
+    .specialnosti_btn a img {
+        margin-right: 10px;
+        width: 20px !important;
+    }
+
+    .specialnosti_btn a:hover {
+        text-decoration: none;
+        background: #d09d26;
+        transition: 0.3s;
+    }
+
+    p.specialnosti_date {
+        position: absolute;
+        top: -1px;
+        background: #f5bb35 !important;
+        padding: 2px;
+        border-radius: 3px;
+    }
+
+    p.specialnosti_date span {
+        font-weight: 900;
+        border-radius: 4px;
+        padding: 1px;
+    }
+
+    span.int_title {
+        font-size: 18px !important;
+        width: 100%;
+        background: inherit !important;
+    }
+
+    span.int_date {
+        position: absolute;
+        right: 1px;
+        bottom: 0;
+    }
+
+    .more_wrapper {
+        display: grid;
+        grid-template-columns: 30% 70%;
+    }
+
+    a.accordion-toggleint {
+        display: flex;
+        align-items: center;
+        position: relative;
+    }
+
+    .interimg {
+        width: 167px !important;
+        margin-right: 15px;
+    }
+
+    .more_wrapper {
+        display: flex;
+    }
+
+    .text_left {
+        width: 40%
+    }
+
+    .text_right {
+        width: 60%
+    }
+
+    .shadow {
+        box-shadow: 0 1px 1px rgb(0 0 0 / 20%);
+    }
+
+    .conditions {
+        float: right;
+        width: 90%;
+        background: #f3f4ee;
+        margin-right: 45px;
+        border-radius: 5px;
+        margin-top: -6px;
+    }
+
+    .conditions h5 {
+        text-transform: uppercase;
+        text-align: center;
+        background: #488c61 !important;
+        padding: 5px;
+        margin-top: 0;
+        margin-bottom: 18px !important;
+        border-radius: 5px 5px 0 0;
+        color: white !important;
+        font-size: 14px !important;
+    }
+
+    .list-group {
+        padding-left: 0;
+        margin-bottom: 20px;
+    }
+
+    ul.list-group li {
+        list-style: none;
+        margin-left: 64px;
+        margin-bottom: 7px;
+        font-size: 11px;
+        color: #656565 !important;
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    img.iconspec {
+        width: 30px !important;
+        height: 30px !important;
+        position: absolute;
+        left: -40px;
+        top: -5px;
+    }
+
+    .modalintership {
+        display: none;
+    }
+
+
+    .interhip_line1, .interhip_line2, .interhip_line3 {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    fieldset.fldst_item {
+        width: 30%;
+    }
+
+
+    .fldst_item legend {
+        font-size: 13px;
+        margin-bottom: 1px;
+        font-weight: 600;
+    }
+    </style>

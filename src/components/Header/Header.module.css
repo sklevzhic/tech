@@ -1,0 +1,12 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid gray;
+}
+
+.logo {
+    width: 80px;
+    color: salmon;
+    font-weight: 700;
+}
