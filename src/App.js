@@ -28,7 +28,7 @@ const App = (props) => {
                                 dispatch={store.dispatch}
                                 dialogs={props.state.dialogsPage.dialogs}
                                 messages={props.state.dialogsPage.messages}
-                                newMessageText={props.newMessageText}
+                                newMessageText={props.state.dialogsPage.newMessageText}
                             />}/>
                     <Route
                         path='/addpost'

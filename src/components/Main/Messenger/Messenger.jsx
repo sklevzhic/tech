@@ -4,8 +4,6 @@ import Dialogs from "./Dialogs/Dialogs";
 import Messages from "./Messages/Messages";
 import store from "../../../redux/state1";
 const Messenger = (props) => {
-
-
     return (
         <div className={s.dialogsWrapper}>
             <Dialogs dialogs={props.dialogs}/>

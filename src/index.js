@@ -6,7 +6,6 @@ import App from "./App";
 import store from "./redux/state1";
 
 const  reRender = (state) => {
-    console.log('state = ',state)
     ReactDOM.render(
         <React.StrictMode>
             <App

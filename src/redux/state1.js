@@ -1,3 +1,6 @@
+import ProfileReducer from "./Profile-reducer";
+import DialogsReducer from "./Dialogs-reducer";
+
 const ADD_NEW_POST = 'ADD-NEW-POST';
 const CHANGE_NEW_POST = 'CHANGE-NEW-POST';
 const ADD_NEW_MESSAGE = 'ADD-NEW-MESSAGE';
@@ -55,32 +58,8 @@ let store = {
         store.reRender = observer;
     },
     dispatch(action) {
-        if (action.type === ADD_NEW_POST) {
-            let newPost = {
-                text: store._state.profilePage.newPostText,
-                id: 158,
-                likecount: 0,
-                dislikeCount: 0,
-                imgPost: "https://materializecss.com/images/sample-1.jpg"
-            }
-
-            store._state.profilePage.posts.unshift(newPost);
-        }
-        else if (action.type === CHANGE_NEW_POST) {
-            store._state.profilePage.newPostText = action.newText;
-        }
-        else if (action.type === ADD_NEW_MESSAGE) {
-            let newMessage = {
-                msg: store._state.dialogsPage.newMessageText,
-                id: Date.now()
-            }
-
-            store._state.dialogsPage.messages.unshift(newMessage);
-            store._state.dialogsPage.newMessageText = '';
-        }
-        else if (action.type === CHANGE_NEW_MESSAGE) {
-            store.getState().dialogsPage.newMessageText = action.newText;
-        }
+        store._state.profilePage = ProfileReducer(store._state.profilePage, action)
+        store._state.dialogsPage = DialogsReducer(store._state.dialogsPage, action)
         store.reRender(store._state)
     }
 }
