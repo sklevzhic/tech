@@ -13,8 +13,8 @@ import {addPostActionCreator, updatePostActionCreator} from "../../../redux/stat
             let text = newPostText.current.value;
             props.dispatch(updatePostActionCreator(text))
         }
-
     return (
+
         <div>
             <div className="row">
                 <Link

@@ -3,7 +3,6 @@ import s from './Messenger.module.css'
 import Dialogs from "./Dialogs/Dialogs";
 import Messages from "./Messages/Messages";
 import store from "../../../redux/state1";
-import App from "../../../App";
 const Messenger = (props) => {
 
 

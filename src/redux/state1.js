@@ -23,7 +23,6 @@ let store = {
             ],
             newPostText: "",
         },
-
         dialogsPage: {
             dialogs: [
                 { name: "Alexander", id: 1},
@@ -45,20 +44,16 @@ let store = {
             ],
             newMessageText: 'Loh'
         },
-
-
     },
     getState() {
         return this._state
     },
-
     reRender() {
         console.log('aaa')
     },
     subscribe(observer) {
         store.reRender = observer;
     },
-
     dispatch(action) {
         if (action.type === ADD_NEW_POST) {
             let newPost = {
@@ -70,11 +65,9 @@ let store = {
             }
 
             store._state.profilePage.posts.unshift(newPost);
-            store.reRender(store)
         }
         else if (action.type === CHANGE_NEW_POST) {
             store._state.profilePage.newPostText = action.newText;
-            store.reRender(store)
         }
         else if (action.type === ADD_NEW_MESSAGE) {
             let newMessage = {
@@ -84,28 +77,23 @@ let store = {
 
             store._state.dialogsPage.messages.unshift(newMessage);
             store._state.dialogsPage.newMessageText = '';
-            store.reRender(store)
         }
         else if (action.type === CHANGE_NEW_MESSAGE) {
-            store._state.dialogsPage.newMessageText = action.newText;
-            store.reRender(store)
+            store.getState().dialogsPage.newMessageText = action.newText;
         }
+        store.reRender(store._state)
     }
 }
 
 export const addPostActionCreator = () => {
     return {type: ADD_NEW_POST}
 }
-
 export const updatePostActionCreator = (text) => {
     return {type: CHANGE_NEW_POST, newText: text }
 }
-
-
 export const addNewMessageActionCreator = () => {
     return { type: ADD_NEW_MESSAGE }
 }
-
 export const updateMessageActionCreator = (text) => {
     return {type: CHANGE_NEW_MESSAGE, newText: text }
 }

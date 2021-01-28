@@ -5,16 +5,13 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import store from "./redux/state1";
 
-const  reRender = () => {
+const  reRender = (state) => {
+    console.log('state = ',state)
     ReactDOM.render(
         <React.StrictMode>
             <App
+                state={state}
                 dispatch={store.dispatch}
-                newPost={store.getState().profilePage.newPostText}
-                posts={store.getState().profilePage.posts}
-                dialogs={store.getState().dialogsPage.dialogs}
-                messages={store.getState().dialogsPage.messages}
-                newMessageText={store.getState().dialogsPage.newMessageText}
             />
         </React.StrictMode>,
         document.getElementById('root')
