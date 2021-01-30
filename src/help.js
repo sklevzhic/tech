@@ -1,4 +1,4 @@
-import {updatePostActionCreator} from "./redux/state1";
+import {updatePostActionCreator} from "./redux/redux";
 
 BrowserRouter
 Route path='/profile'

@@ -1,16 +1,16 @@
 import React from "react";
-import {updateMessageActionCreator, addNewMessageActionCreator} from "../../../../redux/state1";
+
 
 
 const AddNewMessage = (props) => {
 
-    let onChangeNewMessage = (e) =>{
-        props.dispatch(updateMessageActionCreator(e.target.value))
+    let onChangeNewMessage = (e) => {
+        props.onChangeNewMessage(e.target.value)
+
     }
     let addNewMessage = (e) => {
         if (e.keyCode === 13) {
-            props.dispatch(addNewMessageActionCreator())
-            e.target.value = '';
+            props.addNewMessage();
         }
     }
 

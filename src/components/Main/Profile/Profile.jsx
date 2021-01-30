@@ -1,12 +1,12 @@
-import Posts from "./Posts";
 import ProfileInfo from "./ProfileInfo";
+import Posts from "./Posts";
 
-const Profile = (props) => {
+const Profile = () => {
 
     return (
         <div>
             <ProfileInfo />
-            <Posts posts={props.posts}/>
+            <Posts/>
         </div>
     )
 }

@@ -1,17 +1,14 @@
 import React from 'react'
-import {Link} from "react-router-dom";
-import {addPostActionCreator, updatePostActionCreator} from "../../../redux/state1";
+import { Link } from "react-router-dom";
 
     const NewPost = (props) => {
-        let newPostText = React.createRef();
 
         const  addPost = () => {
-            props.dispatch(addPostActionCreator())
+            props.addPost()
         }
 
-        const updatePost = () => {
-            let text = newPostText.current.value;
-            props.dispatch(updatePostActionCreator(text))
+        const updatePost = (e) => {
+            props.updatePost(e.target.value)
         }
     return (
 
@@ -31,7 +28,6 @@ import {addPostActionCreator, updatePostActionCreator} from "../../../redux/stat
                         <textarea
                             id="textarea1"
                             className="materialize-textarea"
-                            ref={newPostText}
                             onChange={ updatePost }
                         > </textarea>
                         <label htmlFor="textarea1" className='active'>Textarea</label>
