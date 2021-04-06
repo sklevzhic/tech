@@ -1,7 +1,7 @@
 import s from './Header.module.css'
 import Navigation from "./Navigation/Navigation";
 
-const Header = () => {
+const Header = (props) => {
     return (
         <header className={s.header}>
             <a className={s.logo} href='/'>
@@ -10,7 +10,7 @@ const Header = () => {
             <div>
                 <input type="text" placeholder="search"/>
             </div>
-            <Navigation />
+            <Navigation props={props}/>
         </header>
     )
 }

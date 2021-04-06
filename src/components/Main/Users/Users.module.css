@@ -1,0 +1,5 @@
+.pagination1 {
+    flex-wrap: nowrap;
+    height: 100px;
+    overflow: hidden;
+}
