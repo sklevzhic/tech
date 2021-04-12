@@ -9,7 +9,7 @@ class CurrentInfo extends React.Component {
         this.setState({
             editMode: !this.state.editMode
         })
-        this.props.updateStatus()
+        this.props.updateStatus(this.state.status)
     }
 
     onChangeStatus = (e) => {
@@ -18,23 +18,33 @@ class CurrentInfo extends React.Component {
         })
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.status !== this.props.status) {
+            this.setState({
+                status: this.props.status
+            })
+        }
+    }
+
     render() {
         return (
             <>
                 {
                     this.state.editMode
-                    ? <input
+                        ? <input
                             autoFocus={true}
                             onChange={this.onChangeStatus}
                             onBlur={this.editStatus}
                             type="text"
                             defaultValue={this.state.status}/>
-                    : <span onDoubleClick={this.editStatus} className="card-subtitle">{this.props.status} </span>
+                        : <span onDoubleClick={this.editStatus}
+                                className="card-subtitle">{this.props.status || "статуса нет"} </span>
                 }
 
             </>
         )
     }
+
 }
 
 export default CurrentInfo

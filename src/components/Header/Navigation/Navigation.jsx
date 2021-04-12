@@ -2,6 +2,7 @@ import s from './Navigation.module.css'
 import { Link } from 'react-router-dom'
 
 const Navigation = ( props ) => {
+
     return (
             <nav className={s.nav}>
                 <ul>
@@ -18,6 +19,7 @@ const Navigation = ( props ) => {
                             : <li><Link to={`/profile/${props.props.id}` }>{props.props.login}</Link></li>
 
                     }
+                    <li onClick={props.props.logaut} className={ props.props.login !== null ? s.show : s.none}><Link to="/login">Log out</Link></li>
                 </ul>
             </nav>
     )

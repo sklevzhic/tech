@@ -6,3 +6,11 @@
     display: flex;
     justify-content: space-around;
 }
+
+.none {
+    display: none;
+}
+
+.show {
+    display: block;
+}

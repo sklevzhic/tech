@@ -87,10 +87,9 @@ export const getStatus = (id) => (dispatch) => {
         })
 }
 export const updateStatus = (status) => (dispatch) => {
-    profileAPI.updateStatus(status)
+    profileAPI.updateStatus({status: status})
         .then(responce => {
             if (responce.resultCode === 0) {
-                debugger
                 dispatch(setStatus(responce.data.status))
             }
         })
