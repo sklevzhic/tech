@@ -4,6 +4,7 @@ import {getTotalUsers, selectPage, getUsersThunkCreator, follow, unfollow} from 
 import React from "react";
 import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
 import {compose} from "redux";
+import {getUsers} from "../../../redux/users-selectors";
 
 
 class UsersWrapper extends React.Component {
@@ -36,7 +37,7 @@ class UsersWrapper extends React.Component {
 
 let mapStateToProps = (state) => {
     return {
-        users: state.usersPage.users,
+        users: getUsers(state),
         rowsPerPage: state.usersPage.rowsPerPage,
         currentPage: state.usersPage.currentPage,
         totalUsers: state.usersPage.totalUsers,

@@ -1,4 +1,3 @@
-import {authAPI} from "../api/api";
 import {getAuthUserData} from "./Auth-reducer";
 
 let INITIALIZED_SUCCESS = 'INITIALIZED_SUCCESS'
@@ -23,11 +22,11 @@ export const initializedSuccess = () => {
     return {type: INITIALIZED_SUCCESS}
 }
 export const initialize = () => (dispatch) => {
-    // let promise = dispatch(getAuthUserData())
-    // Promise.all([promise])
-    //     .then(()=> {
-    //         dispatch(initialize())
-    //     })
+    let promise = dispatch(getAuthUserData())
+    Promise.all([promise])
+        .then(()=> {
+            dispatch(initializedSuccess())
+        })
 }
 
 

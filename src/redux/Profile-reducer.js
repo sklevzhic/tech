@@ -1,6 +1,7 @@
 import {profileAPI, usersAPI} from "../api/api";
 
 const ADD_NEW_POST = 'ADD-NEW-POST';
+const DELETE_POST = 'DELETE_POST';
 const CHANGE_NEW_POST = 'CHANGE-NEW-POST';
 const SET_USER = 'SET_USER';
 const SET_STATUS = 'SET_STATUS';
@@ -8,7 +9,16 @@ const UPDATE_STATUS = 'UPDATE_STATUS';
 
 let initialState = {
     posts: [
-
+        {
+            id: '0',
+            imgPost: 'https://social-network.samuraijs.com/activecontent/images/users/16277/user.jpg?v=2',
+            text: 'text',
+        },
+        {
+            id: '1',
+            imgPost: 'https://social-network.samuraijs.com/activecontent/images/users/16277/user.jpg?v=2',
+            text: 'text',
+        }
     ],
     user: "",
     status: "",
@@ -19,16 +29,19 @@ const ProfileReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_NEW_POST: {
             let newPost = {
-                text: state.newPostText,
-                id: Date.now().toString(),
-                likecount: 0,
-                dislikeCount: 0,
-                imgPost: "https://shum.minsk.by/wp-content/uploads/2019/04/%D0%B1%D0%B0%D1%80weg.jpg"
+                text: action.newPostText,
+                imgPost: "https://social-network.samuraijs.com/activecontent/images/users/16277/user.jpg?v=2"
             }
             let copyState = {...state}
             copyState.posts = [...copyState.posts]
             copyState.posts.unshift(newPost);
             return copyState
+        }
+        case DELETE_POST: {
+            return {
+                ...state,
+                posts: state.posts.filter(p => p.id !== action.id)
+            }
         }
         case CHANGE_NEW_POST: {
             let copyState = {...state}
@@ -59,11 +72,14 @@ const ProfileReducer = (state = initialState, action) => {
 
 }
 
-export const addPostActionCreator = () => {
-    return {type: ADD_NEW_POST}
+export const addPostActionCreator = (newPostText) => {
+    return {type: ADD_NEW_POST, newPostText}
 };
 export const updatePostActionCreator = (text) => {
     return {type: CHANGE_NEW_POST, newText: text }
+};
+export const deletePost = (id) => {
+    return {type: DELETE_POST, id }
 };
 export const setUser = (user) => {
     return {type: SET_USER, user}

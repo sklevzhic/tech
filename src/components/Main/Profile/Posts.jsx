@@ -1,14 +1,7 @@
 import React from "react";
 
-const Posts = ( props ) => {
-    let arr = [
-        {
-            id: 'Name',
-            imgPost: 'imgPost',
-            text: 'text',
-        }
-    ]
-    let postElements = arr.map((el) => {
+const Posts = React.memo((props) =>  {
+    let postElements = props.posts.map((el) => {
         return (
             <div key={el.id} className="col s4">
                 <div className="card">
@@ -20,8 +13,11 @@ const Posts = ( props ) => {
                         <i className="material-icons right">more_vert</i>
                     </span>
                         <p>
-                            <button className="waves-effect waves-light btn-small"><i className="material-icons left">sentiment_very_satisfied</i>{el.likecount}</button>
-                            <button className="waves-effect btn-small"><i className="material-icons left">sentiment_very_dissatisfied</i>{el.dislikeCount}</button>
+                            <button className="waves-effect waves-light btn-small"><i
+                                className="material-icons left">sentiment_very_satisfied</i>{el.likecount}</button>
+                            <button className="waves-effect btn-small"><i
+                                className="material-icons left">sentiment_very_dissatisfied</i>{el.dislikeCount}
+                            </button>
                         </p>
                     </div>
                     <div className="card-reveal">
@@ -39,9 +35,10 @@ const Posts = ( props ) => {
     return (
         <div className="row">
             <div className="postsWrapper">
-                { postElements }
+                {postElements}
             </div>
         </div>
     )
-}
+})
+
 export default Posts

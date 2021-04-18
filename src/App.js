@@ -19,7 +19,9 @@ class App extends React.Component {
         this.props.initialize()
     }
     render() {
-
+        if (!this.props.initializeApp) {
+            return <Preloader />
+        }
         return (
             <BrowserRouter>
                 <div className="container">
@@ -39,7 +41,7 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        initializeApp: state.app.initialize
+        initializeApp: state.app.initialized
     }
 }
 
