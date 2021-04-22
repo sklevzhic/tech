@@ -3,7 +3,7 @@ import {Formik, Form, Field, ErrorMessage, useFormik} from 'formik';
 import {Redirect} from "react-router-dom"
 import * as yup from 'yup';
 import {connect} from "react-redux";
-import TextError from "../../Common/TextError";
+import TextError from "../Common/TextError";
 
 class Login extends React.Component {
     render() {

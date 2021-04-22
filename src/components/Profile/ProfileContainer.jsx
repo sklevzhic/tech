@@ -2,8 +2,8 @@ import Profile from "./Profile";
 import React from "react";
 import {connect} from "react-redux";
 import {withRouter} from 'react-router-dom';
-import {getStatus, getUserInfo, updateStatus} from "../../../redux/Profile-reducer";
-import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
+import {getStatus, getUserInfo, updateStatus} from "../../redux/Profile-reducer";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
 
 class ProfileWrapper extends React.Component {

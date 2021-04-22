@@ -1,10 +1,10 @@
 import {connect} from "react-redux";
 import Users from "./Users";
-import {getTotalUsers, selectPage, getUsersThunkCreator, follow, unfollow} from "../../../redux/Users-reducer";
+import {getTotalUsers, selectPage, getUsersThunkCreator, follow, unfollow} from "../../redux/Users-reducer";
 import React from "react";
-import {withAuthRedirect} from "../../../hoc/withAuthRedirect";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
-import {getUsers} from "../../../redux/users-selectors";
+import {getUsers} from "../../redux/users-selectors";
 
 
 class UsersWrapper extends React.Component {

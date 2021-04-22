@@ -115,25 +115,24 @@ export const getUsersThunkCreator = (rowsPerPage, currentPage) => {
         dispatch(togglePreloader(false))
     }
 }
+
+
+const followUnfollowFlow = async (dispatch, id, apiMethod) => {
+    dispatch(toggleFollowingInProgress(true, id))
+    let response = await apiMethod(id)
+    if (response.data.resultCode == 0) {
+        dispatch(followSuccess(id))
+    }
+    dispatch(toggleFollowingInProgress(false, id))
+}
 export const follow = (id) => {
     return async (dispatch) => {
-        dispatch(toggleFollowingInProgress(true, id))
-        let response = await usersAPI.following(id)
-        if (response.data.statusCode == 0) {
-            dispatch(followSuccess(id))
-        }
-        dispatch(toggleFollowingInProgress(false, id))
-
+        followUnfollowFlow(dispatch,id, usersAPI.following)
     }
 }
 export const unfollow = (id) => {
     return async (dispatch) => {
-        dispatch(toggleFollowingInProgress(true, id))
-        let response = await usersAPI.unfollowing(id)
-        if (response.data.statusCode == 0) {
-            dispatch(followSuccess(id))
-        }
-        dispatch(toggleFollowingInProgress(false, id))
+        followUnfollowFlow(dispatch, id, usersAPI.unfollowing)
     }
 }
 

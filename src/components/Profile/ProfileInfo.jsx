@@ -19,7 +19,7 @@ const ProfileInfo = (props) => {
                             <div className="card">
                                 <div className="card-content">
                                     <span className="card-title">{props.user.fullName} </span>
-                                    <CurrentInfo status={props.status} updateStatus={props.updateStatus}/>
+                                    <CurrentInfo statusGlobalState={props.status} updateStatus={props.updateStatus}/>
                                     <div className="card-action">
                                         <button className="waves-effect waves-light btn"><i
                                             className="material-icons left">cloud</i>0 публикаций

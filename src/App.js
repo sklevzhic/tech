@@ -1,35 +1,37 @@
 import './App.css'
-import ProfileContainer from "./components/Main/Profile/ProfileContainer";
-import NewPostContainer from "./components/Main/Profile/NewPostContainer";
-import Messenger from "./components/Main/Messenger/Messenger";
+import NewPostContainer from "./components/Profile/NewPostContainer";
+import Messenger from "./components/Messenger/Messenger";
 import {BrowserRouter, Switch, Route} from 'react-router-dom'
-import React from "react";
-import UsersContainer from "./components/Main/Users/UsersContainer";
+import React, { Suspense } from 'react';
 import HeaderContainer from "./components/Header/HeaderContainer";
-import LoginContainer from "./components/Main/Auth/LoginContainer";
+import LoginContainer from "./components/Auth/LoginContainer";
 import {connect} from "react-redux";
 import {initialize} from "./redux/App-reducer";
 import {compose} from "redux";
-import { withRouter } from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import Preloader from "./components/Common/Preloader";
+import {withSuspense} from "./hoc/withSuspense";
 
+const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
+const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
 
 class App extends React.Component {
     componentDidMount() {
         this.props.initialize()
     }
+
     render() {
         if (!this.props.initializeApp) {
-            return <Preloader />
+            return <Preloader/>
         }
         return (
             <BrowserRouter>
                 <div className="container">
                     <HeaderContainer/>
                     <Switch>
-                        <Route path='/profile/:userId?' render={() => <ProfileContainer/>}/>
+                        <Route path='/profile/:userId?' render={withSuspense(ProfileContainer)}/>
                         <Route path='/dialogs' render={() => <Messenger/>}/>
-                        <Route path='/users' render={() => <UsersContainer/>}/>
+                        <Route path='/users' render={withSuspense(UsersContainer)}/>
                         <Route path='/addpost' render={() => <NewPostContainer/>}/>
                         <Route path='/login' render={() => <LoginContainer/>}/>
                     </Switch>
@@ -48,4 +50,4 @@ const mapStateToProps = (state) => {
 export default compose(
     withRouter,
     connect(mapStateToProps, {initialize}))
-    (App);
+(App);

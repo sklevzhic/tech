@@ -1,5 +1,4 @@
 import {authAPI} from "../api/api";
-import {isAuth} from "./Users-reducer";
 
 let SET_USER_DATA = 'SET_USER_DATA'
 let initialState = {

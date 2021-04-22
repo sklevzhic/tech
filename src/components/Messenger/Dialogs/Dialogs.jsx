@@ -1,7 +1,7 @@
 import {Link} from "react-router-dom";
 import s from "../Messenger.module.css";
 import React from "react";
-import store from "../../../../redux/redux-store";
+import store from "../../../redux/redux-store";
 
 let dialogsElements = store.getState().dialogsPage.dialogs.map(el => {
     return <Link key={el.id} to={`/dialogs/${el.id}`} className="collection-item"><span
