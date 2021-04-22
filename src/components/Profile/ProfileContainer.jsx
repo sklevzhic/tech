@@ -17,6 +17,15 @@ class ProfileWrapper extends React.Component {
         this.props.getStatus(uId)
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        let uId = this.props.match.params.userId;
+        if (!uId) {
+            uId = this.props.id
+        }
+        this.props.getUserInfo(uId)
+        this.props.getStatus(uId)
+    }
+
 
     render() {
         return (
