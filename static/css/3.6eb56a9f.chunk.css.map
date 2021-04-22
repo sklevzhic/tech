@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/components/Users/Users.module.css"],"names":[],"mappings":"AAAA,0BACI,gBAAiB,CACjB,YAAa,CACb,eACJ","file":"3.6eb56a9f.chunk.css","sourcesContent":[".pagination1 {\r\n    flex-wrap: nowrap;\r\n    height: 100px;\r\n    overflow: hidden;\r\n}"]}
