@@ -7,8 +7,7 @@ import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
 
 class ProfileWrapper extends React.Component {
-
-    componentDidMount() {
+    refreshProfile = () => {
         let uId = this.props.match.params.userId;
         if (!uId) {
             uId = this.props.id
@@ -16,21 +15,26 @@ class ProfileWrapper extends React.Component {
         this.props.getUserInfo(uId)
         this.props.getStatus(uId)
     }
-
+    componentDidMount() {
+        this.refreshProfile()
+    }
     componentDidUpdate(prevProps, prevState, snapshot) {
-        let uId = this.props.match.params.userId;
-        if (!uId) {
-            uId = this.props.id
+        if (this.props.match.params.userId != prevProps.match.params.userId) {
+            this.refreshProfile()
         }
-        this.props.getUserInfo(uId)
-        this.props.getStatus(uId)
     }
 
 
     render() {
         return (
             <div>
-                <Profile user={this.props.user} posts={this.props.posts} status={this.props.status} updateStatus={this.props.updateStatus}/>
+                <Profile
+                    isOwner={!this.props.match.params.userId}
+                    user={this.props.user}
+                    posts={this.props.posts}
+                    status={this.props.status}
+                    updateStatus={this.props.updateStatus}
+                />
             </div>
         );
     }
