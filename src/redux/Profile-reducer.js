@@ -102,7 +102,7 @@ export const uploadPhotoSucceess = (photos) => {
 }
 
 export const getUserInfo = (userId) => (dispatch) => {
-    usersAPI.getUserInfo(userId)
+    profileAPI.getUserInfo(userId)
         .then(responce => {
             dispatch(setUser(responce))
         })
@@ -123,7 +123,16 @@ export const updateStatus = (status) => (dispatch) => {
             }
         })
 }
+export const updateUserInfo = (user) => async (dispatch, getState) => {
+    let userId = getState().auth.id
+    let responce = await profileAPI.updateUserInfo(user)
+    if (responce.resultCode === 0) {
+        dispatch(getUserInfo(userId))
+    } else {
+        debugger
+    }
 
+}
 export const uploadPhoto = (photo) => async (dispatch) => {
     let responce = await profileAPI.uploadPhoto(photo)
     if (responce.data.resultCode === 0) {

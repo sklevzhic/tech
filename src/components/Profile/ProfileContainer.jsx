@@ -2,7 +2,7 @@ import Profile from "./Profile";
 import React from "react";
 import {connect} from "react-redux";
 import {withRouter} from 'react-router-dom';
-import {getStatus, getUserInfo, updateStatus, uploadPhoto} from "../../redux/Profile-reducer";
+import {getStatus, getUserInfo, updateStatus, updateUserInfo, uploadPhoto} from "../../redux/Profile-reducer";
 // import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
 
@@ -35,6 +35,7 @@ class ProfileWrapper extends React.Component {
                     status={this.props.status}
                     updateStatus={this.props.updateStatus}
                     uploadPhoto={this.props.uploadPhoto}
+                    updateUserInfo={this.props.updateUserInfo}
                 />
             </div>
         );
@@ -52,7 +53,7 @@ let mapStateToProps = (state) => {
 }
 
 export default compose(
-    connect(mapStateToProps, {getUserInfo, getStatus, updateStatus, uploadPhoto}),
+    connect(mapStateToProps, {getUserInfo, getStatus, updateStatus, uploadPhoto, updateUserInfo}),
     // withAuthRedirect,
     withRouter
 )(ProfileWrapper)

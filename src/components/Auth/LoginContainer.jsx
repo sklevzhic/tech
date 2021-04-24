@@ -6,13 +6,18 @@ import {connect} from "react-redux";
 
 class LoginContainer extends React.Component {
     render() {
-        return        <Login login={this.props.login}/>
+        return        <Login
+            login={this.props.login}
+            isAuth={this.props.isAuth}
+            captcha={this.props.captcha}
+        />
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-
+        captcha: state.auth.captchaUrl,
+        isAuth: state.auth.isAuth
     }
 }
 export default compose(

@@ -11,13 +11,20 @@ import {compose} from "redux";
 import {withRouter} from 'react-router-dom';
 import Preloader from "./components/Common/Preloader";
 import {withSuspense} from "./hoc/withSuspense";
+import {Redirect} from "react-router-dom"
+
 
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
 const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
 
 class App extends React.Component {
+    // catchAllUnhandledErrors = (promiseRejectionEvent) => {
+    //     console.log(promiseRejectionEvent.reason.message)
+    // }
+
     componentDidMount() {
         this.props.initialize()
+        // window.addEventListener('unhandledrejection', this.catchAllUnhandledErrors)
     }
 
     render() {
@@ -29,11 +36,13 @@ class App extends React.Component {
                 <div className="container">
                     <HeaderContainer/>
                     <Switch>
+                        <Route exact path='/' render={()=><Redirect to={"/profile"} />}/>
                         <Route path='/profile/:userId?' render={withSuspense(ProfileContainer)}/>
                         <Route path='/dialogs' render={() => <Messenger/>}/>
                         <Route path='/users' render={withSuspense(UsersContainer)}/>
                         <Route path='/addpost' render={() => <NewPostContainer/>}/>
                         <Route path='/login' render={() => <LoginContainer/>}/>
+                        <Route path='*' render={() => <h1>404 not found</h1>}/>
                     </Switch>
                 </div>
             </BrowserRouter>

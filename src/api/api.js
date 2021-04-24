@@ -12,10 +12,6 @@ export const usersAPI = {
         return instance.get(`/users?page=${currentPage}&count=${rowsPerPage}`)
             .then(responce => responce.data)
     },
-    getUserInfo(id) {
-        console.log('invalid')
-        return profileAPI.getUserInfo(id)
-    },
     following(id) {
         return instance.post(`/follow/${id}`)
     },
@@ -33,6 +29,11 @@ export const profileAPI = {
         return instance.get(`/profile/status/${id}`)
             .then(responce => responce)
     },
+    updateUserInfo(user) {
+        return instance.put(`/profile`, user)
+            .then(responce => responce.data)
+    },
+
     uploadPhoto(photo) {
         let formData =  new FormData();
         formData.append("image", photo)
@@ -52,8 +53,13 @@ export const authAPI = {
     me() {
         return instance.get(`/auth/me`).then(responce => responce.data)
     },
-    login(email, password, rememberMe) {
-        return  instance.post(`/auth/login`, {email, password, rememberMe}).then(responce => responce.data)
+    login(email, password, rememberMe, captcha) {
+        return  instance.post(`/auth/login`, {email, password, rememberMe, captcha}).then(responce => responce.data)
+    },
+    getCaptcha() {
+        return instance.get(`/security/get-captcha-url`).then(responce => {
+            return  responce.data.url
+        })
     },
     logout() {
         return  instance.post(`/auth/logout`).then(responce => responce.data)

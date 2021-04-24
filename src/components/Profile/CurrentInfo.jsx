@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 const CurrentInfo = ({statusGlobalState, updateStatus}) => {
     let [editMode, setEditMode] = useState(false);
     let [status, setStatus] = useState(statusGlobalState);
+
     useEffect(() => {
         setStatus(statusGlobalState)
     }, [statusGlobalState]);

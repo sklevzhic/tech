@@ -1,5 +1,6 @@
 import ProfileInfo from "./ProfileInfo";
 import Posts from "./Posts";
+import React from "react";
 
 const Profile = (props) => {
     return (
@@ -10,6 +11,8 @@ const Profile = (props) => {
                 status={props.status}
                 updateStatus={props.updateStatus}
                 uploadPhoto={props.uploadPhoto}
+                updateUserInfo={props.updateUserInfo}
+
             />
             <Posts posts={props.posts} />
         </div>
