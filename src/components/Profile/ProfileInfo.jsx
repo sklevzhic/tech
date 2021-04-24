@@ -1,11 +1,11 @@
 import {Link} from 'react-router-dom'
 import CurrentInfo from "./CurrentInfo";
 import userPhoto from '../../assets/img/admin.jpg'
+import SocialButton from "../SocialButton/SocialButton";
 
-const ProfileInfo = ({user, status, updateStatus, isOwner}) => {
-
+const ProfileInfo = ({user, status, updateStatus, isOwner, uploadPhoto}) => {
     const onMainPhotoSelectd = (e) => {
-        console.log(e.target.value[0])
+        uploadPhoto(e.target.files[0])
     }
     return (
         <div className="row">
@@ -35,7 +35,19 @@ const ProfileInfo = ({user, status, updateStatus, isOwner}) => {
                                     </div>
                                     <h5>{user.aboutMe} </h5>
                                     <p>{user.avatar}</p>
+                                    <div className="collection">
+                                        <a className="collection-item">Ищу работу: {user.lookingForAJob ? "Да": "Нет"}</a>
+                                        <a className="collection-item">Сопроводительное письмо: {user.lookingForAJobDescription}</a>
+                                    </div>
 
+                                    <div>
+                                        <p>Контакты</p>
+                                        {
+                                            Object.keys(user.contacts).map(key => {
+                                                return <SocialButton key={key} contactTitle={key} contactValue={user.contacts[key]}/>
+                                            })
+                                        }
+                                    </div>
                                     <Link to='/addpost' className="btn-floating btn-large waves-effect waves-light red"><i
                                         className="material-icons">add</i></Link>
                                 </div>

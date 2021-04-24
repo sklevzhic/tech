@@ -9,6 +9,7 @@ const Profile = (props) => {
                 user={props.user}
                 status={props.status}
                 updateStatus={props.updateStatus}
+                uploadPhoto={props.uploadPhoto}
             />
             <Posts posts={props.posts} />
         </div>

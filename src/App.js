@@ -2,7 +2,7 @@ import './App.css'
 import NewPostContainer from "./components/Profile/NewPostContainer";
 import Messenger from "./components/Messenger/Messenger";
 import {BrowserRouter, Switch, Route} from 'react-router-dom'
-import React, { Suspense } from 'react';
+import React from 'react';
 import HeaderContainer from "./components/Header/HeaderContainer";
 import LoginContainer from "./components/Auth/LoginContainer";
 import {connect} from "react-redux";

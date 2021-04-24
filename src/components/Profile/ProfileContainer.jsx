@@ -2,8 +2,8 @@ import Profile from "./Profile";
 import React from "react";
 import {connect} from "react-redux";
 import {withRouter} from 'react-router-dom';
-import {getStatus, getUserInfo, updateStatus} from "../../redux/Profile-reducer";
-import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {getStatus, getUserInfo, updateStatus, uploadPhoto} from "../../redux/Profile-reducer";
+// import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
 
 class ProfileWrapper extends React.Component {
@@ -19,7 +19,7 @@ class ProfileWrapper extends React.Component {
         this.refreshProfile()
     }
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.match.params.userId != prevProps.match.params.userId) {
+        if (this.props.match.params.userId !== prevProps.match.params.userId) {
             this.refreshProfile()
         }
     }
@@ -34,6 +34,7 @@ class ProfileWrapper extends React.Component {
                     posts={this.props.posts}
                     status={this.props.status}
                     updateStatus={this.props.updateStatus}
+                    uploadPhoto={this.props.uploadPhoto}
                 />
             </div>
         );
@@ -51,7 +52,7 @@ let mapStateToProps = (state) => {
 }
 
 export default compose(
-    connect(mapStateToProps, {getUserInfo, getStatus, updateStatus}),
+    connect(mapStateToProps, {getUserInfo, getStatus, updateStatus, uploadPhoto}),
     // withAuthRedirect,
     withRouter
 )(ProfileWrapper)

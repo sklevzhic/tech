@@ -120,7 +120,7 @@ export const getUsersThunkCreator = (rowsPerPage, currentPage) => {
 const followUnfollowFlow = async (dispatch, id, apiMethod) => {
     dispatch(toggleFollowingInProgress(true, id))
     let response = await apiMethod(id)
-    if (response.data.resultCode == 0) {
+    if (response.data.resultCode === 0) {
         dispatch(followSuccess(id))
     }
     dispatch(toggleFollowingInProgress(false, id))
