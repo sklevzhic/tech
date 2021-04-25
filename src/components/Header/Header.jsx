@@ -1,18 +1,38 @@
-import s from './Header.module.css'
-import Navigation from "./Navigation/Navigation";
+import React from 'react';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import InputBase from '@material-ui/core/InputBase';
+import SearchIcon from '@material-ui/icons/Search';
+import useStyles from "./Header.css";
+import {Button, Icon} from "@material-ui/core";
 
-const Header = (props) => {
+
+const Header = () => {
+    const classes = useStyles()
     return (
-        <header className={s.header}>
-            <a className={s.logo} href='/'>
-                <img src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt=""/>
-            </a>
-            <div>
-                <input type="text" placeholder="search"/>
-            </div>
-            <Navigation props={props}/>
-        </header>
-    )
+        <div className={classes.grow}>
+            <AppBar position="static">
+                <Toolbar>
+                    <Typography className={classes.title} variant="h6" noWrap>
+                        Material-UI
+                    </Typography>
+                    <div className={classes.grow}/>
+                    <Button variant="contained" color="default" className={classes.button}
+                            endIcon={<Icon>person</Icon>}>
+                        Profile
+                    </Button>
+                    <Button variant="contained" color="default" className={classes.button} endIcon={<Icon>email</Icon>}>
+                        Messages
+                    </Button>
+                    <Button variant="contained" color="default" className={classes.button}
+                            endIcon={<Icon>people</Icon>}>
+                        Users
+                    </Button>
+                </Toolbar>
+            </AppBar>
+        </div>
+    );
 }
 
 export default Header

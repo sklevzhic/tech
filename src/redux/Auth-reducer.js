@@ -2,12 +2,15 @@ import {authAPI} from "../api/api";
 
 let SET_USER_DATA = 'SET_USER_DATA'
 let GET_CAPTCH_URL = 'GET_CAPTCH_URL'
+let BUTTON_ACTIVITY_SWITCH = 'BUTTON_ACTIVITY_SWITCH'
+
 let initialState = {
     login: null,
     id: null,
     email: null,
     isAuth: false,
-    captchaUrl: ""
+    captchaUrl: "",
+    isButtonActive: true
 }
 
 const AuthReducer = (state = initialState, action) => {
@@ -18,13 +21,20 @@ const AuthReducer = (state = initialState, action) => {
                 login: action.login,
                 id: action.id,
                 email: action.email,
-                isAuth: action.isAuth
+                isAuth: action.isAuth,
+                isButtonDisabled: false
             }
         }
         case GET_CAPTCH_URL: {
             return {
                 ...state,
                 captchaUrl: action.url
+            }
+        }
+        case BUTTON_ACTIVITY_SWITCH: {
+            return {
+                ...state,
+                isButtonActive: !state.isButtonActive
             }
         }
         default :
@@ -34,6 +44,10 @@ const AuthReducer = (state = initialState, action) => {
 
 export const setUserData = (login, id, email, isAuth) => {
     return {type: SET_USER_DATA, login, id, email, isAuth}
+}
+
+export const buttonActivitySwitch = () => {
+    return {type: BUTTON_ACTIVITY_SWITCH }
 }
 
 export const getCaptchaURL = (url) => {
@@ -47,11 +61,16 @@ export const getAuthUserData = () => async (dispatch) => {
 }
 
 export const login = (data) => async (dispatch) => {
+        dispatch(buttonActivitySwitch())
         let responce = await authAPI.login(data.email, data.password, data.toggle, data.captcha)
         if (responce.resultCode === 0) {
             dispatch(getAuthUserData())
+            dispatch(buttonActivitySwitch())
+
         } else if (responce.resultCode === 10) {
             dispatch(getCaptchaUrl())
+            dispatch(buttonActivitySwitch())
+
         }
 }
 
