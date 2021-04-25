@@ -7,8 +7,9 @@ import {Button, Card, Container, Icon} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import { TextField } from 'formik-material-ui';
 import s from './SignInPage.module.css'
+import Preloader from "../../components/Preloader";
 
-const SignInPage = ({captchaUrl, isAuth, login, isButtonActive}) => {
+const SignInPage = ({captchaUrl, isAuth, login, isButtonDisabled }) => {
 
     let initialValues = {email: '', password: '', captcha: '', toggle: true, address: ''}
 
@@ -39,6 +40,8 @@ const SignInPage = ({captchaUrl, isAuth, login, isButtonActive}) => {
            <Typography component="h1"  align="center" variant="h5">
                Sign in
            </Typography>
+           {isButtonDisabled && <Preloader />}
+
            <Formik
                initialValues={initialValues}
                validationSchema={validationSchema}
@@ -83,7 +86,7 @@ const SignInPage = ({captchaUrl, isAuth, login, isButtonActive}) => {
                        color="primary"
                        margin="dense"
 
-                       // disabled={!isButtonActive}
+                       disabled={isButtonDisabled}
                        endIcon={<Icon>send</Icon>}
                    >
                        Login

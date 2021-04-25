@@ -6,7 +6,9 @@ const mapStateToProps = (state) => {
     console.log(state.auth)
     return {
         captchaUrl: state.auth.captchaUrl,
-        isAuth: state.auth.isAuth
+        isAuth: state.auth.isAuth,
+        isButtonDisabled: state.auth.isButtonDisabled
+
     }
 }
 

@@ -17,9 +17,7 @@ const Header = ({isAuth, logout}) => {
                         Типа Соцсеть
                     </Typography>
                     <div className={classes.grow}/>
-                    <div>
-
-                    </div>
+                    { isAuth && <>
                     <Link to={"/profile"} variant="contained" color="default" className={classes.button}
                           endIcon={<Icon>person</Icon>}>
                         Profile
@@ -31,7 +29,7 @@ const Header = ({isAuth, logout}) => {
                             endIcon={<Icon>people</Icon>}>
                         Users
                     </Button>
-                    {isAuth ? <Button
+                        <Button
                             variant="contained"
                             color="default"
                             className={classes.button}
@@ -39,7 +37,7 @@ const Header = ({isAuth, logout}) => {
                             endIcon={<Icon>person</Icon>}>
                             Log out
                         </Button>
-                        : null
+                    </>
                     }
                 </Toolbar>
             </AppBar>

@@ -10,7 +10,7 @@ let initialState = {
     email: null,
     isAuth: false,
     captchaUrl: "",
-    isButtonActive: true
+    isButtonDisabled: false
 }
 
 const AuthReducer = (state = initialState, action) => {
@@ -34,13 +34,12 @@ const AuthReducer = (state = initialState, action) => {
         case BUTTON_ACTIVITY_SWITCH: {
             return {
                 ...state,
-                isButtonActive: !state.isButtonActive
+                isButtonDisabled: !state.isButtonDisabled
             }
         }
         default :
             return state
     }
-    console.log(state.isAuth)
 }
 
 export const setUserData = (login, id, email, isAuth) => {
@@ -62,8 +61,10 @@ export const getAuthUserData = () => async (dispatch) => {
 }
 
 export const login = (data) => async (dispatch) => {
+    buttonActivitySwitch()
     let responce = await authAPI.login(data.email, data.password, data.toggle, data.captcha)
     if (responce.resultCode === 0) {
+        dispatch(buttonActivitySwitch())
         dispatch(getAuthUserData())
     } else if (responce.resultCode === 10) {
         dispatch(getCaptchaUrl())
