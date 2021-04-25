@@ -40,6 +40,7 @@ const AuthReducer = (state = initialState, action) => {
         default :
             return state
     }
+    console.log(state.isAuth)
 }
 
 export const setUserData = (login, id, email, isAuth) => {
@@ -47,7 +48,7 @@ export const setUserData = (login, id, email, isAuth) => {
 }
 
 export const buttonActivitySwitch = () => {
-    return {type: BUTTON_ACTIVITY_SWITCH }
+    return {type: BUTTON_ACTIVITY_SWITCH}
 }
 
 export const getCaptchaURL = (url) => {
@@ -61,17 +62,12 @@ export const getAuthUserData = () => async (dispatch) => {
 }
 
 export const login = (data) => async (dispatch) => {
-        dispatch(buttonActivitySwitch())
-        let responce = await authAPI.login(data.email, data.password, data.toggle, data.captcha)
-        if (responce.resultCode === 0) {
-            dispatch(getAuthUserData())
-            dispatch(buttonActivitySwitch())
-
-        } else if (responce.resultCode === 10) {
-            dispatch(getCaptchaUrl())
-            dispatch(buttonActivitySwitch())
-
-        }
+    let responce = await authAPI.login(data.email, data.password, data.toggle, data.captcha)
+    if (responce.resultCode === 0) {
+        dispatch(getAuthUserData())
+    } else if (responce.resultCode === 10) {
+        dispatch(getCaptchaUrl())
+    }
 }
 
 export const getCaptchaUrl = () => async (dispatch) => {
@@ -81,8 +77,8 @@ export const getCaptchaUrl = () => async (dispatch) => {
 }
 
 
-export const logaut = (data) => async (dispatch) => {
-    let responce = authAPI.logout()
+export const logout = () => async (dispatch) => {
+    let responce = await authAPI.logout()
     if (responce.resultCode === 0) {
         dispatch(setUserData(null, null, null, false))
     }

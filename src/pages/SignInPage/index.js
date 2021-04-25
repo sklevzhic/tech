@@ -1,12 +1,12 @@
-import {connect} from "react-redux";
 import SignInPage from "./SignInPage";
+import {connect} from "react-redux";
 import {buttonActivitySwitch, login} from "../../redux/Auth-reducer";
 
 const mapStateToProps = (state) => {
+    console.log(state.auth)
     return {
         captchaUrl: state.auth.captchaUrl,
-        isAuth: state.auth.isAuth,
-        isButtonActive: state.auth.isButtonActive
+        isAuth: state.auth.isAuth
     }
 }
 

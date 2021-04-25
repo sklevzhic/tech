@@ -38,7 +38,7 @@ const Login = (props) => {
             <Field type="password" name="password" placeholder="password"/>
             <ErrorMessage name="password" component={TextError}/>
             <Field type="checkbox" name="toggle"/>
-            {props.captcha && <img src={props.captcha}/>}
+            {props.captcha && <img alt="dfd" src={props.captcha}/>}
             {props.captcha && <div>
                 <Field type="text" name="captcha" placeholder="captcha"/>
                 <ErrorMessage name="captcha" component={TextError}/>

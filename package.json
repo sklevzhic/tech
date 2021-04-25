@@ -12,6 +12,8 @@
     "@testing-library/user-event": "^12.6.0",
     "axios": "^0.21.1",
     "formik": "^2.2.6",
+    "formik-material-ui": "^3.0.1",
+    "formik-material-ui-lab": "0.0.8",
     "jose": "^3.11.3",
     "materialize-css": "^1.0.0-rc.2",
     "node-sass": "^4.14.1",
