@@ -1,5 +1,5 @@
 import React from 'react';
-import './index.css';
+import  './index.css';
 import reportWebVitals from './reportWebVitals';
 import ReactDOM from "react-dom";
 import App from "./components/App";
@@ -10,7 +10,7 @@ import {BrowserRouter} from "react-router-dom";
     ReactDOM.render(
         <BrowserRouter basename={process.env.PUBLIC_URL}>
             <Provider store={store}>
-                <App/>
+                <App className=""/>
             </Provider>
         </BrowserRouter>,
         document.getElementById('root')

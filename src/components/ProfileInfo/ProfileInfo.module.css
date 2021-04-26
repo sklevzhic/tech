@@ -1,0 +1,13 @@
+.inline {
+    display: flex;
+    margin-top: 30px;
+}
+
+.center {
+    align-items: center;
+    justify-content: center;
+}
+
+.margin10 a {
+    margin:  0 10px;
+}
