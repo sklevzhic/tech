@@ -22,24 +22,25 @@ const Profile = () => {
                 />
             </Grid>
             <Grid item xs>
-                <div className={s.inline}>
+                <Grid direction="row">
                     <Typography
                         variant="h5"
                         component="h3"
                         noWrap="true"
                     >Alexander Klevzhits </Typography>
                     <Button variant="outlined">Редактировать профиль</Button>
-                </div>
+                </Grid>
 
                 <Typography
-                    variant="body2"
+                    variant="body1"
                     component="p"
                     gutterBottom
+                    color="textSecondary"
                     noWrap="true"
                 >
                     Установить статус
                 </Typography>
-                <div className={`${s.inline} ${s.center}  ${s.margin10}`} >
+                <div className={`${s.inline} ${s.center}  ${s.margin10}`}>
                     <Button variant="outlined" href="#text-buttons" color="primary">
                         <span>25 </span> Online
                     </Button>
@@ -60,13 +61,13 @@ const Profile = () => {
                 >About me </Typography>
                 <Divider/>
 
-                <div className={s.inline}>
+                <Grid direction="row">
                     <Typography
                         variant="h6"
                         component="p"
                         gutterBottom
                         noWrap="true"
-                    >Контакты:  </Typography>
+                    >Контакты: </Typography>
                     <IconButton
                         aria-label="delete"
                         colicolorPrimary
@@ -85,7 +86,7 @@ const Profile = () => {
                     <IconButton aria-label="delete">
                         vk
                     </IconButton>
-                </div>
+                </Grid>
                 <Divider/>
                 <Typography
                     variant="body1"
@@ -97,7 +98,9 @@ const Profile = () => {
                     variant="body2"
                     component="p"
                     gutterBottom
-                >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                    aliquip ex ea commodo consequat.
                 </Typography>
 
             </Grid>
