@@ -1,12 +1,12 @@
 import * as yup from "yup";
-import {Redirect} from "react-router-dom";
+// import {Redirect} from "react-router-dom";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import TextError from "../../components/Common/TextError";
 import React from "react";
 import {Button, Card, Container, Icon} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import { TextField } from 'formik-material-ui';
-import s from './SignInPage.module.css'
+import s from './SignInPage.module.scss'
 import Preloader from "../../components/Preloader";
 
 const SignInPage = ({captchaUrl, isAuth, login, isButtonDisabled }) => {

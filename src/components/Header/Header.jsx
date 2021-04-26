@@ -5,6 +5,8 @@ import Typography from '@material-ui/core/Typography';
 import useStyles from "./Header.css";
 import {Button, Icon} from "@material-ui/core";
 import {Link} from "react-router-dom";
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import IconButton from "@material-ui/core/IconButton";
 
 
 const Header = ({isAuth, logout}) => {
@@ -13,30 +15,26 @@ const Header = ({isAuth, logout}) => {
         <div className={classes.grow}>
             <AppBar position="static">
                 <Toolbar>
-                    <Typography className={classes.title} variant="h6" noWrap>
+                    <Typography className={classes.title} variant="h6">
                         Типа Соцсеть
                     </Typography>
                     <div className={classes.grow}/>
                     { isAuth && <>
-                    <Link to={"/profile"} variant="contained" color="default" className={classes.button}
+                    <Link to={"/profile"}>
+                          <Button variant="contained" color="default"
                           endIcon={<Icon>person</Icon>}>
                         Profile
+                          </Button>
                     </Link>
-                    <Button variant="contained" color="default" className={classes.button} endIcon={<Icon>email</Icon>}>
-                        Messages
-                    </Button>
-                    <Button variant="contained" color="default" className={classes.button}
-                            endIcon={<Icon>people</Icon>}>
-                        Users
-                    </Button>
-                        <Button
-                            variant="contained"
-                            color="default"
-                            className={classes.button}
+
+
+                        <IconButton
                             onClick={logout}
-                            endIcon={<Icon>person</Icon>}>
-                            Log out
-                        </Button>
+                            color="default"
+                            aria-label="add an alarm"
+                        >
+                            <ExitToAppIcon />
+                        </IconButton>
                     </>
                     }
                 </Toolbar>

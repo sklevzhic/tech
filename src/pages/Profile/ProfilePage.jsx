@@ -1,8 +1,11 @@
 import {Container} from "@material-ui/core";
-import s from './ProfilePage.module.css'
-import ProfileInfo from "../../components/ProfileInfo/ProfileInfo";
+// import s from './ProfilePage.module.css'
+import ProfileInfo from "../../components/ProfileInfo";
+// import {useEffect} from "react";
 
-const ProfilePage = () => {
+const ProfilePage = (props) => {
+
+
     return (
         <Container
         >

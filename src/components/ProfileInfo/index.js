@@ -1,3 +1,13 @@
-import ProfileInfo from "./ProfileInfo";
+import ProfileInfo from "./ProfileInfo"
+import {connect} from "react-redux";
+import {getUserInfo} from "../../redux/Profile-reducer";
 
-export default ProfileInfo
+let mapStateToProps = (state) => {
+
+    return {
+        user: state.profilePage.user,
+        id: state.auth.id
+    }
+}
+
+export default connect(mapStateToProps, {getUserInfo})(ProfileInfo)

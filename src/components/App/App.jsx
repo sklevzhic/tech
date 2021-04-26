@@ -7,7 +7,6 @@ import Authorization from "./Authorization";
 const App = ({isAuth, initialize}) => {
     useEffect(() => {
         initialize()
-
     });
     return (
         <>
