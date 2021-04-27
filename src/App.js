@@ -1,5 +1,5 @@
 import './App.css'
-import NewPostContainer from "./components/Profile/NewPostContainer";
+import NewPostContainer from "./components/Profile1/NewPostContainer";
 import Messenger from "./components/Messenger/Messenger";
 import {BrowserRouter, Switch, Route} from 'react-router-dom'
 import React from 'react';
@@ -14,7 +14,7 @@ import {withSuspense} from "./hoc/withSuspense";
 import {Redirect} from "react-router-dom"
 
 
-const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
+const ProfileContainer = React.lazy(() => import('./components/Profile1/ProfileContainer'));
 const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
 
 class App extends React.Component {

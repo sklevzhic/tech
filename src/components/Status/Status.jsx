@@ -5,8 +5,10 @@ import {useEffect, useState} from "react";
 
 const Status = ({id, statusGlobal, updateStatus, getStatus}) => {
     useEffect(() => {
-        getStatus(id)
-    },[])
+        (async () => {
+            await getStatus(id);
+        })();
+    }, [getStatus, id]);
 
     let [editMode, setEditMode] = useState(true)
     let [status, setStatus] = useState({statusGlobal})
@@ -44,8 +46,6 @@ const Status = ({id, statusGlobal, updateStatus, getStatus}) => {
                         defaultValue={statusGlobal}
                     />
             }
-
-
         </div>
     )
 }
