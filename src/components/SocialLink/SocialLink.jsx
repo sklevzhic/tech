@@ -18,10 +18,16 @@ const SocialLink = ({contacts}) => {
         <>
             {Object.keys(contacts).map(key => {
                 let Icon = icons[key]
-                return <LinkTo color="secondary" disabled={!contacts[key]} component={IconButton} key={key} target="_blank"
-                               href={contacts[key]}>
-                    <Icon/>
-                </LinkTo>
+
+                if (contacts[key]) {
+
+                    return <LinkTo color="secondary" disabled={!contacts[key]} component={IconButton} key={key}
+                                   target="_blank"
+                                   href={contacts[key]}>
+                        <Icon/>
+                    </LinkTo>
+                }
+
             })}
         </>
     )

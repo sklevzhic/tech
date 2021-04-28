@@ -1,15 +1,14 @@
 import * as yup from "yup";
-// import {Redirect} from "react-router-dom";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import TextError from "../../components/Common/TextError";
 import React from "react";
-import {Button, Card, Container, Icon} from "@material-ui/core";
+import {Button, Card, Container, FormControlLabel, Icon} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
-import { TextField } from 'formik-material-ui';
+import {Checkbox, TextField} from 'formik-material-ui';
 import s from './SignInPage.module.scss'
 import Preloader from "../../components/Preloader";
 
-const SignInPage = ({captchaUrl, isAuth, login, isButtonDisabled }) => {
+const SignInPage = ({captchaUrl, isAuth, login, isButtonDisabled}) => {
 
     let initialValues = {email: '', password: '', captcha: '', toggle: true, address: ''}
 
@@ -29,71 +28,74 @@ const SignInPage = ({captchaUrl, isAuth, login, isButtonDisabled }) => {
     });
 
 
-
-
     return <Container
         component="main"
         maxWidth="xs"
         className={s.test}
     >
-       <Card className={s.formWrapper}>
-           <Typography component="h1"  align="center" variant="h5">
-               Sign in
-           </Typography>
-           {isButtonDisabled && <Preloader />}
+        <Card className={s.formWrapper}>
+            <Typography component="h1" align="center" variant="h5">
+                Sign in
+            </Typography>
+            {isButtonDisabled && <Preloader/>}
 
-           <Formik
-               initialValues={initialValues}
-               validationSchema={validationSchema}
-               onSubmit={onSubmit}
-           >
-               <Form>
-                   <Field
-                       fullWidth
-                       component={TextField}
-                       margin="dense"
-                       type="email"
-                       name="email"
-                       placeholder="email"
-                       label="Email"
-                       variant="outlined"
+            <Formik
+                initialValues={initialValues}
+                validationSchema={validationSchema}
+                onSubmit={onSubmit}
+            >
+                <Form>
+                    <Field
+                        fullWidth
+                        component={TextField}
+                        margin="dense"
+                        type="email"
+                        name="email"
+                        placeholder="email"
+                        label="Email"
+                        variant="outlined"
 
-                   />
-                   <Field
-                       fullWidth
-                       component={TextField}
-                       margin="dense"
-                       type="password"
-                       name="password"
-                       placeholder="password"
-                       label="Password"
-                       variant="outlined"
-                   />
-                   <div className={s.centerAlign}>
-                       <Field type="checkbox" name="toggle"/>
-                   </div>
-                   {captchaUrl && <img src={captchaUrl} alt="img"/>}
-                   {captchaUrl && <div>
-                       <Field type="text" name="captcha" placeholder="captcha"/>
-                       <ErrorMessage name="captcha" component={TextError}/>
-                   </div>}
+                    />
+                    <Field
+                        fullWidth
+                        component={TextField}
+                        margin="dense"
+                        type="password"
+                        name="password"
+                        placeholder="password"
+                        label="Password"
+                        variant="outlined"
+                    />
+
+                    <FormControlLabel
+                        value="start"
+                        control={<Field component={Checkbox} checked="checked" color="primary" />}
+                        label="Запомнить пароль"
+                        labelPlacement="start"
+                    />
+
+                    {captchaUrl && <img src={captchaUrl} alt="img"/>}
+                    {captchaUrl && <div>
+                        <Field type="text" name="captcha" placeholder="captcha"/>
+                        <ErrorMessage name="captcha" component={TextError}/>
+                    </div>}
 
 
-                   <Button
-                       fullWidth
-                       type="submit"
-                       variant="contained"
-                       color="primary"
-                       margin="dense"
+                    <Button
+                        fullWidth
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        margin="dense"
 
-                       disabled={isButtonDisabled}
-                       endIcon={<Icon>send</Icon>}
-                   >
-                       Login
-                   </Button>
-               </Form>
-           </Formik>
-       </Card>
+                        disabled={isButtonDisabled}
+                        endIcon={<Icon>send</Icon>}
+                    >
+                        Login
+                    </Button>
+                </Form>
+            </Formik>
+        </Card>
     </Container>
 }
 

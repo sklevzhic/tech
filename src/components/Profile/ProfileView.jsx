@@ -11,14 +11,15 @@ const ProfileView = ({user, toogleMode}) => {
             <div className={s.profile__namewrapper}>
                 <Typography variant="h5" component="h3"
                             className={s.profile__name}>{user.fullName} </Typography>
-                <Button onClick={toogleMode} variant="outlined" className={s.profile__edit}>Редактировать профиль</Button>
+                <Button onClick={toogleMode} variant="outlined" className={s.profile__edit}>Редактировать
+                    профиль</Button>
             </div>
             <Status/>
             <div className={`inline center ${s.profile__buttons}`}>
                 <FollowList/>
             </div>
             <Typography
-                variant="h6"
+                variant="body1"
                 component="p"
                 gutterBottom
             >{user.aboutMe} </Typography>
@@ -37,15 +38,12 @@ const ProfileView = ({user, toogleMode}) => {
                 component="p"
                 gutterBottom
             >Поиск работы: {user.lookingForAJob ? "Да" : "Нет"}</Typography>
-            {
-                user.lookingForAJob
-                    ? <Typography
-                        variant="body2"
-                        component="p"
-                        gutterBottom
-                    >{user.lookingForAJobDescription}
-                    </Typography>
-                    : "Нет"
+            {user.lookingForAJob && <Typography
+                variant="body2"
+                component="p"
+                gutterBottom
+            >{user.lookingForAJobDescription}
+            </Typography>
             }
         </>
     )

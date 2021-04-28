@@ -26,6 +26,7 @@ const FollowList = ({followedBy, follows, media}) => {
                 return <Link key={el.to}
                     to={el.to}>
                     <Button
+                        variant="outlined"
                         href="#text-buttons"
                     >
                         <span>{el.count} </span> {el.text}

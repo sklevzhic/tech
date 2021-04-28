@@ -7,6 +7,7 @@ const SET_USER = 'SET_USER';
 const SET_STATUS = 'SET_STATUS';
 const UPDATE_STATUS = 'UPDATE_STATUS';
 const UPDATE_PHOTO = 'UPDATE_PHOTO';
+const LOADING_PROFILE_SWITCH = 'LOADING_PROFILE_SWITCH'
 
 let initialState = {
     posts: [
@@ -23,7 +24,7 @@ let initialState = {
     ],
     user: "",
     status: "",
-    newPostText: "",
+    isUpdateProfile: false
 }
 
 const ProfileReducer = (state = initialState, action) => {
@@ -61,6 +62,12 @@ const ProfileReducer = (state = initialState, action) => {
                 status: action.status,
             }
         }
+        case LOADING_PROFILE_SWITCH: {
+            return {
+                ...state,
+                isUpdateProfile: !state.isUpdateProfile,
+            }
+        }
         case UPDATE_STATUS: {
             return {
                 ...state,
@@ -96,6 +103,9 @@ export const setUser = (user) => {
 export const setStatus = (status) => {
     return {type: SET_STATUS, status}
 }
+export const lodingProfileSwitch = () => {
+    return {type: LOADING_PROFILE_SWITCH}
+}
 
 export const uploadPhotoSucceess = (photos) => {
     return {type: UPDATE_PHOTO, photos}
@@ -125,8 +135,10 @@ export const updateStatus = (status) => (dispatch) => {
         })
 }
 export const updateUserInfo = (user) => async (dispatch, getState) => {
+    dispatch(lodingProfileSwitch());
     let userId = getState().auth.id
     let responce = await profileAPI.updateUserInfo(user)
+    dispatch(lodingProfileSwitch())
     if (responce.resultCode === 0) {
         dispatch(getUserInfo(userId))
     } else {

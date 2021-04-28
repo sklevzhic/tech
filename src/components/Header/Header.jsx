@@ -16,7 +16,7 @@ const Header = ({isAuth, logout}) => {
             <AppBar position="static">
                 <Toolbar>
                     <Typography className={classes.title} variant="h6">
-                        Типа Соцсеть
+                        Недоинст
                     </Typography>
                     <div className={classes.grow}/>
                     { isAuth && <>
