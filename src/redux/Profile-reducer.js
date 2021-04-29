@@ -148,6 +148,8 @@ export const updateUserInfo = (user) => async (dispatch, getState) => {
 }
 export const uploadPhoto = (photo) => async (dispatch) => {
     let responce = await profileAPI.uploadPhoto(photo)
+    debugger
+
     if (responce.data.resultCode === 0) {
         dispatch(uploadPhotoSucceess(responce.data.data.photos))
     }

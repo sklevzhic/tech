@@ -23,15 +23,15 @@ const FollowList = ({followedBy, follows, media}) => {
     return (
         <> {
             buttons.map(el => {
-                return <Link key={el.to}
-                    to={el.to}>
-                    <Button
-                        variant="outlined"
-                        href="#text-buttons"
-                    >
-                        <span>{el.count} </span> {el.text}
-                    </Button>
-                </Link>
+                return <Button
+                    component={Link}
+                    key={el.to}
+                    to={el.to}
+                    variant="outlined"
+                    href="#text-buttons"
+                >
+                    <span>{el.count} </span> {el.text}
+                </Button>
             })
         }
 </>

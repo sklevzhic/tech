@@ -10,6 +10,8 @@ import Preloader from "../../components/Preloader";
 
 const SignInPage = ({captchaUrl, isAuth, login, isButtonDisabled}) => {
 
+    const [checked, setChecked] = React.useState(false);
+
     let initialValues = {email: '', password: '', captcha: '', toggle: true, address: ''}
 
     const onSubmit = values => {
@@ -69,7 +71,13 @@ const SignInPage = ({captchaUrl, isAuth, login, isButtonDisabled}) => {
 
                     <FormControlLabel
                         value="start"
-                        control={<Field component={Checkbox} checked="checked" color="primary" />}
+                        control={<Field
+                            component={Checkbox}
+                            type={"checkbox"}
+                            checked={checked}
+                            color="primary"
+                            onChange={() => setChecked(!checked)}
+                        />}
                         label="Запомнить пароль"
                         labelPlacement="start"
                     />

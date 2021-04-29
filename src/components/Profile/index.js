@@ -1,6 +1,6 @@
 import Profile from './Profile'
 import {connect} from "react-redux";
-import {getUserInfo, updateUserInfo} from "../../redux/Profile-reducer";
+import {getUserInfo, updateUserInfo, uploadPhoto} from "../../redux/Profile-reducer";
 
 let mapStateToProps = (state) => {
 
@@ -11,4 +11,4 @@ let mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, {getUserInfo, updateUserInfo})(Profile)
+export default connect(mapStateToProps, {getUserInfo, updateUserInfo, uploadPhoto})(Profile)

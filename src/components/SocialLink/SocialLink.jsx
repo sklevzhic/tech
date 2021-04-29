@@ -27,6 +27,7 @@ const SocialLink = ({contacts}) => {
                         <Icon/>
                     </LinkTo>
                 }
+                return null
 
             })}
         </>
