@@ -9,7 +9,6 @@ import s from './SignInPage.module.scss'
 import Preloader from "../../components/Preloader";
 
 const SignInPage = ({captchaUrl, isAuth, login, isButtonDisabled}) => {
-
     const [checked, setChecked] = React.useState(false);
 
     let initialValues = {email: '', password: '', captcha: '', toggle: true, address: ''}

@@ -7,7 +7,7 @@ import {Avatar, Button, Menu, MenuItem} from "@material-ui/core";
 import {Link} from "react-router-dom";
 
 
-const Header = ({isAuth, logout, user}) => {
+const Header = ({isAuth, logout, login, photo}) => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget)
@@ -26,17 +26,20 @@ const Header = ({isAuth, logout, user}) => {
                     </Typography>
                     <div className={classes.grow}/>
                     {isAuth && <>
-                        <Button component={Link} to={"/users"}>
-                            <Typography variant="body1">Users</Typography>
-                        </Button>
-                        <Button aria-controls="simple-menu" onClick={handleClick}>
-                            <Avatar
-                                // src={user.photos.small || null}
-                            ></Avatar>
-                            {user.fullName}
-                        </Button>
+                        <Button component={Link} to={"/users"} variant="contained"> Users</Button>
+                        {
+                            photo
+                                ?
+                                <Button aria-controls="simple-menu" variant="contained" onClick={handleClick}>
+                                    <Avatar
+                                        src={photo.small || null}
+                                    ></Avatar>
+                                    {login}
+                                </Button>
 
-
+                                : <Button aria-controls="simple-menu" onClick={handleClick}>
+                                </Button>
+                        }
                         <Menu
                             id="simple-menu"
                             anchorEl={anchorEl}
