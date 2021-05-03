@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import {Checkbox, TextField} from 'formik-material-ui';
 import s from './SignInPage.module.scss'
 import Preloader from "../../components/Preloader";
+import {Redirect} from "react-router-dom";
 
 const SignInPage = ({captchaUrl, isAuth, login, isButtonDisabled}) => {
     const [checked, setChecked] = React.useState(false);
@@ -15,6 +16,10 @@ const SignInPage = ({captchaUrl, isAuth, login, isButtonDisabled}) => {
 
     const onSubmit = values => {
         login(values)
+    }
+
+    if (isAuth) {
+        return <Redirect  to={"/profile"}/>
     }
 
     const validationSchema = yup.object({
@@ -27,6 +32,7 @@ const SignInPage = ({captchaUrl, isAuth, login, isButtonDisabled}) => {
             .min(8, 'Password should be of minimum 8 characters length')
             .required('Password is required'),
     });
+
 
 
     return <Container

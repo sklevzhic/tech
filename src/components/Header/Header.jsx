@@ -9,12 +9,20 @@ import {Link} from "react-router-dom";
 
 const Header = ({isAuth, logout, login, photo}) => {
     const [anchorEl, setAnchorEl] = React.useState(null);
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget)
     }
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+    const handleClose = (event) => {
+        if (event.target.innerText.toLowerCase() === 'logout') {
+            setAnchorEl(null);
+            logout()
+        } else {
+            setAnchorEl(null);
+
+        }
+    }
+
 
     const classes = useStyles()
     return (
@@ -27,6 +35,7 @@ const Header = ({isAuth, logout, login, photo}) => {
                     <div className={classes.grow}/>
                     {isAuth && <>
                         <Button component={Link} to={"/users"} variant="contained"> Users</Button>
+
                         {
                             photo
                                 ?
@@ -52,7 +61,7 @@ const Header = ({isAuth, logout, login, photo}) => {
                                 to={"/profile"}
                                 onClick={handleClose}
                             >Profile</MenuItem>
-                            <MenuItem onClick={logout}>Logout</MenuItem>
+                            <MenuItem onClick={handleClose}>Logout</MenuItem>
                         </Menu>
                     </>
                     }
