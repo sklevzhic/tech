@@ -5,7 +5,8 @@ import { initialize} from "../../redux/App-reducer";
 const mapStateToProps = (state) => {
     return {
         captchaUrl: state.auth.captchaUrl,
-        isAuth: state.auth.isAuth
+        isAuth: state.auth.isAuth,
+        initialized: state.app.initialized
     }
 }
 

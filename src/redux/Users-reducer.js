@@ -11,7 +11,7 @@ let IS_AUTH = 'IS_AUTH'
 
 let initialState = {
     users: [],
-    rowsPerPage: 10,
+    rowsPerPage: 20,
     currentPage: 1,
     totalUsers: 0,
     isFetching: false,

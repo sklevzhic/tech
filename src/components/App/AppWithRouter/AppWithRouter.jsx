@@ -8,7 +8,7 @@ const AppWithRouter = () => {
     return (
         <Switch>
             <Route exact path='/' render={() => <div>MainPage</div>} />
-            <Route path='/profile' render={() =><Profile />} />
+            <Route path='/profile/:uID' render={() =><Profile />} />
             <Route path='/messages' render={() => <div>messages</div>} />
             <Route path='/users' render={() => <UsersPage />} />
             <Route path='/signin' render={() => <SignInPage/>}/>

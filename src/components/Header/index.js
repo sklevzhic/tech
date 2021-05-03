@@ -4,9 +4,10 @@ import {logout} from "../../redux/Auth-reducer";
 
 const mapStateToProps = (state) => {
     return {
-        photo: state.profilePage.user.photos,
         login: state.auth.login,
         isAuth: state.auth.isAuth,
+        photo: state.auth.photos,
+
     }
 }
 export default connect(mapStateToProps,{ logout })(Header)

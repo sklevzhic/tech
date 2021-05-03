@@ -5,9 +5,7 @@ import {useEffect, useState} from "react";
 
 const Status = ({id, statusGlobal, updateStatus, getStatus}) => {
     useEffect(() => {
-        (async () => {
-            await getStatus(id);
-        })();
+            getStatus(id);
     }, [getStatus, id]);
 
     let [editMode, setEditMode] = useState(true)

@@ -8,6 +8,7 @@ import Preloader from "../Preloader";
 import ProfileView from "./ProfileView";
 import ProfileEdit from "./ProfileEdit";
 import {makeStyles} from "@material-ui/styles";
+import { withRouter } from 'react-router-dom';
 
 const useStyles = makeStyles({
     avatar: {
@@ -18,15 +19,17 @@ const useStyles = makeStyles({
     }
 })
 
-const Profile = ({id, user, getUserInfo, updateUserInfo, isUpdateProfile, uploadPhoto}) => {
-    const classes = useStyles()
-    useEffect(() => {
-        (async () => {
-            await getUserInfo(id);
-        })();
-    }, [getUserInfo, id]);
+const Profile = ({id, user, getUserInfo, updateUserInfo, isUpdateProfile, uploadPhoto, match}) => {
+    const classes = useStyles();
+    let uId = match.params.uID;
 
     let [editMode, setEditMode] = useState(false)
+    let [userId, setUserId] = useState(uId)
+
+
+    useEffect(() => {
+        getUserInfo(userId)
+    }, [getUserInfo, userId]);
 
     const toogleMode = () => {
         setEditMode(!editMode)
@@ -80,4 +83,4 @@ const Profile = ({id, user, getUserInfo, updateUserInfo, isUpdateProfile, upload
         </Grid>
     )
 }
-export default Profile;
+export default withRouter(Profile);
