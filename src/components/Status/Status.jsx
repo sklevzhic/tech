@@ -4,10 +4,6 @@ import s from './Status.module.scss'
 import {useEffect, useState} from "react";
 
 const Status = ({id, statusGlobal, updateStatus, getStatus}) => {
-    useEffect(() => {
-            getStatus(id);
-    }, [getStatus, id]);
-
     let [editMode, setEditMode] = useState(true)
     let [status, setStatus] = useState({statusGlobal})
     const onChangeStatus = (e) => {

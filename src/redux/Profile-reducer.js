@@ -4,7 +4,6 @@ const ADD_NEW_POST = 'ADD-NEW-POST';
 const DELETE_POST = 'DELETE_POST';
 const CHANGE_NEW_POST = 'CHANGE-NEW-POST';
 const SET_USER = 'SET_USER';
-const SET_STATUS = 'SET_STATUS';
 const UPDATE_STATUS = 'UPDATE_STATUS';
 const UPDATE_PHOTO = 'UPDATE_PHOTO';
 const LOADING_PROFILE_SWITCH = 'LOADING_PROFILE_SWITCH'
@@ -23,7 +22,6 @@ let initialState = {
         }
     ],
     user: "",
-    status: "",
     isUpdateProfile: false
 }
 
@@ -53,13 +51,7 @@ const ProfileReducer = (state = initialState, action) => {
         case SET_USER: {
             return {
                 ...state,
-                user: action.user,
-            }
-        }
-        case SET_STATUS: {
-            return {
-                ...state,
-                status: action.status,
+                user: {...action.user, status: action.user.status},
             }
         }
         case LOADING_PROFILE_SWITCH: {
@@ -71,11 +63,10 @@ const ProfileReducer = (state = initialState, action) => {
         case UPDATE_STATUS: {
             return {
                 ...state,
-                status: action.status,
+                user: {...state.user, status: action.status}
             }
         }
         case UPDATE_PHOTO: {
-            debugger
             return {
                 ...state,
                 user: {...state.user, photos: action.photos}
@@ -97,42 +88,34 @@ export const updatePostActionCreator = (text) => {
 export const deletePost = (id) => {
     return {type: DELETE_POST, id}
 };
-export const setUser = (user) => {
-    return {type: SET_USER, user}
+export const setUser = (user, status) => {
+    return {type: SET_USER, user, status}
 }
-export const setStatus = (status) => {
-    return {type: SET_STATUS, status}
-}
+
 export const lodingProfileSwitch = () => {
     return {type: LOADING_PROFILE_SWITCH}
 }
 
-export const uploadPhotoSucceess = (photos) => {
+export const uploadPhotoSuccess = (photos) => {
     return {type: UPDATE_PHOTO, photos}
 }
 
-// +
+export const setStatus = status => {
+    return {type: UPDATE_STATUS, status}
+}
+
 export const getUserInfo = (userId) => async (dispatch) => {
-    let responce = await profileAPI.getUserInfo(userId);
-    dispatch(setUser(responce))
+    let responceUserInfo = await profileAPI.getUserInfo(userId);
+    let responceUserStatus = await profileAPI.getStatus(userId);
+        dispatch(setUser(responceUserInfo, responceUserStatus.data))
 }
 
-
-export const getStatus = (id) => (dispatch) => {
-    profileAPI.getStatus(id)
-        .then(responce => {
-            if (responce.status === 200) {
-                dispatch(setStatus(responce.data))
-            }
-        })
-}
-export const updateStatus = (status) => (dispatch) => {
-    profileAPI.updateStatus({status: status})
-        .then(responce => {
-            if (responce.resultCode === 0) {
-                dispatch(setStatus(status))
-            }
-        })
+export const updateStatus = (status) => async (dispatch) => {
+    let response = await profileAPI.updateStatus({status: status})
+        debugger
+    if (response.data.resultCode === 0) {
+        dispatch(setStatus(status))
+    }
 }
 export const updateUserInfo = (user) => async (dispatch, getState) => {
     dispatch(lodingProfileSwitch());
@@ -151,7 +134,7 @@ export const uploadPhoto = (photo) => async (dispatch) => {
     debugger
 
     if (responce.data.resultCode === 0) {
-        dispatch(uploadPhotoSucceess(responce.data.data.photos))
+        dispatch(uploadPhotoSuccess(responce.data.data.photos))
     }
 }
 

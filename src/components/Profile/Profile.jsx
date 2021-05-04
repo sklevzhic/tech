@@ -19,10 +19,9 @@ const useStyles = makeStyles({
     }
 })
 
-const Profile = ({id, user, getUserInfo, updateUserInfo, isUpdateProfile, uploadPhoto, match}) => {
+const Profile = ({user, getUserInfo, updateUserInfo, isUpdateProfile, uploadPhoto, match}) => {
     const classes = useStyles();
     let uId = match.params.uID;
-
     let [editMode, setEditMode] = useState(false)
     let [userId, setUserId] = useState(uId)
 
