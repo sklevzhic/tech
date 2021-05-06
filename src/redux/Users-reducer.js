@@ -80,15 +80,12 @@ const UsersReducer = (state = initialState, action) => {
     }
 
 }
-// Подписка
+
 export const followSuccess = (id) => {
     return {type: FOLLOW, id: id}
 }
 export const isAuth = (body) => {
     return {type: FOLLOW, body: body}
-}
-export const unfollowSuccess = (id) => {
-    return {type: FOLLOW, id: id}
 }
 export const setUsers = (users) => {
     return {type: SET_USERS, users}
@@ -102,12 +99,11 @@ export const getTotalUsers = (totalUsers) => {
 export const togglePreloader = (isFetching) => {
     return {type: TOGGLE_PRELOADER, isFetching}
 }
-
 export const toggleFollowingInProgress = (isFetching, userID) => {
     return {type: TOOGLE_FOLLOWING_IN_PROGRESS, isFetching, userID}
 }
 
-export const getUsersThunkCreator = (rowsPerPage, currentPage) => {
+export const getUsers = (rowsPerPage, currentPage) => {
     return async (dispatch) => {
         dispatch(togglePreloader(true))
         let response = await usersAPI.getUsers(rowsPerPage, currentPage)
@@ -115,8 +111,6 @@ export const getUsersThunkCreator = (rowsPerPage, currentPage) => {
         dispatch(togglePreloader(false))
     }
 }
-
-
 const followUnfollowFlow = async (dispatch, id, apiMethod) => {
     dispatch(toggleFollowingInProgress(true, id))
     let response = await apiMethod(id)
@@ -127,7 +121,7 @@ const followUnfollowFlow = async (dispatch, id, apiMethod) => {
 }
 export const follow = (id) => {
     return async (dispatch) => {
-        followUnfollowFlow(dispatch,id, usersAPI.following)
+        followUnfollowFlow(dispatch, id, usersAPI.following)
     }
 }
 export const unfollow = (id) => {

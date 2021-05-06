@@ -15,11 +15,11 @@ const SignInPage = ({captchaUrl, isAuth, login, isButtonDisabled}) => {
     let initialValues = {email: '', password: '', captcha: '', toggle: true, address: ''}
 
     const onSubmit = values => {
-        login(values)
+       login(values)
     }
 
     if (isAuth) {
-        return <Redirect  to={"/profile"}/>
+        return <Redirect to={"/profile"}/>
     }
 
     const validationSchema = yup.object({
@@ -32,8 +32,6 @@ const SignInPage = ({captchaUrl, isAuth, login, isButtonDisabled}) => {
             .min(8, 'Password should be of minimum 8 characters length')
             .required('Password is required'),
     });
-
-
 
     return <Container
         component="main"

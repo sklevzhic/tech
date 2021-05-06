@@ -58,8 +58,9 @@ export const getCaptchaURL = (url) => {
 
 export const getAuthUserData = () => async (dispatch) => {
     let responce = await authAPI.me();
-    let responceMore = await profileAPI.getUserInfo(responce.data.id);
     if (responce.resultCode === 0) {
+        let responceMore = await profileAPI.getUserInfo(responce.data.id);
+
         let data = {
             login: responce.data.login,
             id: responce.data.id,

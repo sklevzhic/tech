@@ -51,7 +51,7 @@ const ProfileReducer = (state = initialState, action) => {
         case SET_USER: {
             return {
                 ...state,
-                user: {...action.user, status: action.user.status},
+                user: {...action.user, status: action.status},
             }
         }
         case LOADING_PROFILE_SWITCH: {
@@ -112,7 +112,6 @@ export const getUserInfo = (userId) => async (dispatch) => {
 
 export const updateStatus = (status) => async (dispatch) => {
     let response = await profileAPI.updateStatus({status: status})
-        debugger
     if (response.data.resultCode === 0) {
         dispatch(setStatus(status))
     }
