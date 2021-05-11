@@ -12,7 +12,7 @@ const AppWithRouter = () => {
             <Route path='/messages' render={() => <div>messages</div>} />
             <Route path='/users' render={() => <UsersPage />} />
             <Route path='/signin' render={() => <SignInPage/>}/>
-            {/*<Route path='*' render={() => <div>404 NOT FOUND</div>} />*/}
+            <Route path='*' render={() => <div>404 NOT FOUND</div>} />
         </Switch>
     )
 }

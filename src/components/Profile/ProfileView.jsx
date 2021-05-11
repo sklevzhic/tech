@@ -5,14 +5,13 @@ import FollowList from "../FollowList";
 import SocialLink from "../SocialLink";
 import React from "react";
 
-const ProfileView = ({user, toogleMode}) => {
+const ProfileView = ({user}) => {
     return (
         <>
             <div className={s.profile__namewrapper}>
                 <Typography variant="h5" component="h3"
                             className={s.profile__name}>{user.fullName} </Typography>
-                <Button onClick={toogleMode} variant="outlined" className={s.profile__edit}>Редактировать
-                    профиль</Button>
+
             </div>
             <Status/>
             <div className={`inline center ${s.profile__buttons}`}>

@@ -3,11 +3,18 @@ import * as yup from "yup";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import TextError from "../Common/TextError";
 import {Select, TextField} from "formik-material-ui";
-import {Button, MenuItem} from "@material-ui/core";
+import {Button, FormControl, Grid, InputAdornment, MenuItem} from "@material-ui/core";
+import icons from "../global/global";
+import {makeStyles} from "@material-ui/styles";
 
+const useStyles = makeStyles((theme) => ({
+    margin: {
+        margin: theme.spacing(1),
+    },
+}));
 
 const ProfileEdit = ({user, toogleMode, updateUserInfo, isUpdateProfile}) => {
-
+    // const classes = useStyles()
     let initialValues = {
         aboutMe: user.aboutMe,
         lookingForAJob: user.lookingForAJob,
@@ -73,11 +80,20 @@ const ProfileEdit = ({user, toogleMode, updateUserInfo, isUpdateProfile}) => {
                     <p>Контакты</p>
                     {
                         Object.keys(initialValues.contacts).map(key => {
+                            let Icon = icons[key]
                             return <div key={key}>
-                                <Field fullWidth variant="outlined" margin="dense" component={TextField} type="text"
-                                       name={`contacts.${key}`}
-                                       placeholder={key}/>
-                                <ErrorMessage name={`contacts.${key}`} component={TextError}/>
+                                <Grid container spacing={1} alignItems="flex-end">
+                                    <Grid item>
+                                        <Icon/>
+                                    </Grid>
+                                    <Grid item>
+                                        <Field fullWidth variant="outlined" margin="dense" component={TextField}
+                                               type="text"
+                                               name={`contacts.${key}`}
+                                               placeholder={key}/>
+                                        <ErrorMessage name={`contacts.${key}`} component={TextError}/>
+                                    </Grid>
+                                </Grid>
                             </div>
                         })
                     }
