@@ -1,9 +1,9 @@
 import {TextField, Typography} from "@material-ui/core";
 
 import s from './Status.module.scss'
-import {useEffect, useState} from "react";
+import {useState} from "react";
 
-const Status = ({id, statusGlobal, updateStatus, getStatus}) => {
+const Status = ({statusGlobal, updateStatus}) => {
     let [editMode, setEditMode] = useState(true)
     let [status, setStatus] = useState({statusGlobal})
     const onChangeStatus = (e) => {

@@ -6,7 +6,7 @@ const FollowList = ({followedBy, follows, media}) => {
     let buttons = [
         {
             text: "Подписчиков",
-            to: "followers",
+            to: "/followers",
             count: followedBy = 25,
         },
         {

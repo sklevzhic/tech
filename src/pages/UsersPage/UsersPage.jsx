@@ -1,75 +1,58 @@
 import React, {useEffect, useState} from "react";
-import {
-    Avatar,
-    Container,
-    Button,
-    List,
-    ListItem,
-    ListItemAvatar,
-    ListItemSecondaryAction,
-    ListItemText
-} from "@material-ui/core";
-import {makeStyles} from '@material-ui/core/styles';
-import {Pagination, Skeleton} from "@material-ui/lab";
-import {Link} from "react-router-dom";
+import {Button, Container, Paper, Tab, Tabs} from "@material-ui/core";
 import Preloader from "../../components/Preloader";
+import Typography from "@material-ui/core/Typography";
+import {Link, withRouter} from "react-router-dom";
+import {makeStyles} from "@material-ui/styles";
+import Users from "../../components/Users";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
     root: {
-        // width: '100%',
+        flexGrow: 1,
     },
-}));
+});
 
-const UsersPage = ({users, getUsers, follow, unfollow, rowsPerPage, currentPage, totalPages, isFetching}) => {
+const UsersPage = ({isFetching, rowsPerPage, currentPage, getUsers, match}) => {
+    let sectionUrl = match.params.section
     useEffect(() => {
-        (async () => {
-            await getUsers(rowsPerPage, currentPage);
-        })();
-    }, [getUsers]);
-    const [page, setPage] = useState(1)
-
-    const selectPage = (event, page) => {
-        setPage(page)
-        getUsers(rowsPerPage, page)
-    }
-
+        if (sectionUrl === 'following') {
+            getUsers(rowsPerPage, currentPage, true);
+        }
+        if (sectionUrl === 'allusers') {
+            getUsers(rowsPerPage, currentPage, false);
+        }
+    }, [sectionUrl])
     const classes = useStyles();
+    const [value, setValue] = React.useState(0);
+    const handleChange = (event, newValue) => {
+        getUsers(rowsPerPage, currentPage, false);
+        setValue(newValue);
+    };
+
     return (
         <>
             {!isFetching
                 ? <Container>
-                    <List dense className={classes.root}>
-                        {users.map((user) => {
-                            const labelId = `checkbox-list-secondary-label-${user.id}`;
-                            return (
-                                <ListItem component={Link} to={`profile/${user.id}`} key={user.id} button>
-                                    <ListItemAvatar>
-                                        <Avatar
-                                            alt={`Avatar n°${user.name}`}
-                                            src={user.photos.small}
-                                        />
-                                    </ListItemAvatar>
-                                    <ListItemText id={labelId} primary={user.name}/>
-                                    <ListItemSecondaryAction>
-                                        {
-                                            user.followed
-                                                ? <Button variant="outlined"
-                                                          onClick={() => unfollow(user.id)}>Unollow</Button>
-                                                : <Button variant="outlined"
-                                                          onClick={() => follow(user.id)}>Follow</Button>
-                                        }
-                                    </ListItemSecondaryAction>
-                                </ListItem>
-                            );
-                        })}
-                    </List>
-                    <Pagination count={totalPages} onChange={selectPage}/>
+                    <Typography variant="body1" component="span">
+                    </Typography>
+                    <Paper square>
+                        <Tabs
+                            value={value}
+                            indicatorColor="primary"
+                            textColor="primary"
+                            onChange={handleChange}
+                            aria-label="disabled tabs example"
+                        >
+                            <Tab label="All Users" component={Link} to="/users/allusers"/>
+                            <Tab label="following" component={Link} to="/users/following"/>
+                        </Tabs>
+                    </Paper>
+                    <Users/>
                 </Container>
-                : <Preloader />
+                : <Preloader/>
             }
-
         </>
     )
 }
 
-export default UsersPage
+export default withRouter(UsersPage)

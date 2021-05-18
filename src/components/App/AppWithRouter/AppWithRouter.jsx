@@ -10,7 +10,8 @@ const AppWithRouter = () => {
             <Route exact path='/' render={() => <div>MainPage</div>} />
             <Route path='/profile/:uID' render={() =><Profile />} />
             <Route path='/messages' render={() => <div>messages</div>} />
-            <Route path='/users' render={() => <UsersPage />} />
+            <Route path='/users/:section' render={() => <UsersPage />} />
+            <Route path='/following' render={() => <div>following</div>} />
             <Route path='/signin' render={() => <SignInPage/>}/>
             <Route path='*' render={() => <div>404 NOT FOUND</div>} />
         </Switch>

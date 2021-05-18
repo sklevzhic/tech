@@ -1,62 +1,55 @@
-import Preloader from "../Common/Preloader";
-import {NavLink} from "react-router-dom";
-import Paginator from "../Paginator/Paginator";
+import {Avatar, Button, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText} from "@material-ui/core";
+import {Link} from "react-router-dom";
+import {Pagination} from "@material-ui/lab";
+import React, {useState} from "react";
+import {makeStyles} from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 
-const Users = ({
-                   users,
-                   followingInProgress,
-                   follow,
-                   totalUsers,
-                   unfollow,
-                   currentPage,
-                   onSelectPage,
-                   isFetching,
-                   rowsPerPage
-               }) => {
-    let usersElements = users.map(u => {
-        return <li key={u.id} className="collection-item avatar">
-            <NavLink to={`/profile/${u.id}`}>
-                <img src={
-                    ((u.photos.large === null) || (u.photos.small === null))
-                        ? "https://www.needava.com/wp-content/uploads/2015/08/profile-175-50x50-300x300.jpg"
-                        : u.photos.small
+const useStyles = makeStyles((theme) => ({
+    root: {
+        // width: '100%',
+    },
+}));
 
-                } className="circle" alt={`${u.login}`}/>
-            </NavLink>
-            <span className="title">{`${u.name}`}</span>
-            {
-                u.followed
-                    ? <button
-                        disabled={followingInProgress.some(id => id === u.id)}
-                        className="waves-effect waves-light btn right"
-                        onClick={() => unfollow(u.id)}
-                    >Отписаться</button>
-                    : <button
-                        disabled={followingInProgress.some(id => id === u.id)}
-                        className="waves-effect waves-light btn right"
-                        onClick={() => follow(u.id)}
-                    >Подписаться</button>
-            }
-        </li>
+const Users = ({users, follow, getUsers, rowsPerPage, unfollow, totalPages, totalUsers}) => {
+    const classes = useStyles();
 
-
-    })
+    const [page, setPage] = useState(1)
+    const selectPage = (event, page) => {
+        setPage(page)
+        getUsers(rowsPerPage, page, false)
+    }
 
     return (
-        <div>
-            {isFetching ? <Preloader/> : null}
-            <Paginator
-                totalUsers={totalUsers}
-                rowsPerPage={rowsPerPage}
-                currentPage={currentPage}
-                onSelectPage={onSelectPage}
-            />
-
-            <ul className="collection">
-                {usersElements}
-            </ul>
-        </div>
+        <>
+            <List dense className={classes.root}>
+                <Typography variant="body2">Всего пользователей: {totalUsers} </Typography>
+                {users.map((user) => {
+                    const labelId = `checkbox-list-secondary-label-${user.id}`;
+                    return (
+                        <ListItem component={Link} to={`profile/${user.id}`} key={user.id} button>
+                            <ListItemAvatar>
+                                <Avatar
+                                    alt={`Avatar n°${user.name}`}
+                                    src={user.photos.small}
+                                />
+                            </ListItemAvatar>
+                            <ListItemText id={labelId} primary={user.name}/>
+                            <ListItemSecondaryAction>
+                                {
+                                    user.followed
+                                        ? <Button variant="outlined"
+                                                  onClick={() => unfollow(user.id)}>Unollow</Button>
+                                        : <Button variant="outlined"
+                                                  onClick={() => follow(user.id)}>Follow</Button>
+                                }
+                            </ListItemSecondaryAction>
+                        </ListItem>
+                    );
+                })}
+            </List>
+            <Pagination count={totalPages} page={page} color="primary" onChange={selectPage}/>
+        </>
     )
 }
-
-export default Users;
+export default Users

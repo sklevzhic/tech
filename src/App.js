@@ -15,7 +15,7 @@ import {Redirect} from "react-router-dom"
 
 
 const ProfileContainer = React.lazy(() => import('./components/Profile1/ProfileContainer'));
-const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
+const UsersContainer = React.lazy(() => import('./components/Users'));
 
 class App extends React.Component {
     // catchAllUnhandledErrors = (promiseRejectionEvent) => {

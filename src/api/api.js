@@ -8,8 +8,8 @@ let instance = axios.create({
     }
 })
 export const usersAPI = {
-    getUsers(rowsPerPage, currentPage) {
-        return instance.get(`/users?page=${currentPage}&count=${rowsPerPage}`)
+    getUsers(rowsPerPage, currentPage, friend) {
+        return instance.get(`/users?page=${currentPage}&count=${rowsPerPage}&friend=${friend}`)
             .then(responce => responce.data)
     },
     following(id) {

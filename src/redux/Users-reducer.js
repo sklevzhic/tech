@@ -7,10 +7,12 @@ let TOGGLE_PRELOADER = 'TOGGLE_PRELOADER';
 let GET_TOTAL_USERS = 'GET_TOTAL_USERS';
 let TOOGLE_FOLLOWING_IN_PROGRESS = 'TOOGLE_FOLLOWING_IN_PROGRESS'
 let IS_AUTH = 'IS_AUTH'
+let SET_FRIENDS = 'SET_FRIENDS'
 
 
 let initialState = {
     users: [],
+    friends: [],
     rowsPerPage: 20,
     currentPage: 1,
     totalUsers: 0,
@@ -90,6 +92,9 @@ export const isAuth = (body) => {
 export const setUsers = (users) => {
     return {type: SET_USERS, users}
 }
+export const setFriends = (users) => {
+    return {type: SET_FRIENDS, users}
+}
 export const selectPage = (page) => {
     return {type: SELECT_PAGE, page}
 }
@@ -103,14 +108,15 @@ export const toggleFollowingInProgress = (isFetching, userID) => {
     return {type: TOOGLE_FOLLOWING_IN_PROGRESS, isFetching, userID}
 }
 
-export const getUsers = (rowsPerPage, currentPage) => {
+export const getUsers = (rowsPerPage, currentPage, friend) => {
     return async (dispatch) => {
         dispatch(togglePreloader(true))
-        let response = await usersAPI.getUsers(rowsPerPage, currentPage)
+        let response = await usersAPI.getUsers(rowsPerPage, currentPage,friend)
         dispatch(setUsers(response))
         dispatch(togglePreloader(false))
     }
 }
+
 const followUnfollowFlow = async (dispatch, id, apiMethod) => {
     dispatch(toggleFollowingInProgress(true, id))
     let response = await apiMethod(id)

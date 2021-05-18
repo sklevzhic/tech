@@ -4,8 +4,6 @@ import ProfileInfo from "../../components/Profile";
 // import {useEffect} from "react";
 
 const ProfilePage = (props) => {
-
-
     return (
         <Container
         >
