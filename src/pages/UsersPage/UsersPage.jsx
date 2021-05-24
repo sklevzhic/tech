@@ -43,7 +43,7 @@ const UsersPage = ({isFetching, rowsPerPage, currentPage, getUsers, match}) => {
                             onChange={handleChange}
                             aria-label="disabled tabs example"
                         >
-                            <Tab label="All Users" component={Link} to="/users/allusers"/>
+                            <Tab label="All Users" disabled component={Link} to="/users/allusers"/>
                             <Tab label="following" component={Link} to="/users/following"/>
                         </Tabs>
                     </Paper>
