@@ -6,18 +6,18 @@ const FollowList = ({followedBy, follows, media}) => {
     let buttons = [
         {
             text: "Подписчиков",
-            to: "/followers",
-            count: followedBy = 25,
+            to: "/users/followers",
+            count: followedBy = '--',
         },
         {
             text: "подписок",
-            to: "following",
+            to: "/users/following",
             count: follows = 10,
         },
         {
             text: "публикаций",
             to: "publications",
-            count: media = 15,
+            count: media = '--',
         },
     ]
     return (

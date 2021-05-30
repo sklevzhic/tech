@@ -5,15 +5,15 @@ import React, {useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     root: {
         // width: '100%',
     },
 }));
 
-const Users = ({users, follow, getUsers, rowsPerPage, unfollow, totalPages, totalUsers}) => {
+const Users = (props) => {
+    const {users, follow, getUsers, rowsPerPage, unfollow, totalPages, totalUsers} = props;
     const classes = useStyles();
-
     const [page, setPage] = useState(1)
     const selectPage = (event, page) => {
         setPage(page)
@@ -27,7 +27,7 @@ const Users = ({users, follow, getUsers, rowsPerPage, unfollow, totalPages, tota
                 {users.map((user) => {
                     const labelId = `checkbox-list-secondary-label-${user.id}`;
                     return (
-                        <ListItem component={Link} to={`profile/${user.id}`} key={user.id} button>
+                        <ListItem component={Link} to={`/profile/${user.id}`} key={user.id} button>
                             <ListItemAvatar>
                                 <Avatar
                                     alt={`Avatar n°${user.name}`}
@@ -53,3 +53,7 @@ const Users = ({users, follow, getUsers, rowsPerPage, unfollow, totalPages, tota
     )
 }
 export default Users
+
+Users.propTypes = {
+
+}

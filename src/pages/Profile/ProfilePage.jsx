@@ -1,13 +1,12 @@
 import {Container} from "@material-ui/core";
-// import s from './ProfilePage.module.css'
 import ProfileInfo from "../../components/Profile";
-// import {useEffect} from "react";
+import Posts from "../../components/Posts";
 
-const ProfilePage = (props) => {
+const ProfilePage = (isFetching) => {
     return (
-        <Container
-        >
-            <ProfileInfo />
+        <Container>
+            <ProfileInfo/>
+            <Posts />
         </Container>
     )
 }

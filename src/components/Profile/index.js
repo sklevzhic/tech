@@ -7,7 +7,7 @@ let mapStateToProps = (state) => {
     return {
         user: state.profilePage.user,
         id: state.auth.id,
-        isUpdateProfile: state.profilePage.isUpdateProfile
+        isUpdateProfile: state.profilePage.isUpdateProfile,
     }
 }
 

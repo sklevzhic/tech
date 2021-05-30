@@ -7,6 +7,7 @@ const SET_USER = 'SET_USER';
 const UPDATE_STATUS = 'UPDATE_STATUS';
 const UPDATE_PHOTO = 'UPDATE_PHOTO';
 const LOADING_PROFILE_SWITCH = 'LOADING_PROFILE_SWITCH'
+const TOGGLE_PRELOADER = ''
 
 let initialState = {
     posts: [
@@ -19,10 +20,16 @@ let initialState = {
             id: '1',
             imgPost: 'https://social-network.samuraijs.com/activecontent/images/users/16277/user.jpg?v=2',
             text: 'text',
+        },
+        {
+            id: '2',
+            imgPost: 'https://social-network.samuraijs.com/activecontent/images/users/16277/user.jpg?v=2',
+            text: 'text',
         }
     ],
     user: "",
-    isUpdateProfile: false
+    isUpdateProfile: false,
+    isFetching: false
 }
 
 const ProfileReducer = (state = initialState, action) => {
@@ -104,10 +111,17 @@ export const setStatus = status => {
     return {type: UPDATE_STATUS, status}
 }
 
+export const togglePreloader = (isFetching) => {
+    return {type: TOGGLE_PRELOADER, isFetching}
+}
+
 export const getUserInfo = (userId) => async (dispatch) => {
+    dispatch(togglePreloader(true))
     let responceUserInfo = await profileAPI.getUserInfo(userId);
     let responceUserStatus = await profileAPI.getStatus(userId);
         dispatch(setUser(responceUserInfo, responceUserStatus.data))
+    dispatch(togglePreloader(false))
+
 }
 
 export const updateStatus = (status) => async (dispatch) => {

@@ -1,31 +1,33 @@
-import React, {useEffect, useState} from "react";
-import {Button, Container, Paper, Tab, Tabs} from "@material-ui/core";
+import React, {useEffect} from "react";
+import {Container, Paper, Tab, Tabs} from "@material-ui/core";
 import Preloader from "../../components/Preloader";
 import Typography from "@material-ui/core/Typography";
 import {Link, withRouter} from "react-router-dom";
-import {makeStyles} from "@material-ui/styles";
+// import {makeStyles} from "@material-ui/styles";
 import Users from "../../components/Users";
 
-const useStyles = makeStyles({
-    root: {
-        flexGrow: 1,
-    },
-});
+// const useStyles = makeStyles({
+//     root: {
+//         flexGrow: 1,
+//     },
+// });
 
 const UsersPage = ({isFetching, rowsPerPage, currentPage, getUsers, match}) => {
     let sectionUrl = match.params.section
+    const [value, setValue] = React.useState(0);
     useEffect(() => {
+        console.log('a')
         if (sectionUrl === 'following') {
+            setValue(1)
             getUsers(rowsPerPage, currentPage, true);
         }
         if (sectionUrl === 'allusers') {
+            setValue(0)
             getUsers(rowsPerPage, currentPage, false);
         }
     }, [sectionUrl])
-    const classes = useStyles();
-    const [value, setValue] = React.useState(0);
+    // const classes = useStyles();
     const handleChange = (event, newValue) => {
-        getUsers(rowsPerPage, currentPage, false);
         setValue(newValue);
     };
 
@@ -43,7 +45,7 @@ const UsersPage = ({isFetching, rowsPerPage, currentPage, getUsers, match}) => {
                             onChange={handleChange}
                             aria-label="disabled tabs example"
                         >
-                            <Tab label="All Users" disabled component={Link} to="/users/allusers"/>
+                            <Tab label="All Users" component={Link} to="/users/allusers"/>
                             <Tab label="following" component={Link} to="/users/following"/>
                         </Tabs>
                     </Paper>

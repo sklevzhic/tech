@@ -29,7 +29,7 @@ const Header = ({isAuth, logout, login, photo}) => {
         <div className={classes.grow}>
             <AppBar position="static">
                 <Toolbar>
-                    <Typography component={Link} to={"/profile/16277"} className={classes.title} variant="h6">
+                    <Typography component={Link} to={"/profile"} className={classes.title} variant="h6">
                         Недоинст
                     </Typography>
                     <div className={classes.grow}/>

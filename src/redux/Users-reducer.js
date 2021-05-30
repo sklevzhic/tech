@@ -6,16 +6,16 @@ let SELECT_PAGE = 'SELECT_PAGE';
 let TOGGLE_PRELOADER = 'TOGGLE_PRELOADER';
 let GET_TOTAL_USERS = 'GET_TOTAL_USERS';
 let TOOGLE_FOLLOWING_IN_PROGRESS = 'TOOGLE_FOLLOWING_IN_PROGRESS'
-let IS_AUTH = 'IS_AUTH'
-let SET_FRIENDS = 'SET_FRIENDS'
+let IS_AUTH = 'IS_AUTH';
+let GET_FOLLOWINGS = 'GET_FOLLOWINGS'
 
 
 let initialState = {
     users: [],
-    friends: [],
     rowsPerPage: 20,
     currentPage: 1,
     totalUsers: 0,
+    totalFriends: 0,
     isFetching: false,
     followingInProgress: []
 }
@@ -37,7 +37,7 @@ const UsersReducer = (state = initialState, action) => {
             return {
                 ...state,
                 users: [...action.users.items],
-                totalUsers: action.users.totalCount
+                totalUsers: action.users.totalCount,
             }
         }
         case IS_AUTH: {
@@ -92,14 +92,14 @@ export const isAuth = (body) => {
 export const setUsers = (users) => {
     return {type: SET_USERS, users}
 }
-export const setFriends = (users) => {
-    return {type: SET_FRIENDS, users}
-}
 export const selectPage = (page) => {
     return {type: SELECT_PAGE, page}
 }
 export const getTotalUsers = (totalUsers) => {
     return {type: GET_TOTAL_USERS, totalUsers}
+}
+export const setFollowings = (count) => {
+    return {type: GET_FOLLOWINGS, count}
 }
 export const togglePreloader = (isFetching) => {
     return {type: TOGGLE_PRELOADER, isFetching}
@@ -111,12 +111,17 @@ export const toggleFollowingInProgress = (isFetching, userID) => {
 export const getUsers = (rowsPerPage, currentPage, friend) => {
     return async (dispatch) => {
         dispatch(togglePreloader(true))
-        let response = await usersAPI.getUsers(rowsPerPage, currentPage,friend)
+        let response = await usersAPI.getUsers(rowsPerPage, currentPage, friend)
         dispatch(setUsers(response))
         dispatch(togglePreloader(false))
     }
 }
-
+export const getCountFollowings = (rowsPerPage, currentPage) => {
+    return async (dispatch) => {
+        let response = await usersAPI.getUsers(rowsPerPage, currentPage, true)
+        setFollowings(response)
+    }
+}
 const followUnfollowFlow = async (dispatch, id, apiMethod) => {
     dispatch(toggleFollowingInProgress(true, id))
     let response = await apiMethod(id)

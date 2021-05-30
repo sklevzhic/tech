@@ -1,5 +1,5 @@
 import s from "./Profile.module.scss";
-import {Button, Divider, Grid, Typography} from "@material-ui/core";
+import {Divider, Grid, Typography} from "@material-ui/core";
 import Status from "../Status";
 import FollowList from "../FollowList";
 import SocialLink from "../SocialLink";

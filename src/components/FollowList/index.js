@@ -1,3 +1,12 @@
 import FollowList from "./FolowList";
+import {connect} from "react-redux";
 
-export default FollowList
+let mapStateToProps = (state) => {
+    return {
+        // followedBy: ,
+        // follows: ,
+        // media:
+    }
+}
+
+export default connect(mapStateToProps)(FollowList)
