@@ -16,7 +16,6 @@ const UsersPage = ({isFetching, rowsPerPage, currentPage, getUsers, match}) => {
     let sectionUrl = match.params.section
     const [value, setValue] = React.useState(0);
     useEffect(() => {
-        console.log('a')
         if (sectionUrl === 'following') {
             setValue(1)
             getUsers(rowsPerPage, currentPage, true);

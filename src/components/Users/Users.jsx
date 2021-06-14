@@ -14,12 +14,11 @@ const useStyles = makeStyles(() => ({
 const Users = (props) => {
     const {users, follow, getUsers, rowsPerPage, unfollow, totalPages, totalUsers} = props;
     const classes = useStyles();
-    const [page, setPage] = useState(1)
+    const [pageNumber, setPageNumber] = useState(1)
     const selectPage = (event, page) => {
-        setPage(page)
-        getUsers(rowsPerPage, page, false)
+        setPageNumber(page)
+        getUsers(rowsPerPage, pageNumber, false)
     }
-
     return (
         <>
             <List dense className={classes.root}>
@@ -48,7 +47,8 @@ const Users = (props) => {
                     );
                 })}
             </List>
-            <Pagination count={totalPages} page={page} color="primary" onChange={selectPage}/>
+            {/*<Pagination count={totalPages} page={page} color="primary" onChange={selectPage}/>*/}
+            <Pagination count={totalPages} variant="outlined" shape="rounded" onChange={selectPage}  />
         </>
     )
 }

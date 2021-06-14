@@ -16,10 +16,11 @@ const App = ({isAuth, initialize, initialized}) => {
                 !initialized ? <Preloader />
                 : <>
                     <Header/>
-                    <Switch>
-                        {isAuth ? <AppWithRouter/> : <Authorization/>}
 
-                    </Switch>
+                        <Switch>
+                            {isAuth ? <AppWithRouter/> : <Authorization/>}
+
+                        </Switch>
                 </>
             }
 

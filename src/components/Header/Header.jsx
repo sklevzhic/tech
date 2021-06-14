@@ -35,6 +35,7 @@ const Header = ({isAuth, logout, login, photo}) => {
                     <div className={classes.grow}/>
                     {isAuth && <>
                         <Button component={Link} to={"/users"} variant="contained"> Users</Button>
+                        <Button component={Link} to={"/techs"} variant="contained"> Techs</Button>
 
                         {
                             photo

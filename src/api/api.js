@@ -15,7 +15,7 @@ export const usersAPI = {
     following(id) {
         return instance.post(`/follow/${id}`)
     },
-    unfollowing (id) {
+    unfollowing(id) {
         return instance.delete(`/follow/${id}`)
     }
 }
@@ -35,10 +35,10 @@ export const profileAPI = {
     },
 
     uploadPhoto(photo) {
-        let formData =  new FormData();
+        let formData = new FormData();
         formData.append("image", photo)
         return instance.put(`/profile/photo`, formData, {
-            headers: { 'content-type': 'multipart/form-data' }
+            headers: {'content-type': 'multipart/form-data'}
         })
 
     },
@@ -53,15 +53,24 @@ export const authAPI = {
         return instance.get(`/auth/me`).then(responce => responce.data)
     },
     login(email, password, rememberMe, captcha) {
-        return  instance.post(`/auth/login`, {email, password, rememberMe, captcha}).then(responce => responce.data)
+        return instance.post(`/auth/login`, {email, password, rememberMe, captcha}).then(responce => responce.data)
     },
     getCaptcha() {
         return instance.get(`/security/get-captcha-url`).then(responce => {
-            return  responce.data.url
+            return responce.data.url
         })
     },
     logout() {
-        return  instance.post(`/auth/logout`).then(responce => responce.data)
+        return instance.post(`/auth/logout`).then(responce => responce.data)
     }
 }
 
+export const techAPI = {
+    getTypes() {
+        return axios.get(`http://localhost:3004/technics`).then(responce => responce.data)
+    },
+    getTechnicsForTypes(type) {
+        return axios.get(`http://localhost:3004/technics?type=${type}`).then(responce => responce.data)
+    },
+
+}
