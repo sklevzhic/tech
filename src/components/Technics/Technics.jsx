@@ -1,11 +1,11 @@
 import {Grid} from "@material-ui/core";
 import React, {useEffect} from "react";
 import {withRouter} from "react-router-dom";
-const Technics = ({technics =['1','2'], getTechnicForTypes}, match) => {
+const Technics = ({technics =['1','2'], getTechnicForTypes}) => {
     useEffect(() => {
         getTechnicForTypes()
     }, [technics])
-    console.log(match)
+
     return (
         <>
             <Grid item xs={9}>

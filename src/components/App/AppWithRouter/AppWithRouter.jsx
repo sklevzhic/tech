@@ -3,7 +3,9 @@ import React from "react";
 import Profile from "../../../pages/Profile";
 import SignInPage from "../../../pages/SignInPage";
 import UsersPage from "../../../pages/UsersPage";
-import TechicsPage from "../../../pages/TechnicsPage";
+import TypesPage from "../../../pages/TypesTechnicsPage";
+import TypePage from "../../../pages/TypePage";
+import TechnicPage from "../../../pages/TechnicPage";
 
 const AppWithRouter = () => {
     return (
@@ -15,7 +17,9 @@ const AppWithRouter = () => {
             <Route exact path='/users' render={() => <Redirect to='/users/allusers'/> } />
             <Route path='/users/:section' render={() => <UsersPage/>}/>
             <Route path='/following' render={() => <div>following</div>}/>
-            <Route path='/techs' render={() => <TechicsPage /> }/>
+            <Route exact path='/types' render={() => <TypesPage /> }/>
+            <Route path='/types/:type' render={() => <TypePage /> }/>
+            <Route path='/technics/:id' render={() => <TechnicPage /> }/>
             <Route path='/signin' render={() => <SignInPage/>}/>
             <Route path='*' render={() => <div>404 NOT FOUND</div>}/>
         </Switch>

@@ -67,10 +67,33 @@ export const authAPI = {
 
 export const techAPI = {
     getTypes() {
-        return axios.get(`http://localhost:3004/technics`).then(responce => responce.data)
+        return axios.get(`http://localhost:3004/types`).then(responce => responce.data)
     },
-    getTechnicsForTypes(type) {
-        return axios.get(`http://localhost:3004/technics?type=${type}`).then(responce => responce.data)
+    addType(obj) {
+        return axios.post(`http://localhost:3004/types`, obj).then(response => response)
     },
-
+    deleteType(id) {
+        return axios.delete(`http://localhost:3004/types/${id}`).then(response => response)
+    },
+    editType(id, obj) {
+        return axios.put(`http://localhost:3004/types/${id}`, obj).then(response => response)
+    },
+    getActiveType(value) {
+        return axios.get(`http://localhost:3004/types?type=${value}`).then(response => response.data[0])
+    },
+    getTechnicsForType(value) {
+        return axios.get(`http://localhost:3004/technics?type=${value}`).then(response => response.data)
+    },
+    getTechnicInfo(id) {
+        return axios.get(`http://localhost:3004/technics/${id}`).then(response => response.data)
+    },
+    updateTechnic(id, data) {
+        return axios.patch(`http://localhost:3004/technics/${id}`, data).then(response => response)
+    },
+    getUsers() {
+        return axios.get(`http://localhost:3004/users`).then(responce => responce.data)
+    },
+    addUser(data) {
+        return axios.post(`http://localhost:3004/users`,{name: data}).then(responce => responce.data)
+    },
 }

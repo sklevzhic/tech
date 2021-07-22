@@ -6,9 +6,9 @@ import Authorization from "./Authorization";
 import Preloader from "../Preloader";
 
 const App = ({isAuth, initialize, initialized}) => {
-    useEffect(() => {
-        initialize()
-    },[initialize]);
+    // useEffect(() => {
+    //     initialize()
+    // },[initialize]);
 
     return (
         <>
@@ -18,7 +18,7 @@ const App = ({isAuth, initialize, initialized}) => {
                     <Header/>
 
                         <Switch>
-                            {isAuth ? <AppWithRouter/> : <Authorization/>}
+                            {!isAuth ? <AppWithRouter/> : <Authorization/>}
 
                         </Switch>
                 </>

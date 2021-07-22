@@ -33,9 +33,9 @@ const Header = ({isAuth, logout, login, photo}) => {
                         Недоинст
                     </Typography>
                     <div className={classes.grow}/>
-                    {isAuth && <>
+                    {!isAuth && <>
                         <Button component={Link} to={"/users"} variant="contained"> Users</Button>
-                        <Button component={Link} to={"/techs"} variant="contained"> Techs</Button>
+                        <Button component={Link} to={"/types"} variant="contained"> Types</Button>
 
                         {
                             photo
