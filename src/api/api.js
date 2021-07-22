@@ -82,7 +82,7 @@ export const techAPI = {
         return axios.get(`http://localhost:3004/types?type=${value}`).then(response => response.data[0])
     },
     getTechnicsForType(value) {
-        return axios.get(`http://localhost:3004/technics?type=${value}`).then(response => response.data)
+        return axios.get(`http://localhost:3004/technics?type_like=${value}`).then(response => response.data)
     },
     getTechnicInfo(id) {
         return axios.get(`http://localhost:3004/technics/${id}`).then(response => response.data)

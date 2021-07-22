@@ -9,12 +9,14 @@ const SET_TECHNIC = 'SET_TECHNIC'
 const UPDATE_TECHNIC = 'UPDATE_TECHNIC'
 const SET_USERS_TECH = 'SET_USERS_TECH'
 const ADD_USER = 'ADD_USER'
+const TOOGLE_LOADING_IN_FOR_TYPE = 'TOOGLE_LOADING_IN_FOR_TYPE'
 
 let initialState = {
     types: [],
     activeType: {},
     activeTechnic: {},
     yearsOfProduction: {},
+    toogleLoadingInfoFotType: false,
     technics: [],
     users: [],
     subdivisions: [
@@ -94,6 +96,13 @@ const TechReducer = (state = initialState, action) => {
                 activeType: action.payload
             }
         }
+
+        case TOOGLE_LOADING_IN_FOR_TYPE: {
+            return {
+                ...state,
+                toogleLoadingInfoFotType: action.payload
+            }
+        }
         case UPDATE_TECHNIC: {
             let aa = Object.keys(state.technics).map(key => {
                 return state.technics[key].map(el => {
@@ -135,6 +144,10 @@ export const updateTechnicAC = (payload) => {
 export const setActiveTypeAC = (payload) => {
     return {type: SET_ACTIVE_TYPE, payload}
 }
+
+export const toogleLoadingInForTypeAC = (payload) => {
+    return {type: TOOGLE_LOADING_IN_FOR_TYPE, payload}
+}
 export const setTechnicsAC = (payload) => {
     return {type: SET_TECHNICS, payload}
 }
@@ -173,6 +186,7 @@ export const deleteType = (id) => {
 }
 export const getActiveType = (value) => {
     return async (dispatch) => {
+        dispatch(toogleLoadingInForTypeAC(true))
         let response = await techAPI.getActiveType(value)
         if (response) {
             dispatch(setActiveTypeAC(response))
@@ -185,6 +199,7 @@ export const getTechnicsForType = (value) => {
         let response = await techAPI.getTechnicsForType(value)
 
         dispatch(setTechnicsAC(response))
+            dispatch(toogleLoadingInForTypeAC(false))
         // let usersResponse = await techAPI.getUsers()
         // dispatch(setUsersAC(usersResponse))
     }

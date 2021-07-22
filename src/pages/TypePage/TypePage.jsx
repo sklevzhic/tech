@@ -1,6 +1,7 @@
 import {withRouter, useParams, Link} from "react-router-dom";
 import {
-    Button,
+    Avatar,
+    Button, Card, CardHeader,
     Container,
     Divider, Fab,
     Grid,
@@ -15,11 +16,12 @@ import React, {useEffect, useState} from "react";
 import DraftsIcon from '@material-ui/icons/Drafts';
 import {makeStyles} from "@material-ui/core/styles";
 import PrintIcon from '@material-ui/icons/Print';
-import EditIcon from '@material-ui/icons/Edit';
 import Modal from "../../components/Modal";
 import {useForm, FormProvider, useFormContext} from "react-hook-form";
-import FormTechItem from "../../components/FormTech/FormTech";
-import {Alert} from "@material-ui/lab";
+import MiniCardTechnic from "../../components/MiniCardTechnic/MiniCardTechnic";
+import ListTypes from "../../components/ListTypes";
+import {Skeleton} from "@material-ui/lab";
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -63,6 +65,11 @@ const useStyles = makeStyles((theme) => ({
         marginRight: theme.spacing(1),
         width: '25ch',
     },
+    roomItem: {
+        marginTop: "20px",
+        padding: "7px"
+    },
+    roomNumber: {}
 
 }));
 
@@ -71,13 +78,13 @@ const TypePage = ({
                       activeType,
                       technics,
                       yearsOfProduction,
+                      toogleLoadingInfoFotType
                   }) => {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     const [technicActive, setTechnicActive] = useState({});
     const [formData, setFormData] = useState({});
     const methods = useForm();
-
     const handleClickOpen = (el) => {
         setOpen(true);
         setTechnicActive(el)
@@ -92,9 +99,10 @@ const TypePage = ({
     };
 
     const params = useParams();
+    console.log(params)
     useEffect(() => {
         getActiveType(params.type)
-    }, [])
+    }, [params])
 
     const {register, handleSubmit, control, watch, formState: {errors}} = useForm();
     const onSubmit = data => {
@@ -109,9 +117,7 @@ const TypePage = ({
 
                     <Paper className={classes.paper}>
                         <div className={classes.typeInfoWrapper}>
-                            <Paper className={classes.imageType} style={{cursor: "pointer"}} onClick={selectIcon}>
-                                <PrintIcon className={classes.icon}/>
-                            </Paper>
+                            {/*<Avatar>{activeType.name[0].toUpperCase()}</Avatar>*/}
                             <div className={classes.typeInfo}>
                                 <Typography color={"primary"}>Тип</Typography>
                                 <Typography variant="h6">{activeType.name}</Typography>
@@ -125,120 +131,70 @@ const TypePage = ({
                 </Grid>
                 <Grid item xs={3}>
                     <Paper className={classes.paper}>
-                        <Typography  color={"primary"}>Годы выпуска</Typography>
+                        <Typography color={"primary"}>Годы выпуска</Typography>
                         <Divider/>
                         <div>
                             {Object.keys(yearsOfProduction).map((key) => {
-                                return <Typography variant={"body2"}  key={key}>{key} - {yearsOfProduction[key].length}</Typography>
+                                return <Typography variant={"body2"}
+                                                   key={key}>{key} - {yearsOfProduction[key].length}</Typography>
                             })}
                         </div>
                     </Paper>
                 </Grid>
                 <Grid item xs={3}>
                     <Paper className={classes.paper}>
-                        <Typography color={"primary"} >Корпуса</Typography>
-                        {["1","9"].map((key) => {
+                        <Typography color={"primary"}>Корпуса</Typography>
+                        {["1", "9"].map((key) => {
                             return <Typography variant={"body2"} key={key}>{key} - 15 шт </Typography>
                         })}
                         <Divider/>
                         <Typography color={"primary"}>Факультеты</Typography>
-                        {["1","9"].map((key) => {
+                        {["1", "9"].map((key) => {
                             return <Typography variant={"body2"} key={key}>{key} - 15 шт </Typography>
                         })}
                     </Paper>
                 </Grid>
+                {/*<Grid item xs={3}>*/}
+                {/*    <Paper className={classes.paper}>*/}
+                {/*        <Typography>Материально-ответственные лица</Typography>*/}
+                {/*        <Divider/>*/}
+                {/*    </Paper>*/}
+                {/*</Grid>*/}
                 <Grid item xs={3}>
                     <Paper className={classes.paper}>
-                        <Typography>Материально-ответственные лица</Typography>
-                        <Divider/>
+                        { toogleLoadingInfoFotType ? }
                     </Paper>
                 </Grid>
+
             </Grid>
             {activeType ? <>
             </> : ""}
-            <div>
-                {Object.keys(technics).map(key => {
-                    return (
-                        <Paper key={key}>
-                            <h2>{technics[key][0].room} кабинет</h2>
-                            <List dense >
-                            {technics[key].map(el => {
-                                return <ListItem component={Link} key={el.id} to={`/technics/${el.id}`} button>
-                                    <ListItemIcon>
-                                        <DraftsIcon/>
-                                    </ListItemIcon>
-                                    <ListItemText
-                                        primary={el.name}
-                                        secondary={
-                                            <React.Fragment>
-                                                <Typography
-                                                    component="span"
-                                                    variant="body2"
-                                                    className={classes.inline}
-                                                    color="textPrimary"
-                                                >
-                                                    {el.fyo}
-                                                </Typography>
-                                                - [ {!el.invent ? <Button color="secondary">Заполнить</Button> : el.invent} ]- [ {!el.zavod ? <Button color="secondary">Заполнить</Button> : el.zavod} ]
-                                            </React.Fragment>
-                                        }
-                                    />
-                                    <ListItemSecondaryAction>
-                                        {/*<Fab size="small" color="secondary"*/}
-                                        {/*     onClick={() => handleClickOpen(el)}><EditIcon/></Fab>*/}
-                                    </ListItemSecondaryAction>
-                                </ListItem>
-                            })}
-                            </List>
-                        </Paper>
-                    )
+            <Grid container spacing={3}>
+                <Grid item xs={8}>
+                    {Object.keys(technics).map(key => {
+                        return (
+                            <Card key={key} className={classes.roomItem}>
+                                <Typography variant={"h5"}
+                                            className={`${classes.roomNumber} `}>{technics[key][0].room} кабинет</Typography>
+                                <List dense>
+                                    {technics[key].map(el => {
+                                        return <MiniCardTechnic el={el}/>
+                                    })}
+                                </List>
+                            </Card>
+                        )
 
 
-                })}
-            </div>
+                    })}</Grid>
+                <Grid item xs={4}>
+                    <ListTypes/>
+                </Grid>
+            </Grid>
             <Modal handleClose={handleClose} open={open} title={technicActive.name}>
                 <FormProvider>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <Grid container spacing={3}>
-                            {/*<Grid item xs={12} sm={6}>*/}
-                            {/*    <FormTechItem technicActive={technicActive} property={"name"} label={"Наименование"}/>*/}
-                            {/*</Grid>*/}
-                            {/*<Grid item xs={12} sm={6}>*/}
-                            {/*    <FormTechItem technicActive={technicActive} property={"type"} label={"Тип"}/>*/}
-                            {/*</Grid>*/}
-                            {/*<Grid item xs={12} sm={6}>*/}
-                            {/*    <FormTechItem technicActive={technicActive} property={"invent"}*/}
-                            {/*                  label={"Инвентарный номер"}/>*/}
-                            {/*</Grid>*/}
-                            {/*<Grid item xs={12} sm={6}>*/}
-                            {/*    <FormTechItem technicActive={technicActive} property={"zavod"}*/}
-                            {/*                  label={"Заводской номер"}/>*/}
-                            {/*</Grid>*/}
-                            {/*<Grid item xs={12} sm={6}>*/}
-                            {/*    <FormTechItem technicActive={technicActive} addUser={addUser} items={users}*/}
-                            {/*                  property={"fyo"} label={"ФИО сотрудника"}/>*/}
-                            {/*</Grid>*/}
-                            {/*<Grid item xs={12} sm={6}>*/}
-                            {/*    <FormTechItem technicActive={technicActive} addUser={addUser} items={users}*/}
-                            {/*                  property={"matfyo"} label={"Материально-ответственное лицо"}/>*/}
-                            {/*</Grid>*/}
-                            {/*<Grid item xs={12} sm={6}>*/}
-                            {/*    <FormTechItem technicActive={technicActive} property={"korpus"} label={"Корпус"}/>*/}
-                            {/*</Grid>*/}
-                            {/*<Grid item xs={12} sm={6}>*/}
-                            {/*    <FormTechItem technicActive={technicActive} property={"room"} label={"Кабинет"}/>*/}
-                            {/*</Grid>*/}
-                            {/*<Grid item xs={12} sm={6}>*/}
-                            {/*    <FormTechItem technicActive={technicActive} items={subdivisions}*/}
-                            {/*                  property={"subdivision"} label={"Подразделение"}/>*/}
-                            {/*</Grid>*/}
-                            {/*<Grid item xs={12} sm={6}>*/}
-                            {/*    <FormTechItem technicActive={technicActive} property={"year"} label={"Год получения"}/>*/}
-                            {/*</Grid>*/}
-                            {/*<Grid item xs={12} sm={6}>*/}
-                            {/*    <FormTechItem technicActive={technicActive} property={"isTrusted"}*/}
-                            {/*                  label={"Комментарий"}/>*/}
-                            {/*</Grid>*/}
+
                             <TextField {...register("property")} label={"label"} fullWidth variant="outlined"/>
                             <TextField {...register("property1")} label={"label1"} fullWidth variant="outlined"/>
                             <TextField {...register("property2")} label={"label2"} fullWidth variant="outlined"/>
@@ -253,3 +209,11 @@ const TypePage = ({
 }
 
 export default withRouter(TypePage)
+
+export const SceletonInfoType = () => {
+    return <div>
+        <Skeleton variant="text"/>
+        <Skeleton variant="rect" width={230} height={180}/>
+    </div>
+}
+

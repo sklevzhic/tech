@@ -9,7 +9,9 @@ const mapStateToProps = (state) => {
         technics: state.techs.technics,
         yearsOfProduction: state.techs.yearsOfProduction,
         users: state.techs.users,
-        subdivisions: state.techs.subdivisions}
+        subdivisions: state.techs.subdivisions,
+        toogleLoadingInfoFotType: state.techs.toogleLoadingInfoFotType
+    }
 }
 const mapToDispatch = {
     getActiveType,

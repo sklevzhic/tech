@@ -9,22 +9,13 @@ import {
     TextField, Typography
 } from "@material-ui/core";
 
-const Modal = ({open, handleClose, title, children}) => {
+const Modal = ({open, handleClose, title, children, button}) => {
     return (
         <div>
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">{title}</DialogTitle>
-                <DialogContent>
-                    {children}
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose} color="primary">
-                        Cancel
-                    </Button>
-                    <Button onClick={handleClose} color="primary">
-                        Subscribe
-                    </Button>
-                </DialogActions>
+                {children}
+
             </Dialog>
         </div>
     );
