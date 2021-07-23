@@ -35,21 +35,20 @@ function HomeIcon(props) {
     );
 }
 
-const TechnicPage = ({activeTechnic, getTechnicInfo}) => {
+const TechnicPage = ({activeTechnic, getTechnicInfo, types}) => {
     useEffect(() => {
         getTechnicInfo(params.id)
     }, [])
 
-    const onSubmit = data => {
-        // setFormData(data)
-        console.log(data)
-        // updateTechnic(technicActive.id, formData)
-        // setOpen(false);
-    }
+    // const onSubmit = data => {
+    //     // setFormData(data)
+    //     console.log(data)
+    //     // updateTechnic(technicActive.id, formData)
+    //     // setOpen(false);
+    // }
 
     const classes = useStyles();
     const params = useParams();
-    const { register, handleSubmit, setValue, reset } = useForm();
     return (
         <Container>
             <Grid container spacing={2}>
@@ -68,11 +67,12 @@ const TechnicPage = ({activeTechnic, getTechnicInfo}) => {
                 </Grid>
                 <Grid item xs={8}>
                     <Paper>
-                        <form onSubmit={handleSubmit(onSubmit)}>
-                            <input {...register("firstName")} defaultValue={activeTechnic.name} />
-                            <input {...register("lastName")} defaultValue={activeTechnic.type} />
-                            <input type="submit" />
-                        </form>
+                        <>
+                            {types.map(el => {
+                                return <Typography style={{background: el.bg}}>{`${el.name} ${activeTechnic[el.key]}`}</Typography>
+                            })}
+
+                        </>
                     </Paper>
                 </Grid>
             </Grid>

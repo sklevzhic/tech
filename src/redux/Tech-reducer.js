@@ -10,6 +10,7 @@ const UPDATE_TECHNIC = 'UPDATE_TECHNIC'
 const SET_USERS_TECH = 'SET_USERS_TECH'
 const ADD_USER = 'ADD_USER'
 const TOOGLE_LOADING_IN_FOR_TYPE = 'TOOGLE_LOADING_IN_FOR_TYPE'
+const TOOGLE_LOADING_TECHNICS = 'TOOGLE_LOADING_TECHNICS'
 
 let initialState = {
     types: [],
@@ -18,6 +19,7 @@ let initialState = {
     yearsOfProduction: {},
     toogleLoadingInfoFotType: false,
     technics: [],
+    toogleLoadingTechnics: false,
     users: [],
     subdivisions: [
         {name: "Фаукультет доуниверситетской подготовки", id: 1},
@@ -27,7 +29,64 @@ let initialState = {
         {name: "Первое образование", id: 5},
         {name: "ЦДО Альтернатива", id: 6}
     ],
-    rooms: []
+    rooms: [],
+    keys: [
+        {
+            id: "1",
+            key: "name",
+            bg: "#ec1717",
+            name: "Наименование"
+        },
+        {
+            id: "2",
+            key: "type",
+            bg: "#1aeabf",
+            name: "Тип"
+
+        },
+        {
+            id: "3",
+            key: "fyo",
+            bg: "#887d1a",
+            name: "ФИО сотрудника"
+        },
+        {
+            id: "4",
+            key: "matfyo",
+            bg: "#1a8842",
+            name: "Материально-ответственное лицо"
+        },
+        {
+            id: "5",
+            key: "zavod",
+            bg: "#cb14c8",
+            name: "Заводскрй номер"
+        },
+        {
+            id: "6",
+            key: "date",
+            bg: "#4bcb14",
+            name: "Дата получения"
+        },
+        {
+            id: "7",
+            key: "year",
+            bg: "#cb145d",
+            name: "Год выпуска"
+        },
+        {
+            id: "8",
+            key: "zavod",
+            bg: "#1451cb",
+            name: "Заводской номер"
+        },
+        {
+            id: "9",
+            key: "print",
+            bg: "#cb8e14",
+            name: "Наклейка"
+        }
+    ]
 
 }
 
@@ -103,6 +162,12 @@ const TechReducer = (state = initialState, action) => {
                 toogleLoadingInfoFotType: action.payload
             }
         }
+        case TOOGLE_LOADING_TECHNICS: {
+            return {
+                ...state,
+                toogleLoadingTechnics: action.payload
+            }
+        }
         case UPDATE_TECHNIC: {
             let aa = Object.keys(state.technics).map(key => {
                 return state.technics[key].map(el => {
@@ -154,6 +219,9 @@ export const setTechnicsAC = (payload) => {
 export const setTechnic = (payload) => {
     return {type: SET_TECHNIC, payload}
 }
+export const toogleLoadingTechnicsAC = (payload) => {
+    return {type: TOOGLE_LOADING_TECHNICS, payload}
+}
 export const setUsersAC = (payload) => {
     return {type: SET_USERS_TECH, payload}
 }
@@ -187,6 +255,7 @@ export const deleteType = (id) => {
 export const getActiveType = (value) => {
     return async (dispatch) => {
         dispatch(toogleLoadingInForTypeAC(true))
+
         let response = await techAPI.getActiveType(value)
         if (response) {
             dispatch(setActiveTypeAC(response))

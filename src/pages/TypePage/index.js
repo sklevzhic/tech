@@ -10,7 +10,7 @@ const mapStateToProps = (state) => {
         yearsOfProduction: state.techs.yearsOfProduction,
         users: state.techs.users,
         subdivisions: state.techs.subdivisions,
-        toogleLoadingInfoFotType: state.techs.toogleLoadingInfoFotType
+        toogleLoadingInfoFotType: state.techs.toogleLoadingInfoFotType,
     }
 }
 const mapToDispatch = {

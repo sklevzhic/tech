@@ -1,19 +1,26 @@
 import {makeStyles} from "@material-ui/core/styles";
-import {Avatar, Button, Chip, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText} from "@material-ui/core";
+import {
+    Avatar,
+    Button,
+    Chip,
+    Fab,
+    ListItem,
+    ListItemIcon,
+    ListItemSecondaryAction,
+    ListItemText, Tooltip
+} from "@material-ui/core";
 import {Link} from "react-router-dom";
 import DraftsIcon from "@material-ui/icons/Drafts";
 import React from "react";
 import Typography from "@material-ui/core/Typography";
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        // background: "#e6e6e6"
-    }
-}))
-const MiniCardTechnic = ({el}) => {
+const useStyles = makeStyles((theme) => ({}))
+
+const MiniCardTechnic = ({el,keys}) => {
+
     const classes = useStyles();
     return (
-        <ListItem className={classes.root} component={Link} key={el.id} to={`/technics/${el.id}`} button>
+        <ListItem component={Link} key={el.id} to={`/technics/${el.id}`} button>
             <ListItemIcon>
                 <Avatar>{el.type.toString()[0]}</Avatar>
             </ListItemIcon>
@@ -29,9 +36,7 @@ const MiniCardTechnic = ({el}) => {
                             {el.fyo}
                         </Typography>
                         - [ {!el.invent ?
-                        <Button color="secondary">Заполнить</Button> : el.invent} ]-
-                        [ {!el.zavod ?
-                        <Button color="secondary">Заполнить</Button> : el.zavod} ]
+                        <Button color="secondary">Заполнить</Button> : el.invent} ]
                         <div>
                             {
                                 (typeof el.type === 'object')
@@ -53,9 +58,19 @@ const MiniCardTechnic = ({el}) => {
                     </React.Fragment>
                 }
             />
-            <ListItemSecondaryAction>
-                {/*<Fab size="small" color="secondary"*/}
-                {/*     onClick={() => handleClickOpen(el)}><EditIcon/></Fab>*/}
+            <ListItemSecondaryAction style={{display: "flex"}}>
+                {Object.keys(keys).map(key => {
+                    if (!el[keys[key].key]) {
+                        return <Tooltip title={keys[key].name}><span style={{
+                            display: "block",
+                            width: "10px",
+                            textAlign: "center",
+                            color: "white",
+                            marginRight: "2px",
+                            background: keys[key].bg
+                        }}>!</span></Tooltip>
+                    }
+                })}
             </ListItemSecondaryAction>
         </ListItem>
     )

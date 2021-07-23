@@ -18,9 +18,10 @@ import {makeStyles} from "@material-ui/core/styles";
 import PrintIcon from '@material-ui/icons/Print';
 import Modal from "../../components/Modal";
 import {useForm, FormProvider, useFormContext} from "react-hook-form";
-import MiniCardTechnic from "../../components/MiniCardTechnic/MiniCardTechnic";
+import MiniCardTechnic from "../../components/MiniCardTechnic";
 import ListTypes from "../../components/ListTypes";
 import {Skeleton} from "@material-ui/lab";
+import MiniCardTechnicSkeleton from "../../components/MiniCardTechnic/MiniCardTechnicSceleton";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -99,7 +100,6 @@ const TypePage = ({
     };
 
     const params = useParams();
-    console.log(params)
     useEffect(() => {
         getActiveType(params.type)
     }, [params])
@@ -116,6 +116,7 @@ const TypePage = ({
                 <Grid item xs={3}>
 
                     <Paper className={classes.paper}>
+                        {toogleLoadingInfoFotType ? <SceletonInfoType/> : <>
                         <div className={classes.typeInfoWrapper}>
                             {/*<Avatar>{activeType.name[0].toUpperCase()}</Avatar>*/}
                             <div className={classes.typeInfo}>
@@ -127,10 +128,13 @@ const TypePage = ({
                             </div>
                         </div>
                         <Divider/>
+                    </>
+                    }
                     </Paper>
                 </Grid>
                 <Grid item xs={3}>
                     <Paper className={classes.paper}>
+                        {toogleLoadingInfoFotType ? <SceletonInfoType/> : <>
                         <Typography color={"primary"}>Годы выпуска</Typography>
                         <Divider/>
                         <div>
@@ -139,30 +143,38 @@ const TypePage = ({
                                                    key={key}>{key} - {yearsOfProduction[key].length}</Typography>
                             })}
                         </div>
+                        </>
+                        }
                     </Paper>
                 </Grid>
                 <Grid item xs={3}>
                     <Paper className={classes.paper}>
-                        <Typography color={"primary"}>Корпуса</Typography>
-                        {["1", "9"].map((key) => {
-                            return <Typography variant={"body2"} key={key}>{key} - 15 шт </Typography>
-                        })}
-                        <Divider/>
-                        <Typography color={"primary"}>Факультеты</Typography>
-                        {["1", "9"].map((key) => {
-                            return <Typography variant={"body2"} key={key}>{key} - 15 шт </Typography>
-                        })}
+                        {toogleLoadingInfoFotType ? <SceletonInfoType/> : <>
+                            <Typography color={"primary"}>Корпуса</Typography>
+                            {["1", "9"].map((key) => {
+                                return <Typography variant={"body2"} key={key}>{key} - 15 шт </Typography>
+                            })}
+                            <Divider/>
+                            <Typography color={"primary"}>Факультеты</Typography>
+                            {["1", "9"].map((key) => {
+                                return <Typography variant={"body2"} key={key}>{key} - 15 шт </Typography>
+                            })}
+                        </>
+                        }
                     </Paper>
                 </Grid>
                 {/*<Grid item xs={3}>*/}
                 {/*    <Paper className={classes.paper}>*/}
-                {/*        <Typography>Материально-ответственные лица</Typography>*/}
-                {/*        <Divider/>*/}
+
                 {/*    </Paper>*/}
                 {/*</Grid>*/}
                 <Grid item xs={3}>
                     <Paper className={classes.paper}>
-                        { toogleLoadingInfoFotType ? }
+                        {toogleLoadingInfoFotType ? <SceletonInfoType/> : <>
+                            <Typography>Материально-ответственные лица</Typography>
+                            <Divider/>
+                        </>
+                        }
                     </Paper>
                 </Grid>
 
@@ -178,7 +190,7 @@ const TypePage = ({
                                             className={`${classes.roomNumber} `}>{technics[key][0].room} кабинет</Typography>
                                 <List dense>
                                     {technics[key].map(el => {
-                                        return <MiniCardTechnic el={el}/>
+                                        return  !toogleLoadingInfoFotType ? <MiniCardTechnic el={el} /> : <MiniCardTechnicSkeleton />
                                     })}
                                 </List>
                             </Card>
@@ -212,8 +224,9 @@ export default withRouter(TypePage)
 
 export const SceletonInfoType = () => {
     return <div>
-        <Skeleton variant="text"/>
-        <Skeleton variant="rect" width={230} height={180}/>
+        <Skeleton />
+        <Skeleton animation={false} />
+        <Skeleton animation="wave" />
     </div>
 }
 
