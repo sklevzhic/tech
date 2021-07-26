@@ -4,11 +4,24 @@ import Paper from '@material-ui/core/Paper';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from "@material-ui/core/Typography";
 import {makeStyles} from '@material-ui/core/styles';
-import {Container, Divider, Grid, TextField} from "@material-ui/core";
+import {
+    Card,
+    CardContent,
+    Container,
+    Divider,
+    Grid,
+    List,
+    ListItem,
+    ListItemIcon,
+    ListItemText,
+    TextField
+} from "@material-ui/core";
 import SvgIcon from '@material-ui/core/SvgIcon';
 import {deepOrange} from '@material-ui/core/colors';
 import {FormProvider, useForm} from "react-hook-form";
 import {connect} from "react-redux";
+import {Alert} from "@material-ui/lab";
+import Steppers from "../../components/Steppers";
 
 const useStyles = makeStyles((theme) => ({
     avatarWrapper: {
@@ -25,6 +38,13 @@ const useStyles = makeStyles((theme) => ({
         color: theme.palette.getContrastText(deepOrange[500]),
         backgroundColor: deepOrange[500],
     },
+    technicInfoWrapper: {
+        padding: "20px"
+    },
+    listItemText: {
+        fontSize: '1.1em',
+        fontWeight: "bold"
+    }
 }))
 
 function HomeIcon(props) {
@@ -40,12 +60,37 @@ const TechnicPage = ({activeTechnic, getTechnicInfo, types}) => {
         getTechnicInfo(params.id)
     }, [])
 
-    // const onSubmit = data => {
-    //     // setFormData(data)
-    //     console.log(data)
-    //     // updateTechnic(technicActive.id, formData)
-    //     // setOpen(false);
-    // }
+    const aaaa1 = (arr) => {
+        return arr.reverse().map((el, i) => {
+            return <>
+                <p>2020 год</p>
+                <ul>
+                    <li>Клевжиц А.Ю. (26,08,2021)</li>
+                    <li>Клевжиц А.Ю. (26,08,2021)</li>
+                </ul>
+            </>
+        })
+    }
+    const aaaa = (arr) => {
+        let years = arr.map(el => {
+            return new Date(el.receiverDate).getFullYear()
+        }).sort((a,b) => b - a)
+        let uniqueYears = [...new Set(years.map((year) => year))]
+
+        return uniqueYears.map(year => {
+            return <>
+                <p>{year} год</p>
+                <ul>
+                    {arr.map((el,i) => {
+                        if (new Date(el.receiverDate).getFullYear() === year) {
+                            return <li>{i} == {el.receiverDate} - ({el.receiverName})</li>
+
+                        }
+                    })}
+                </ul>
+            </>
+        })
+    }
 
     const classes = useStyles();
     const params = useParams();
@@ -65,20 +110,127 @@ const TechnicPage = ({activeTechnic, getTechnicInfo, types}) => {
                         </div>
                     </Paper>
                 </Grid>
-                <Grid item xs={8}>
-                    <Paper>
-                        <>
-                            {types.map(el => {
-                                return <Typography style={{background: el.bg}}>{`${el.name} ${activeTechnic[el.key]}`}</Typography>
-                            })}
-
-                        </>
-                    </Paper>
+                <Grid item xs={4}>
+                    <Card>
+                        <CardContent>
+                            <Typography gutterBottom variant="h6" component="h2">
+                                Место установки
+                            </Typography>
+                            <Divider/>
+                            <List>
+                                <ListItem>
+                                    <ListItemIcon>
+                                        <Avatar>M</Avatar>
+                                    </ListItemIcon>
+                                    <ListItemText
+                                        classes={{primary: classes.listItemText}}
+                                        primary={activeTechnic.room || "Заполнить"}
+                                        secondary={"Кабинет"}
+                                    />
+                                </ListItem>
+                                <ListItem>
+                                    <ListItemIcon>
+                                        <Avatar>M</Avatar>
+                                    </ListItemIcon>
+                                    <ListItemText
+                                        classes={{primary: classes.listItemText}}
+                                        primary={activeTechnic.korpus || "Заполнить"}
+                                        secondary={"Корпус"}
+                                    />
+                                </ListItem>
+                                <ListItem>
+                                    <ListItemIcon>
+                                        <Avatar>M</Avatar>
+                                    </ListItemIcon>
+                                    <ListItemText
+                                        classes={{primary: classes.listItemText}}
+                                        primary={activeTechnic.fyo || "Заполнить"}
+                                        secondary={"ФИО сотрудника"}
+                                    />
+                                </ListItem>
+                            </List>
+                        </CardContent>
+                    </Card>
                 </Grid>
+                <Grid item xs={4}>
+                    <Card>
+                        <CardContent>
+                            <Typography gutterBottom variant="h6" component="h2">
+                                Бухгалтерия
+                            </Typography>
+                            <Divider/>
+                            <ListItem>
+                                <ListItemIcon>
+                                    <Avatar>M</Avatar>
+                                </ListItemIcon>
+                                <ListItemText
+                                    classes={{primary: classes.listItemText}}
+                                    primary={activeTechnic.zavod || "Заполнить"}
+                                    secondary={"Заводской номер"}
+                                />
+                            </ListItem>
+                            <ListItem>
+                                <ListItemIcon>
+                                    <Avatar>M</Avatar>
+                                </ListItemIcon>
+                                <ListItemText
+                                    classes={{primary: classes.listItemText}}
+                                    primary={activeTechnic.invent || "Заполнить"}
+                                    secondary={"Инвентарный номер"}
+                                />
+                            </ListItem>
+                            <ListItem>
+                                <ListItemIcon>
+                                    <Avatar>M</Avatar>
+                                </ListItemIcon>
+                                <ListItemText
+                                    classes={{primary: classes.listItemText}}
+                                    primary={activeTechnic.matfyo || "Заполнить"}
+                                    secondary={"Материально-ответственное лицо"}
+                                />
+                            </ListItem>
+                        </CardContent>
+                    </Card>
+                </Grid>
+                {
+                    !activeTechnic && <Grid item xs={12}>
+                        <Card>
+                            <CardContent>
+                                <Typography gutterBottom variant="h6" component="h2">
+                                    Комментарий
+                                </Typography>
+                                <Divider/>
+                                <Typography>
+                                    {activeTechnic.desc}
+                                </Typography>
+                            </CardContent>
+
+                        </Card>
+                    </Grid>
+                }
+                {
+                    ((activeTechnic.type === 'Принтер') || (activeTechnic.type === 'МФУ') || (activeTechnic.type === 'Ксерокс')) &&
+                    <Grid item xs={12}>
+                        <Card>
+                            <CardContent>
+                                <Typography gutterBottom variant="h6" component="h2">
+                                    Заправки
+                                </Typography>
+                                {/*<Steppers/>*/}
+                                <Typography variant={"body2"}>Максимальное количество заправок за год: 2</Typography>
+                                <Divider/>
+                                {
+                                    aaaa(activeTechnic.refill)
+                                }
+                            </CardContent>
+
+                        </Card>
+                    </Grid>
+                }
             </Grid>
 
         </Container>
     )
 }
 
-export default connect(({ firstName, lastName }) => ({ firstName, lastName }))(TechnicPage);
+export default connect(({firstName, lastName}) => ({firstName, lastName}))(TechnicPage);

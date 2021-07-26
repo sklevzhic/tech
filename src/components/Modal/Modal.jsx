@@ -15,8 +15,6 @@ const Modal = ({open, handleClose, title, children, button}) => {
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">{title}</DialogTitle>
                 {children}
-                <h2>dd</h2>
-
             </Dialog>
         </div>
     );
