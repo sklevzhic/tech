@@ -5,7 +5,7 @@ import {getTechnicInfo} from "../../redux/Tech-reducer";
 const mapStateToProps = (state) => {
     return {
         activeTechnic: state.techs.activeTechnic,
-        types: state.techs.keys
+        types: state.techs.types
     }
 }
 const mapToDispatch = {

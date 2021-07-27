@@ -87,6 +87,18 @@ let initialState = {
             key: "print",
             bg: "#cb8e14",
             name: "Наклейка"
+        },
+        {
+            id: "10",
+            key: "korpus",
+            bg: "#14cbcb",
+            name: "Корпус",
+        }        ,
+        {
+            id: "11",
+            key: "room",
+            bg: "#cb14c8",
+            name: "Кабинет"
         }
     ]
 
