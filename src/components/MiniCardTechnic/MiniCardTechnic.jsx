@@ -3,14 +3,12 @@ import {
     Avatar,
     Button,
     Chip,
-    Fab,
     ListItem,
     ListItemIcon,
     ListItemSecondaryAction,
     ListItemText, Tooltip
 } from "@material-ui/core";
 import {Link} from "react-router-dom";
-import DraftsIcon from "@material-ui/icons/Drafts";
 import React from "react";
 import Typography from "@material-ui/core/Typography";
 
@@ -20,7 +18,7 @@ const MiniCardTechnic = ({el,keys}) => {
 
     const classes = useStyles();
     return (
-        <ListItem component={Link} key={el.id} to={`/technics/${el.id}`} button>
+        <ListItem component={Link} key={el} to={`/technics/${el.id}`} button>
             <ListItemIcon>
                 <Avatar>{el.type.toString()[0]}</Avatar>
             </ListItemIcon>
@@ -37,7 +35,7 @@ const MiniCardTechnic = ({el,keys}) => {
                         </Typography>
                         - [ {!el.invent ?
                         <Button color="secondary">Заполнить</Button> : el.invent} ]
-                        <div>
+                        <>
                             {
                                 (typeof el.type === 'object')
                                     ? <>{el.type.map(el => {
@@ -54,7 +52,7 @@ const MiniCardTechnic = ({el,keys}) => {
                                         label={el.type}
                                         variant="outlined"
                                     />}
-                        </div>
+                        </>
                     </React.Fragment>
                 }
             />

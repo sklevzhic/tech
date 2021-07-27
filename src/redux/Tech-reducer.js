@@ -16,7 +16,9 @@ let initialState = {
     types: [],
     activeType: {},
     activeTechnic: {},
-    yearsOfProduction: {},
+    yearsOfProduction: [],
+    korpuses: [],
+    matfyos: [],
     toogleLoadingInfoFotType: false,
     technics: [],
     toogleLoadingTechnics: false,
@@ -105,29 +107,28 @@ const TechReducer = (state = initialState, action) => {
             }
         }
         case SET_TECHNICS: {
-            let equipmentInClassrooms = action.payload.reduce((acc, item) => {
-                let room = item.room
-                if (acc[room]) {
-                    acc[room].push(item)
-                } else {
-                    acc[room] = [item]
-                }
-                return acc
-            }, {})
-            let yearsOfProduction = action.payload.reduce((acc, item) => {
-                let year = new Date(item.year).getFullYear()
-
-                if (acc[year]) {
-                    acc[year].push(item)
-                } else {
-                    acc[year] = [item]
-                }
-                return acc
-            }, {})
+            const groupElements = (property) => {
+                return action.payload.reduce((previousValue, currentValue, index, array) => {
+                    let objType = previousValue.find(
+                        (element) => element[property] === currentValue[property]
+                    );
+                    if (!objType) {
+                        previousValue.push({
+                            [property]: currentValue[property],
+                            properties: [currentValue]
+                        });
+                    } else {
+                        objType.properties.push(currentValue);
+                    }
+                    return previousValue;
+                }, []).sort((a,b) => a[property] - b[property])
+            }
             return {
                 ...state,
-                technics: equipmentInClassrooms,
-                yearsOfProduction: yearsOfProduction
+                technics: groupElements("room"),
+                yearsOfProduction: groupElements("year"),
+                korpuses: groupElements("korpus"),
+                matfyos: groupElements("matfyo")
 
             }
         }

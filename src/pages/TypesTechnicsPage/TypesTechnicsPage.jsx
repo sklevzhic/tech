@@ -1,10 +1,9 @@
-import React, {useEffect} from "react";
-import {useForm} from "react-hook-form";
-import {useParams, withRouter} from "react-router-dom";
+import React from "react";
+import {withRouter} from "react-router-dom";
 
 import ListTypes from "../../components/ListTypes";
 
-const TypesTechnicsPage = ({addType}) => {
+const TypesTechnicsPage = () => {
 
     return (
         <div>
