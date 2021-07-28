@@ -46,7 +46,6 @@ const useStyles = makeStyles((theme) => ({
 
 const TechnicPage = ({activeTechnic, getTechnicInfo, types}) => {
     const {register, handleSubmit} = useForm();
-
     useEffect(() => {
         getTechnicInfo(params.id)
     }, [])
@@ -83,8 +82,8 @@ const TechnicPage = ({activeTechnic, getTechnicInfo, types}) => {
                             <Divider/>
                             <List>
                                 <ListItemForm activeTechnic={activeTechnic} property={"room"} text={"Кабинет"}/>
-                                <ListItemForm activeTechnic={activeTechnic} property={"korpus"} text={"Корпус"}/>
-                                <ListItemForm activeTechnic={activeTechnic} property={"fyo"} text={"ФИО сотрудника"}/>
+                                <ListItemForm activeTechnic={activeTechnic} property={"korpus"} text={"Корпус"} array={[{"title": "1"},{"title": "9"},{"title": "ШРР"}]}/>
+                                <ListItemForm activeTechnic={activeTechnic} property={"fyo"} text={"ФИО сотрудника"} array={"users"}/>
                             </List>
                         </CardContent>
                     </Card>

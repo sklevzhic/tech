@@ -181,17 +181,9 @@ const TechReducer = (state = initialState, action) => {
             }
         }
         case UPDATE_TECHNIC: {
-            let aa = Object.keys(state.technics).map(key => {
-                return state.technics[key].map(el => {
-                    if (el.id === action.payload.id) {
-                        return action.payload
-                    }
-                    return el
-                })
-            })
             return {
                 ...state,
-                technics: aa
+                activeTechnic: action.payload
             }
         }
         case ADD_USER: {

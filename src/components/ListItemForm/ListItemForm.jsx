@@ -4,7 +4,8 @@ import Button from "@material-ui/core/Button";
 import React, {useState} from "react";
 import icons from "../global/global";
 import {makeStyles} from "@material-ui/core/styles";
-import {useForm} from "react-hook-form";
+import {useForm} from 'react-hook-form';
+import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 
 const useStyles = makeStyles((theme) => ({
     listItemText: {
@@ -12,10 +13,11 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: "bold"
     }
 }))
-const ListItemForm = ({activeTechnic, property, text}) => {
-    const {register, formState: {errors}, handleSubmit} = useForm();
+const filter = createFilterOptions();
+
+const ListItemForm = ({activeTechnic, property, text, updateTechnic, array}) => {
     const classes = useStyles();
-    const editPropertyTechnic = (val) => {
+    const editPropertyTechnic = () => {
         setEditMode(true)
     }
     const getIcon = (val, size) => {
@@ -23,14 +25,21 @@ const ListItemForm = ({activeTechnic, property, text}) => {
         return <Icon style={{fontSize: `${size}px`}}/>
     }
     const [editMode, setEditMode] = useState(false)
+    const [value, setValue] = React.useState(null);
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
             handleSubmit(onSubmit)();
             setEditMode(false)
         }
     }
-    const onSubmit = (value) => {
-        console.log(value, activeTechnic.id)
+    const {
+        register,
+        handleSubmit,
+        reset
+    } = useForm();
+    const onSubmit = (obj) => {
+        updateTechnic(activeTechnic.id, obj)
+        reset()
     }
     return <ListItem onDoubleClick={() => editPropertyTechnic(activeTechnic, property)}>
         <ListItemIcon>
@@ -40,12 +49,68 @@ const ListItemForm = ({activeTechnic, property, text}) => {
             classes={{primary: classes.listItemText}}
             primary={activeTechnic[property] ||
             <Button variant="contained" color="secondary"
-                    onClick={() => editPropertyTechnic(activeTechnic, property)}>Заполнить</Button>}
+                    onClick={() => {
+                        editPropertyTechnic(activeTechnic, property)
+                    }}>Заполнить</Button>}
             secondary={text}
         /> : <form onSubmit={handleSubmit(onSubmit)}>
-            <TextField helperText="Для сохранения информации нажмите Enter" {...register(property)}
-                       onKeyDown={handleKeyDown}
-                       label={text} defaultValue={activeTechnic[property]}></TextField>
+
+
+            <TextField onKeyDown={handleKeyDown} defaultValue={activeTechnic[property]} {...register(property)} />
+            <Autocomplete
+                defaultValue={activeTechnic[property]}
+                onChange={(event, newValue) => {
+                    if (typeof newValue === 'string') {
+                        setValue({
+                            title: newValue,
+                        });
+                    } else if (newValue && newValue.inputValue) {
+                        // Create a new value from the user input
+                        setValue({
+                            title: newValue.inputValue,
+                        });
+                    } else {
+                        setValue(newValue);
+                    }
+                }}
+                filterOptions={(options, params) => {
+                    const filtered = filter(options, params);
+
+                    // Suggest the creation of a new value
+                    if (params.inputValue !== '') {
+                        filtered.push({
+                            inputValue: params.inputValue,
+                            title: `Add "${params.inputValue}"`,
+                        });
+                    }
+
+                    return filtered;
+                }}
+                selectOnFocus
+                clearOnBlur
+                handleHomeEndKeys
+                id="free-solo-with-text-demo"
+                options={array}
+                getOptionLabel={(option) => {
+                    // Value selected with enter, right from the input
+                    if (typeof option === 'string') {
+                        return option;
+                    }
+                    // Add "xxx" option created dynamically
+                    if (option.inputValue) {
+                        return option.inputValue;
+                    }
+                    // Regular option
+                    return option.title;
+                }}
+                renderOption={(option) => option.title}
+                style={{ width: 300 }}
+                freeSolo
+                renderInput={(params) => (
+                    <TextField {...params} label="Free solo with text demo" variant="outlined" />
+                )}
+            />
+
         </form>}
 
     </ListItem>
