@@ -11,16 +11,13 @@ import {
     Divider,
     Grid,
     List,
-    ListItem,
-    ListItemIcon,
-    ListItemText,
 } from "@material-ui/core";
-import SvgIcon from '@material-ui/core/SvgIcon';
 import {deepOrange} from '@material-ui/core/colors';
-import {connect} from "react-redux";
 import ControlledAccordions from "../../components/Accordion";
 import Button from "@material-ui/core/Button";
 import icons from "../../components/global/global";
+import {useForm} from "react-hook-form";
+import ListItemForm from "../../components/ListItemForm";
 
 const useStyles = makeStyles((theme) => ({
     avatarWrapper: {
@@ -46,32 +43,20 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-function HomeIcon(props) {
-    return (
-        <SvgIcon {...props}>
-            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
-        </SvgIcon>
-    );
-}
 
 const TechnicPage = ({activeTechnic, getTechnicInfo, types}) => {
+    const {register, handleSubmit} = useForm();
+
     useEffect(() => {
         getTechnicInfo(params.id)
     }, [])
-    const getIconType = () => {
-        types.filter(el => {
-            if (activeTechnic.type === el.name) {
-                console.log(el.name)
-            }
-        })
-    }
-    console.log(types)
     const getIcon = (val, size) => {
         let Icon = icons[val]
         return <Icon style={{fontSize: `${size}px`}}/>
     }
     const classes = useStyles();
     const params = useParams();
+
     return (
         <Container>
             <Grid container spacing={2}>
@@ -97,41 +82,9 @@ const TechnicPage = ({activeTechnic, getTechnicInfo, types}) => {
                             </Typography>
                             <Divider/>
                             <List>
-                                <ListItem>
-                                    <ListItemIcon>
-                                        <Avatar>{getIcon("room")}</Avatar>
-                                    </ListItemIcon>
-                                    <ListItemText
-                                        classes={{primary: classes.listItemText}}
-                                        primary={activeTechnic.room ||
-                                        <Button variant="contained" color="secondary">Заполнить</Button>}
-                                        secondary={"Кабинет"}
-                                    />
-                                </ListItem>
-                                <ListItem>
-                                    <ListItemIcon>
-                                        <Avatar>
-                                            {getIcon("korpus")}
-                                        </Avatar>
-                                    </ListItemIcon>
-                                    <ListItemText
-                                        classes={{primary: classes.listItemText}}
-                                        primary={activeTechnic.korpus ||
-                                        <Button variant="contained" color="secondary">Заполнить</Button>}
-                                        secondary={"Корпус"}
-                                    />
-                                </ListItem>
-                                <ListItem>
-                                    <ListItemIcon>
-                                        <Avatar>{getIcon("fyo")}</Avatar>
-                                    </ListItemIcon>
-                                    <ListItemText
-                                        classes={{primary: classes.listItemText}}
-                                        primary={activeTechnic.fyo ||
-                                        <Button variant="contained" color="secondary">Заполнить</Button>}
-                                        secondary={"ФИО сотрудника"}
-                                    />
-                                </ListItem>
+                                <ListItemForm activeTechnic={activeTechnic} property={"room"} text={"Кабинет"}/>
+                                <ListItemForm activeTechnic={activeTechnic} property={"korpus"} text={"Корпус"}/>
+                                <ListItemForm activeTechnic={activeTechnic} property={"fyo"} text={"ФИО сотрудника"}/>
                             </List>
                         </CardContent>
                     </Card>
@@ -143,39 +96,10 @@ const TechnicPage = ({activeTechnic, getTechnicInfo, types}) => {
                                 Бухгалтерия
                             </Typography>
                             <Divider/>
-                            <ListItem>
-                                <ListItemIcon>
-                                    <Avatar>{getIcon("zavod")}</Avatar>
-                                </ListItemIcon>
-                                <ListItemText
-                                    classes={{primary: classes.listItemText}}
-                                    primary={activeTechnic.zavod ||
-                                    <Button variant="contained" color="secondary">Заполнить</Button>}
-                                    secondary={"Заводской номер"}
-                                />
-                            </ListItem>
-                            <ListItem>
-                                <ListItemIcon>
-                                    <Avatar>{getIcon("invent")}</Avatar>
-                                </ListItemIcon>
-                                <ListItemText
-                                    classes={{primary: classes.listItemText}}
-                                    primary={activeTechnic.invent ||
-                                    <Button variant="contained" color="secondary">Заполнить</Button>}
-                                    secondary={"Инвентарный номер"}
-                                />
-                            </ListItem>
-                            <ListItem>
-                                <ListItemIcon>
-                                    <Avatar>{getIcon("matfyo")}</Avatar>
-                                </ListItemIcon>
-                                <ListItemText
-                                    classes={{primary: classes.listItemText}}
-                                    primary={activeTechnic.matfyo ||
-                                    <Button variant="contained" color="secondary">Заполнить</Button>}
-                                    secondary={"Материально-ответственное лицо"}
-                                />
-                            </ListItem>
+                            <ListItemForm activeTechnic={activeTechnic} property={"invent"} text={"Инвентарный номер"}/>
+                            <ListItemForm activeTechnic={activeTechnic} property={"zavod"} text={"Заводской номер"}/>
+                            <ListItemForm activeTechnic={activeTechnic} property={"matfyo"} text={"Материально-ответственное лицо"}/>
+
                         </CardContent>
                     </Card>
                 </Grid>
@@ -210,14 +134,13 @@ const TechnicPage = ({activeTechnic, getTechnicInfo, types}) => {
 
                                 {activeTechnic.refill ? <>
                                     <ControlledAccordions array={activeTechnic.refill}/>
-                                </> : <Button>Заполнить</Button>}
+                                </> : <Button >Заполнить</Button>}
                             </CardContent>
 
                         </Card>
                     </Grid>
                 }
             </Grid>
-
         </Container>
     )
 }

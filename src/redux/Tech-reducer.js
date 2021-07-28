@@ -168,7 +168,6 @@ const TechReducer = (state = initialState, action) => {
                 activeType: action.payload
             }
         }
-
         case TOOGLE_LOADING_IN_FOR_TYPE: {
             return {
                 ...state,
