@@ -273,8 +273,7 @@ export const getTechnicsForType = (value) => {
 
         dispatch(setTechnicsAC(response))
             dispatch(toogleLoadingInForTypeAC(false))
-        // let usersResponse = await techAPI.getUsers()
-        // dispatch(setUsersAC(usersResponse))
+
     }
 }
 export const getTechnicInfo = (id) => {
@@ -292,7 +291,12 @@ export const updateTechnic = (id, data) => {
         }
     }
 }
-
+export const getUsers = () => {
+    return async (dispatch) => {
+        let usersResponse = await techAPI.getUsers()
+        dispatch(setUsersAC(usersResponse))
+    }
+}
 export const addUser = (data) => {
     return async (dispatch) => {
         let response = await techAPI.addUser(data)
