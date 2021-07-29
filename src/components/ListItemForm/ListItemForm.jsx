@@ -5,7 +5,7 @@ import React, {useState} from "react";
 import icons from "../global/global";
 import {makeStyles} from "@material-ui/core/styles";
 import {useForm} from 'react-hook-form';
-import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
+import Autocomplete, {createFilterOptions} from '@material-ui/lab/Autocomplete';
 
 const useStyles = makeStyles((theme) => ({
     listItemText: {
@@ -38,8 +38,9 @@ const ListItemForm = ({activeTechnic, property, text, updateTechnic, array}) => 
         reset
     } = useForm();
     const onSubmit = (obj) => {
-        updateTechnic(activeTechnic.id, obj)
-        reset()
+        console.log(value)
+        // updateTechnic(activeTechnic.id, obj)
+        // reset()
     }
     return <ListItem onDoubleClick={() => editPropertyTechnic(activeTechnic, property)}>
         <ListItemIcon>
@@ -55,61 +56,62 @@ const ListItemForm = ({activeTechnic, property, text, updateTechnic, array}) => 
             secondary={text}
         /> : <form onSubmit={handleSubmit(onSubmit)}>
 
+            {!array ?  <TextField onKeyDown={handleKeyDown} defaultValue={activeTechnic[property]} {...register(property)} />
+                :             <Autocomplete
+                    defaultValue={activeTechnic[property]}
+                    onChange={(event, newValue) => {
+                        if (typeof newValue === 'string') {
+                            setValue({
+                                [property]: newValue,
+                            });
+                        } else if (newValue && newValue.inputValue) {
+                            // Create a new value from the user input
+                            setValue({
+                                [property]: newValue.inputValue,
+                            });
+                        } else {
+                            setValue(newValue);
+                        }
+                    }}
+                    filterOptions={(options, params) => {
+                        const filtered = filter(options, params);
 
-            <TextField onKeyDown={handleKeyDown} defaultValue={activeTechnic[property]} {...register(property)} />
-            <Autocomplete
-                defaultValue={activeTechnic[property]}
-                onChange={(event, newValue) => {
-                    if (typeof newValue === 'string') {
-                        setValue({
-                            title: newValue,
-                        });
-                    } else if (newValue && newValue.inputValue) {
-                        // Create a new value from the user input
-                        setValue({
-                            title: newValue.inputValue,
-                        });
-                    } else {
-                        setValue(newValue);
-                    }
-                }}
-                filterOptions={(options, params) => {
-                    const filtered = filter(options, params);
+                        // Suggest the creation of a new value
+                        if (params.inputValue !== '') {
+                            filtered.push({
+                                inputValue: params.inputValue,
+                                [property]: `Add "${params.inputValue}"`,
+                            });
+                        }
 
-                    // Suggest the creation of a new value
-                    if (params.inputValue !== '') {
-                        filtered.push({
-                            inputValue: params.inputValue,
-                            title: `Add "${params.inputValue}"`,
-                        });
-                    }
+                        return filtered;
+                    }}
+                    selectOnFocus
+                    clearOnBlur
+                    handleHomeEndKeys
+                    id="free-solo-with-text-demo"
+                    options={array}
+                    getOptionLabel={(option) => {
+                        // Value selected with enter, right from the input
+                        if (typeof option === 'string') {
+                            return option;
+                        }
+                        // Add "xxx" option created dynamically
+                        if (option.inputValue) {
+                            return option.inputValue;
+                        }
+                        // Regular option
+                        return option[property];
+                    }}
+                    renderOption={(option) => option[property]}
+                    style={{width: 300}}
+                    freeSolo
+                    renderInput={(params) => (
+                        <TextField {...params} label="Free solo with text demo" variant="outlined"/>
+                    )}
+                />
+            }
 
-                    return filtered;
-                }}
-                selectOnFocus
-                clearOnBlur
-                handleHomeEndKeys
-                id="free-solo-with-text-demo"
-                options={array}
-                getOptionLabel={(option) => {
-                    // Value selected with enter, right from the input
-                    if (typeof option === 'string') {
-                        return option;
-                    }
-                    // Add "xxx" option created dynamically
-                    if (option.inputValue) {
-                        return option.inputValue;
-                    }
-                    // Regular option
-                    return option.title;
-                }}
-                renderOption={(option) => option.title}
-                style={{ width: 300 }}
-                freeSolo
-                renderInput={(params) => (
-                    <TextField {...params} label="Free solo with text demo" variant="outlined" />
-                )}
-            />
 
         </form>}
 

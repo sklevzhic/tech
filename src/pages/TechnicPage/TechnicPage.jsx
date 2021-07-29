@@ -82,8 +82,8 @@ const TechnicPage = ({activeTechnic, getTechnicInfo, types}) => {
                             <Divider/>
                             <List>
                                 <ListItemForm activeTechnic={activeTechnic} property={"room"} text={"Кабинет"}/>
-                                <ListItemForm activeTechnic={activeTechnic} property={"korpus"} text={"Корпус"} array={[{"title": "1"},{"title": "9"},{"title": "ШРР"}]}/>
-                                <ListItemForm activeTechnic={activeTechnic} property={"fyo"} text={"ФИО сотрудника"} array={"users"}/>
+                                <ListItemForm activeTechnic={activeTechnic} property={"korpus"} text={"Корпус"} array={[{"korpus": "1"},{"korpus": "9"},{"korpus": "ШРР"}]}/>
+                                <ListItemForm activeTechnic={activeTechnic} property={"fyo"} text={"ФИО сотрудника"} />
                             </List>
                         </CardContent>
                     </Card>
