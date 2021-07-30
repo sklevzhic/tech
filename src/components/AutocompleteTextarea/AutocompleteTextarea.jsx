@@ -2,20 +2,32 @@ import {TextField} from "@material-ui/core";
 import Autocomplete, {createFilterOptions} from "@material-ui/lab/Autocomplete";
 import React, {useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
-import {getUsers} from "../../redux/Tech-reducer";
-import {getAuthUserData} from "../../redux/Auth-reducer";
-import {initializedSuccess} from "../../redux/App-reducer";
 
 const filter = createFilterOptions();
 
-const AutocompleteTextarea = ({activeTechnic, property, text, updateTechnic, setEditMode, getUsers, users, rooms}) => {
+const AutocompleteTextarea = ({activeTechnic, property, text, updateTechnic, setEditMode, getUsers, getRooms}) => {
     const [array, setArray] = useState([])
     useEffect(() => {
+        if (property === 'fyo') {
+            async function fetchUsers(){
+                let response =  await getUsers()
+                return response
+            }
+            fetchUsers().then(response => setArray(response))
+        }
+        if (property === 'room') {
+            async function fetchRooms(){
+                let response =  await getRooms()
+                return response
+            }
+            fetchRooms().then(response => setArray(response))
+        }
     }, [])
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
             handleSubmit(onSubmit)();
             setEditMode(false)
+            setArray([])
         }
     }
     const [value, setValue] = React.useState(null);
@@ -33,7 +45,6 @@ const AutocompleteTextarea = ({activeTechnic, property, text, updateTechnic, set
     }
 
     return (<form onSubmit={handleSubmit(onSubmit)}>
-        {console.log(array)}
         {!array ? <TextField onKeyDown={handleKeyDown} defaultValue={activeTechnic[property]} {...register(property)} />
             : <Autocomplete
                             defaultValue={activeTechnic[property]}

@@ -93,6 +93,9 @@ export const techAPI = {
     getUsers() {
         return axios.get(`http://localhost:3004/users`).then(responce => responce.data)
     },
+    getRooms() {
+        return axios.get(`http://localhost:3004/technics`).then(responce => responce.data)
+    },
     addUser(data) {
         return axios.post(`http://localhost:3004/users`,{name: data}).then(responce => responce.data)
     },

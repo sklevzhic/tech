@@ -4,8 +4,6 @@ import Button from "@material-ui/core/Button";
 import React, {useEffect, useState} from "react";
 import icons from "../global/global";
 import {makeStyles} from "@material-ui/core/styles";
-import {useForm} from 'react-hook-form';
-import Autocomplete, {createFilterOptions} from '@material-ui/lab/Autocomplete';
 import AutocompleteTextarea from "../AutocompleteTextarea";
 
 

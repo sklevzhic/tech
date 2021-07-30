@@ -7,10 +7,11 @@ const SET_ACTIVE_TYPE = 'SET_ACTIVE_TYPE'
 const SET_TECHNICS = 'SET_TECHNICS'
 const SET_TECHNIC = 'SET_TECHNIC'
 const UPDATE_TECHNIC = 'UPDATE_TECHNIC'
-const SET_USERS_TECH = 'SET_USERS_TECH'
+const SET_USERS1 = 'SET_USERS1'
 const ADD_USER = 'ADD_USER'
 const TOOGLE_LOADING_IN_FOR_TYPE = 'TOOGLE_LOADING_IN_FOR_TYPE'
 const TOOGLE_LOADING_TECHNICS = 'TOOGLE_LOADING_TECHNICS'
+const SET_ROOMS = 'SET_ROOMS'
 
 let initialState = {
     types: [],
@@ -112,10 +113,16 @@ const TechReducer = (state = initialState, action) => {
                 types: action.payload
             }
         }
-        case SET_USERS_TECH: {
+        case SET_USERS1: {
             return {
                 ...state,
                 users: action.payload
+            }
+        }
+        case SET_ROOMS: {
+            return {
+                ...state,
+                rooms: action.payload
             }
         }
         case SET_TECHNICS: {
@@ -227,10 +234,14 @@ export const toogleLoadingTechnicsAC = (payload) => {
     return {type: TOOGLE_LOADING_TECHNICS, payload}
 }
 export const setUsersAC = (payload) => {
-    return {type: SET_USERS_TECH, payload}
+    return {type: SET_USERS1, payload}
 }
 export const addUserAC = (payload) => {
     return {type: ADD_USER, payload}
+}
+
+export const setRoomsAC = (payload) => {
+    return {type: SET_ROOMS, payload}
 }
 
 
@@ -295,6 +306,25 @@ export const getUsers = () => {
     return async (dispatch) => {
         let usersResponse = await techAPI.getUsers()
         dispatch(setUsersAC(usersResponse))
+        return usersResponse
+    }
+}
+export const getRooms = () => {
+    return async (dispatch) => {
+        let roomsResponse = await techAPI.getRooms()
+        let rooms = [...new Set(roomsResponse.map(el => el.room))].sort().map((el,i) => {
+            if (el) {
+                return {
+                    room: el,
+                    id: i
+                }
+            } else {
+                return ''
+            }
+
+        })
+        dispatch(setRoomsAC(rooms))
+        return rooms
     }
 }
 export const addUser = (data) => {
