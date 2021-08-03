@@ -15,7 +15,8 @@ import MiniCardTechnic from "../../components/MiniCardTechnic";
 import ListTypes from "../../components/ListTypes";
 import {Skeleton} from "@material-ui/lab";
 import MiniCardTechnicSkeleton from "../../components/MiniCardTechnic/MiniCardTechnicSceleton";
-
+import Avatar from '@material-ui/core/Avatar';
+import Chip from '@material-ui/core/Chip';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -173,6 +174,12 @@ const TypePage = ({
             </> : ""}
             <Grid container spacing={3}>
                 <Grid item xs={8}>
+                    <>
+                        <Chip avatar={<Avatar>M</Avatar>} label="Clickable" />
+                        <Chip avatar={<Avatar>M</Avatar>} label="Clickable" />
+                        <Chip avatar={<Avatar>M</Avatar>} label="Clickable" />
+                        <Chip avatar={<Avatar>M</Avatar>} label="Clickable" />
+                    </>
                     {technics.map(key => {
                         return (
                             <Card key={key.room} className={classes.roomItem}>

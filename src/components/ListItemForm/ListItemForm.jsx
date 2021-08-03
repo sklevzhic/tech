@@ -3,13 +3,13 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import React, {useEffect, useState} from "react";
 import icons from "../global/global";
-import {makeStyles} from "@material-ui/core/styles";
 import AutocompleteTextarea from "../AutocompleteTextarea";
+import {makeStyles} from "@material-ui/core/styles";
 
 
 const useStyles = makeStyles((theme) => ({
     listItemText: {
-        fontSize: '1.1em',
+        fontSize: '.9em',
         fontWeight: "bold"
     }
 }))

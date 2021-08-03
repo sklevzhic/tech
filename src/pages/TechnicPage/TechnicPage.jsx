@@ -82,8 +82,9 @@ const TechnicPage = ({activeTechnic, getTechnicInfo, users}) => {
                             <Divider/>
                             <List>
                                 <ListItemForm activeTechnic={activeTechnic} property={"room"} text={"Кабинет"}/>
-                                <ListItemForm activeTechnic={activeTechnic} property={"korpus"} text={"Корпус"} />
-                                <ListItemForm activeTechnic={activeTechnic} property={"fyo"} text={"ФИО сотрудника"} array={users} />
+                                <ListItemForm activeTechnic={activeTechnic} property={"korpus"} text={"Корпус"}/>
+                                <ListItemForm activeTechnic={activeTechnic} property={"fyo"} text={"ФИО сотрудника"}
+                                              array={users}/>
                             </List>
                         </CardContent>
                     </Card>
@@ -97,7 +98,8 @@ const TechnicPage = ({activeTechnic, getTechnicInfo, users}) => {
                             <Divider/>
                             <ListItemForm activeTechnic={activeTechnic} property={"invent"} text={"Инвентарный номер"}/>
                             <ListItemForm activeTechnic={activeTechnic} property={"zavod"} text={"Заводской номер"}/>
-                            <ListItemForm activeTechnic={activeTechnic} property={"matfyo"} text={"Материально-ответственное лицо"}/>
+                            <ListItemForm activeTechnic={activeTechnic} property={"matfyo"}
+                                          text={"Материально-ответственное лицо"}/>
 
                         </CardContent>
                     </Card>
@@ -133,7 +135,7 @@ const TechnicPage = ({activeTechnic, getTechnicInfo, users}) => {
 
                                 {activeTechnic.refill ? <>
                                     <ControlledAccordions array={activeTechnic.refill}/>
-                                </> : <Button >Заполнить</Button>}
+                                </> : <Button>Заполнить</Button>}
                             </CardContent>
 
                         </Card>
