@@ -15,12 +15,19 @@ const filter = createFilterOptions();
 const AutocompleteTextarea = ({activeTechnic, property, updateTechnic, setEditMode, getUsers, getRooms, text}) => {
 
     const classes = useStyles()
-    const [array, setArray] = useState("");
-    const [value, setValue] = React.useState(null)
-
+    const [array, setArray] = useState("")
+    const [value, setValue] = useState(null)
 
     useEffect(() => {
         if (property === 'fyo') {
+            async function fetchUsers() {
+                let response = await getUsers()
+                return response
+            }
+
+            fetchUsers().then(response => setArray(response))
+        }
+        if (property === 'matfyo') {
             async function fetchUsers() {
                 let response = await getUsers()
                 return response
@@ -42,6 +49,10 @@ const AutocompleteTextarea = ({activeTechnic, property, updateTechnic, setEditMo
             handleSubmit(onSubmit)();
             setArray([])
         }
+        if (e.key === 'Escape') {
+            setEditMode(false)
+        }
+
     }
     const selectItem = (event, newValue) => {
         if (typeof newValue === 'string') {
@@ -58,19 +69,30 @@ const AutocompleteTextarea = ({activeTechnic, property, updateTechnic, setEditMo
     }
     const {register, handleSubmit, control, reset} = useForm();
     const onSubmit = (obj) => {
-        updateTechnic(activeTechnic.id, obj)
-        setEditMode(false)
-        // reset()
+        if (obj[property] === 'undefined') {
+            let val = {
+                [property]: value[property]
+            }
+            updateTechnic(activeTechnic.id, val)
+            setEditMode(false)
+            reset()
+        } else if (obj[property] === 'null') {
+            setEditMode(false)
+        } else {
+            debugger
+            updateTechnic(activeTechnic.id, obj)
+            setEditMode(false)
+            reset()
+        }
     }
 
     return (<form className={classes.root} onSubmit={handleSubmit(onSubmit)}>
         <div>
             {!array ?
-                <TextField onKeyDown={handleKeyDown} defaultValue={activeTechnic[property]} {...register(property)} />
+                <TextField onKeyDown={handleKeyDown} defaultValue={activeTechnic[property]} autoFocus={true} {...register(property)} />
                 : <Controller
                     name={property}
                     control={control}
-                    defaultValue={activeTechnic[property]}
                     render={({field}) => <Autocomplete
                         filterOptions={(options, params) => {
                             const filtered = filter(options, params);
@@ -83,7 +105,9 @@ const AutocompleteTextarea = ({activeTechnic, property, updateTechnic, setEditMo
                             return filtered;
                         }}
                         selectOnFocus
+                        defaultValue={activeTechnic[property]}
                         clearOnBlur
+                        onKeyDown={handleKeyDown}
                         onChange={selectItem}
                         handleHomeEndKeys
                         id="free-solo-with-text-demo"
@@ -98,10 +122,10 @@ const AutocompleteTextarea = ({activeTechnic, property, updateTechnic, setEditMo
                             return option[property];
                         }}
                         renderOption={(option) => option[property]}
-                        style={{width: 300}}
+                        style={{width: 250}}
                         freeSolo
                         renderInput={(field) => (
-                            <TextField {...field} label={text} variant="outlined"/>
+                            <TextField  autoFocus={true} {...field} label={text} variant="outlined"/>
                         )}
                     />}
                 />
