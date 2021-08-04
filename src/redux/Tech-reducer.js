@@ -127,7 +127,7 @@ const TechReducer = (state = initialState, action) => {
         }
         case SET_TECHNICS: {
             const groupElements = (property) => {
-                return action.payload.reduce((previousValue, currentValue, index, array) => {
+                return action.payload.reduce((previousValue, currentValue) => {
                     let objType = previousValue.find(
                         (element) => element[property] === currentValue[property]
                     );

@@ -1,4 +1,4 @@
-import {withRouter, useParams} from "react-router-dom";
+import {withRouter, useParams, Link, useLocation} from "react-router-dom";
 import {
     Card,
     Container,
@@ -17,6 +17,7 @@ import {Skeleton} from "@material-ui/lab";
 import MiniCardTechnicSkeleton from "../../components/MiniCardTechnic/MiniCardTechnicSceleton";
 import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
+import queryString from 'query-string'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -80,22 +81,14 @@ const TypePage = ({
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     const [technicActive, setTechnicActive] = useState({});
-    // const handleClickOpen = (el) => {
-    //     setOpen(true);
-    //     setTechnicActive(el)
-    // };
-
-    // const selectIcon = () => {
-    //     console.log('icon')
-    // }
-
     const handleClose = () => {
         setOpen(false);
     };
-
+    const {search} = useLocation()
+    const {year, korpus} = queryString.parse(search)
     const params = useParams();
     useEffect(() => {
-        getActiveType(params.type)
+        getActiveType(params.type, year, korpus)
     }, [params])
 
     return (
@@ -127,8 +120,8 @@ const TypePage = ({
                             <div>
                                 {
                                     yearsOfProduction.map(el => {
-                                        return <Typography variant={"body2"}
-                                                           key={el.year}>{el.year} - {el.properties.length}</Typography>
+                                        return <Typography component={Link} to={`?year=${el.year}`} variant={"body2"}
+                                                           key={el.year}>{el.year} - {el.properties.length} шт <br/> </Typography>
                                     })
                                 }
 
@@ -142,8 +135,8 @@ const TypePage = ({
                         {toogleLoadingInfoFotType ? <SceletonInfoType/> : <>
                             <Typography color={"primary"}>Корпуса</Typography>
                             {korpuses.map((el) => {
-                                return <Typography variant={"body2"}
-                                                   key={el.korpus}>{el.korpus} - {el.properties.length}</Typography>
+                                return <Typography  component={Link} to={`?korpus=${el.korpus}`}  variant={"body2"}
+                                                   key={el.korpus}>{el.korpus} - {el.properties.length} <br/> </Typography>
                             })}
                             <Divider/>
                             <Typography color={"primary"}>Факультеты</Typography>

@@ -1,4 +1,4 @@
-import {Button, Checkbox, IconButton, Input, Select, TextField} from "@material-ui/core";
+import { IconButton, TextField} from "@material-ui/core";
 import Autocomplete, {createFilterOptions} from "@material-ui/lab/Autocomplete";
 import React, {useEffect, useState} from "react";
 import {Controller, useForm, useFormContext} from "react-hook-form";
@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
     }
 }))
+
 const filter = createFilterOptions();
 
 const AutocompleteTextarea = ({activeTechnic, property, updateTechnic, setEditMode, getUsers, getRooms, text}) => {
@@ -59,27 +60,27 @@ const AutocompleteTextarea = ({activeTechnic, property, updateTechnic, setEditMo
             setValue({
                 [property]: newValue,
             });
-        } else if (newValue && newValue.inputValue) {
+        }
+        else if (newValue && newValue.inputValue) {
             setValue({
                 [property]: newValue.inputValue,
             });
-        } else {
+        }
+        else {
             setValue(newValue);
         }
     }
     const {register, handleSubmit, control, reset} = useForm();
     const onSubmit = (obj) => {
-        if (obj[property] === 'undefined') {
+        if (obj[property] === undefined) {
             let val = {
                 [property]: value[property]
             }
             updateTechnic(activeTechnic.id, val)
             setEditMode(false)
             reset()
-        } else if (obj[property] === 'null') {
-            setEditMode(false)
-        } else {
-            debugger
+        }
+        else {
             updateTechnic(activeTechnic.id, obj)
             setEditMode(false)
             reset()

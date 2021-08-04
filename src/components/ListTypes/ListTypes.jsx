@@ -7,7 +7,7 @@ import {
     ListItemText,
     ListSubheader, TextField
 } from "@material-ui/core";
-import {Link} from "react-router-dom";
+import {Link,useParams} from "react-router-dom";
 import WifiIcon from "@material-ui/icons/Wifi";
 import {DeleteOutline} from "@material-ui/icons";
 import React, {useEffect} from "react";
@@ -20,9 +20,13 @@ const useStyles = makeStyles((theme) => ({
     button: {
         margin: theme.spacing(1),
     },
+    activeType: {
+      background: "#d5d5d5",
+    }
 }));
 
 const ListTypes = ({types, deleteType, getTypes, addType}) => {
+    const params = useParams();
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const {register, handleSubmit} = useForm();
@@ -42,7 +46,8 @@ const ListTypes = ({types, deleteType, getTypes, addType}) => {
             {types &&
             <List subheader={<ListSubheader>Settings</ListSubheader>}>
                 {types.map(el => {
-                        return <ListItem component={Link} to={`/types/${el.type}`} key={el.id}>
+                        return <ListItem className={(params.type === el.type) ? classes.activeType : ""} component={Link} to={`/types/${el.type}`} key={el.id}>
+
                             <ListItemIcon>
                                 <WifiIcon/>
                             </ListItemIcon>
