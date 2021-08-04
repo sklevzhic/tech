@@ -1,4 +1,4 @@
-import {withRouter, useParams, Link, useLocation} from "react-router-dom";
+import {withRouter, useParams, Link, useLocation, useHistory } from "react-router-dom";
 import {
     Card,
     Container,
@@ -78,17 +78,41 @@ const TypePage = ({
                       matfyos,
                       korpuses
                   }) => {
+    const {search} = useLocation()
+    let history = useHistory();
+    const {years, builds} = queryString.parse(search)
     const classes = useStyles();
     const [open, setOpen] = useState(false);
+    const [yearsStart, setYearsStart] = useState([]);
+    const [buildsStart, setBuildsStart] = useState([]);
     const [technicActive, setTechnicActive] = useState({});
     const handleClose = () => {
         setOpen(false);
     };
-    const {search} = useLocation()
-    const {year, korpus} = queryString.parse(search)
+    const handleClickButton = (value, type) => {
+
+        async function fetchMyAPI() {
+            if (type === "year") {
+               let response1 = await setYearsStart((oldArray) => [...oldArray, value])
+            }
+            if (type === "build") {
+                let response2 = await setBuildsStart((oldArray) => [...oldArray, value])
+            }
+            let a = response1
+            let b = response2
+            debugger
+
+        }
+
+        fetchMyAPI()
+        history.push({
+            search: `${(yearsStart) ?`&years=${yearsStart}` : ''}${(buildsStart !== 0) ? `&builds=${buildsStart}` : ''}`
+        });
+    }
+
     const params = useParams();
     useEffect(() => {
-        getActiveType(params.type, year, korpus)
+        getActiveType(params.type, years, builds)
     }, [params])
 
     return (
@@ -120,7 +144,7 @@ const TypePage = ({
                             <div>
                                 {
                                     yearsOfProduction.map(el => {
-                                        return <Typography component={Link} to={`?year=${el.year}`} variant={"body2"}
+                                        return <Typography onClick={() => handleClickButton(el.year, "year")} variant={"body2"}
                                                            key={el.year}>{el.year} - {el.properties.length} шт <br/> </Typography>
                                     })
                                 }
@@ -135,8 +159,8 @@ const TypePage = ({
                         {toogleLoadingInfoFotType ? <SceletonInfoType/> : <>
                             <Typography color={"primary"}>Корпуса</Typography>
                             {korpuses.map((el) => {
-                                return <Typography  component={Link} to={`?korpus=${el.korpus}`}  variant={"body2"}
-                                                   key={el.korpus}>{el.korpus} - {el.properties.length} <br/> </Typography>
+                                return <Typography  onClick={() => handleClickButton(el.korpus, "build")}  variant={"body2"}
+                                                    key={el.korpus}>{el.korpus} - {el.properties.length} <br/> </Typography>
                             })}
                             <Divider/>
                             <Typography color={"primary"}>Факультеты</Typography>
@@ -147,7 +171,6 @@ const TypePage = ({
                         }
                     </Paper>
                 </Grid>
-
                 <Grid item xs={3}>
                     <Paper className={classes.paper}>
                         {toogleLoadingInfoFotType ? <SceletonInfoType/> : <>
@@ -161,7 +184,6 @@ const TypePage = ({
                         }
                     </Paper>
                 </Grid>
-
             </Grid>
             {activeType ? <>
             </> : ""}
@@ -195,8 +217,6 @@ const TypePage = ({
                 </Grid>
             </Grid>
             <Modal handleClose={handleClose} open={open} title={technicActive.name}>
-
-
             </Modal>
         </Container>
     )
