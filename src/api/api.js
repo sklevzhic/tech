@@ -81,8 +81,20 @@ export const techAPI = {
     getActiveType(value) {
         return axios.get(`http://localhost:3004/types?type=${value}`).then(response => response.data[0])
     },
-    getTechnicsForType(value) {
-        return axios.get(`http://localhost:3004/technics?type_like=${value}`).then(response => response.data)
+    getTechnicsForType(value, years, builds) {
+        const arrayToQuery = (property, arr) => {
+            if ((arr[0] === "") || (arr.length === 0)) {
+                return ``
+            }
+            else {
+                return (arr.map(el => {
+                    return `&${property}=${el}`
+                })).join('')
+            }
+        }
+        let queryYears = arrayToQuery("year", years)
+        let buildsYears = arrayToQuery("korpus", builds)
+        return axios.get(`http://localhost:3004/technics?type_like=${value}${queryYears}${buildsYears}`).then(response => response.data)
     },
     getTechnicInfo(id) {
         return axios.get(`http://localhost:3004/technics/${id}`).then(response => response.data)

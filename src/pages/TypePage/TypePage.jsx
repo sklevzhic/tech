@@ -1,10 +1,10 @@
-import {withRouter, useParams, Link, useLocation, useHistory } from "react-router-dom";
+import {withRouter, useParams, Link, useLocation, useHistory} from "react-router-dom";
 import {
     Card,
     Container,
     Divider,
     Grid,
-    List,
+    List, ListItem, ListItemAvatar, ListItemIcon, ListItemText,
     Paper
 } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
@@ -18,6 +18,7 @@ import MiniCardTechnicSkeleton from "../../components/MiniCardTechnic/MiniCardTe
 import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
 import queryString from 'query-string'
+import FolderIcon from '@material-ui/icons/Folder';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -32,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
         overflow: "hidden",
         textOverflow: "ellipsis",
     },
-
     typeInfoWrapper: {
         display: "flex",
         alignItems: "center"
@@ -65,8 +65,10 @@ const useStyles = makeStyles((theme) => ({
         marginTop: "20px",
         padding: "7px"
     },
+    activeItem: {
+        background: "red",
+    },
     roomNumber: {}
-
 }));
 
 const TypePage = ({
@@ -82,39 +84,57 @@ const TypePage = ({
     let history = useHistory();
     const {years, builds} = queryString.parse(search)
     const classes = useStyles();
+    const params = useParams();
     const [open, setOpen] = useState(false);
     const [yearsStart, setYearsStart] = useState([]);
     const [buildsStart, setBuildsStart] = useState([]);
     const [technicActive, setTechnicActive] = useState({});
+
+    useEffect(() => {
+        [
+            {type: years, arr: yearsStart},
+            {type: builds, arr: buildsStart},
+        ].map(el => {
+            (el.type !== undefined) && el.type.split(",").map(elArr => {
+                el.arr.push(elArr)
+            })
+        })
+
+    }, [])  // получение данных с url
+    useEffect(() => {
+        getActiveType(params.type, yearsStart, buildsStart)
+        setYearsStart([])
+        setBuildsStart([])
+    }, [params.type]) // получение техники по api-запросу, обновление при смене url
+    console.log(technics)
     const handleClose = () => {
         setOpen(false);
     };
     const handleClickButton = (value, type) => {
-
-        async function fetchMyAPI() {
-            if (type === "year") {
-               let response1 = await setYearsStart((oldArray) => [...oldArray, value])
-            }
-            if (type === "build") {
-                let response2 = await setBuildsStart((oldArray) => [...oldArray, value])
-            }
-            let a = response1
-            let b = response2
-            debugger
-
+        if (type === "year") {
+            setYearsStart((oldArray) => {
+                if (oldArray.includes(value)) {
+                    return oldArray.filter(el => el !== value)
+                }
+                return [...oldArray, value]
+            })
         }
-
-        fetchMyAPI()
+        if (type === "build") {
+            setBuildsStart((oldArray) => {
+                if (oldArray.includes(value)) {
+                    return oldArray.filter(el => el !== value)
+                }
+                return [...oldArray, value]
+            })
+        }
         history.push({
-            search: `${(yearsStart) ?`&years=${yearsStart}` : ''}${(buildsStart !== 0) ? `&builds=${buildsStart}` : ''}`
+            search: `${(yearsStart !== 0) ? `&years=${yearsStart}` : ''}${(buildsStart !== 0) ? `&builds=${buildsStart}` : ''}`
         });
-    }
+    } // добавление {годов выпуска, корпусов, фио сотруников} в url
 
-    const params = useParams();
-    useEffect(() => {
-        getActiveType(params.type, years, builds)
-    }, [params])
 
+    console.log(yearsStart)
+    console.log(buildsStart)
     return (
         <Container>
             <Grid container className={classes.wrapperInfo} spacing={3}>
@@ -141,15 +161,24 @@ const TypePage = ({
                         {toogleLoadingInfoFotType ? <SceletonInfoType/> : <>
                             <Typography color={"primary"}>Годы выпуска</Typography>
                             <Divider/>
-                            <div>
+                            <List dense={true}>
                                 {
                                     yearsOfProduction.map(el => {
-                                        return <Typography onClick={() => handleClickButton(el.year, "year")} variant={"body2"}
-                                                           key={el.year}>{el.year} - {el.properties.length} шт <br/> </Typography>
+                                        return <ListItem button
+                                                         className={(yearsStart.includes(el.year)) ? classes.activeItem : ''}
+                                                         onClick={() => handleClickButton(el.year, "year")}
+                                                         key={el.year}>
+                                            <ListItemIcon>
+                                                <FolderIcon/>
+                                            </ListItemIcon>
+                                            <ListItemText
+                                                primary={`${el.year} - ${el.properties.length} шт`}
+                                            />
+                                        </ListItem>
                                     })
                                 }
 
-                            </div>
+                            </List>
                         </>
                         }
                     </Paper>
@@ -158,10 +187,22 @@ const TypePage = ({
                     <Paper className={classes.paper}>
                         {toogleLoadingInfoFotType ? <SceletonInfoType/> : <>
                             <Typography color={"primary"}>Корпуса</Typography>
-                            {korpuses.map((el) => {
-                                return <Typography  onClick={() => handleClickButton(el.korpus, "build")}  variant={"body2"}
-                                                    key={el.korpus}>{el.korpus} - {el.properties.length} <br/> </Typography>
-                            })}
+                            <Divider/>
+                            <List dense={true}>
+                                {korpuses.map((el) => {
+                                    return <ListItem button
+                                                     className={(buildsStart.includes(el.korpus)) ? classes.activeItem : ''}
+                                                     onClick={() => handleClickButton(el.korpus, "build")}
+                                                     key={el.korpus}>
+                                        <ListItemIcon>
+                                            <FolderIcon/>
+                                        </ListItemIcon>
+                                        <ListItemText
+                                            primary={`${el.korpus} - ${el.properties.length} шт`}
+                                        />
+                                    </ListItem>
+                                })}
+                            </List>
                             <Divider/>
                             <Typography color={"primary"}>Факультеты</Typography>
                             {["1", "9"].map((key) => {
@@ -190,10 +231,12 @@ const TypePage = ({
             <Grid container spacing={3}>
                 <Grid item xs={8}>
                     <>
-                        <Chip avatar={<Avatar>M</Avatar>} label="Clickable" />
-                        <Chip avatar={<Avatar>M</Avatar>} label="Clickable" />
-                        <Chip avatar={<Avatar>M</Avatar>} label="Clickable" />
-                        <Chip avatar={<Avatar>M</Avatar>} label="Clickable" />
+                        {yearsStart.map(el => {
+                            return <Chip avatar={<Avatar>Y</Avatar>} label={el}/>
+                        })}
+                        {buildsStart.map(el => {
+                            return <Chip avatar={<Avatar>B</Avatar>} label={el}/>
+                        })}
                     </>
                     {technics.map(key => {
                         return (

@@ -267,20 +267,20 @@ export const deleteType = (id) => {
         }
     }
 }
-export const getActiveType = (value) => {
+export const getActiveType = (value, years, builds) => {
     return async (dispatch) => {
         dispatch(toogleLoadingInForTypeAC(true))
 
         let response = await techAPI.getActiveType(value)
         if (response) {
             dispatch(setActiveTypeAC(response))
-            dispatch(getTechnicsForType(response.name))
+            dispatch(getTechnicsForType(response.name, years, builds))
         }
     }
 }
-export const getTechnicsForType = (value) => {
+export const getTechnicsForType = (value, years, builds) => {
         return async (dispatch) => {
-        let response = await techAPI.getTechnicsForType(value)
+        let response = await techAPI.getTechnicsForType(value, years, builds)
 
         dispatch(setTechnicsAC(response))
             dispatch(toogleLoadingInForTypeAC(false))
