@@ -19,6 +19,8 @@ import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
 import queryString from 'query-string'
 import FolderIcon from '@material-ui/icons/Folder';
+import {Print} from "@material-ui/icons";
+import icons from '../../components/global/global';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -85,11 +87,8 @@ const TypePage = ({
     const {years, builds} = queryString.parse(search)
     const classes = useStyles();
     const params = useParams();
-    const [open, setOpen] = useState(false);
     const [yearsStart, setYearsStart] = useState([]);
     const [buildsStart, setBuildsStart] = useState([]);
-    const [technicActive, setTechnicActive] = useState({});
-
     useEffect(() => {
         [
             {type: years, arr: yearsStart},
@@ -102,14 +101,10 @@ const TypePage = ({
 
     }, [])  // получение данных с url
     useEffect(() => {
-        getActiveType(params.type, yearsStart, buildsStart)
+        getActiveType(params.type)
         setYearsStart([])
         setBuildsStart([])
     }, [params.type]) // получение техники по api-запросу, обновление при смене url
-    console.log(technics)
-    const handleClose = () => {
-        setOpen(false);
-    };
     const handleClickButton = (value, type) => {
         if (type === "year") {
             setYearsStart((oldArray) => {
@@ -131,10 +126,16 @@ const TypePage = ({
             search: `${(yearsStart !== 0) ? `&years=${yearsStart}` : ''}${(buildsStart !== 0) ? `&builds=${buildsStart}` : ''}`
         });
     } // добавление {годов выпуска, корпусов, фио сотруников} в url
+    const icon = (type) => {
+        if (icons[type] !== undefined) {
+            let Icon = icons[type]
+            return <Icon />
+        } else {
+            return <Print />
+        }
 
 
-    console.log(yearsStart)
-    console.log(buildsStart)
+    }
     return (
         <Container>
             <Grid container className={classes.wrapperInfo} spacing={3}>
@@ -144,6 +145,7 @@ const TypePage = ({
                         {toogleLoadingInfoFotType ? <SceletonInfoType/> : <>
                             <div className={classes.typeInfoWrapper}>
                                 <div className={classes.typeInfo}>
+                                    {icon(activeType.type)}
                                     <Typography color={"primary"}>Тип</Typography>
                                     <Typography variant="h6">{activeType.name}</Typography>
                                     <Typography variant="body2" gutterBottom>
@@ -155,7 +157,7 @@ const TypePage = ({
                         </>
                         }
                     </Paper>
-                </Grid>
+                </Grid> {/*  Тип, картинка */}
                 <Grid item xs={3}>
                     <Paper className={classes.paper}>
                         {toogleLoadingInfoFotType ? <SceletonInfoType/> : <>
@@ -182,7 +184,7 @@ const TypePage = ({
                         </>
                         }
                     </Paper>
-                </Grid>
+                </Grid> {/*  Годы выпуска */}
                 <Grid item xs={3}>
                     <Paper className={classes.paper}>
                         {toogleLoadingInfoFotType ? <SceletonInfoType/> : <>
@@ -211,7 +213,7 @@ const TypePage = ({
                         </>
                         }
                     </Paper>
-                </Grid>
+                </Grid> {/*  Корпуса */}
                 <Grid item xs={3}>
                     <Paper className={classes.paper}>
                         {toogleLoadingInfoFotType ? <SceletonInfoType/> : <>
@@ -224,13 +226,14 @@ const TypePage = ({
                         </>
                         }
                     </Paper>
-                </Grid>
-            </Grid>
+                </Grid> {/*  Материально ответственные лица */}
+            </Grid> {/*  Сводная информация в столбцах */}
             {activeType ? <>
             </> : ""}
             <Grid container spacing={3}>
                 <Grid item xs={8}>
                     <>
+                        {console.log(yearsStart)}
                         {yearsStart.map(el => {
                             return <Chip avatar={<Avatar>Y</Avatar>} label={el}/>
                         })}
@@ -238,6 +241,7 @@ const TypePage = ({
                             return <Chip avatar={<Avatar>B</Avatar>} label={el}/>
                         })}
                     </>
+                    {/*  Активные свойства фильтрации */}
                     {technics.map(key => {
                         return (
                             <Card key={key.room} className={classes.roomItem}>
@@ -253,14 +257,12 @@ const TypePage = ({
                         )
 
 
-                    })}
+                    })} {/*  Список техники technics */}
                 </Grid>
                 <Grid item xs={4}>
                     <ListTypes/>
-                </Grid>
+                </Grid> {/*  Список типов техникик */}
             </Grid>
-            <Modal handleClose={handleClose} open={open} title={technicActive.name}>
-            </Modal>
         </Container>
     )
 }

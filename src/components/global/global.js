@@ -2,7 +2,7 @@ import {
     Facebook,
     GitHub,
     Instagram, Language, Link, Telegram, Twitter, YouTube, Contacts, MenuBook,
-    Place,Store,TurnedInNot,Toc, Print
+    Place,Store,TurnedInNot,Toc, Print, DesktopWindows, Scanner
 } from "@material-ui/icons";
 
 const icons = {
@@ -20,9 +20,9 @@ const icons = {
     zavod: TurnedInNot,
     fyo: Contacts,
     matfyo: MenuBook,
-    printer: Print
-
-
+    printer: Print,
+    monitor: DesktopWindows,
+    scanner: Scanner
 }
 
 export default icons

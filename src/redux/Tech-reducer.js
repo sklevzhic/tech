@@ -278,9 +278,9 @@ export const getActiveType = (value, years, builds) => {
         }
     }
 }
-export const getTechnicsForType = (value, years, builds) => {
+export const getTechnicsForType = (value) => {
         return async (dispatch) => {
-        let response = await techAPI.getTechnicsForType(value, years, builds)
+        let response = await techAPI.getTechnicsForType(value)
 
         dispatch(setTechnicsAC(response))
             dispatch(toogleLoadingInForTypeAC(false))
