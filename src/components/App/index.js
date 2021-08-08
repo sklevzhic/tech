@@ -1,6 +1,7 @@
 import App from "./App";
 import {connect} from "react-redux";
-import { initialize} from "../../redux/App-reducer";
+import {getTypes} from "../../redux/Tech-reducer";
+
 
 const mapStateToProps = (state) => {
     return {
@@ -10,4 +11,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, {initialize})(App)
+export default connect(mapStateToProps, {getTypes})(App)

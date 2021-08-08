@@ -2,7 +2,8 @@ import {
     Facebook,
     GitHub,
     Instagram, Language, Link, Telegram, Twitter, YouTube, Contacts, MenuBook,
-    Place,Store,TurnedInNot,Toc, Print, DesktopWindows, Scanner
+    Place, Store, TurnedInNot, Toc, Print, DesktopWindows, Scanner, DesktopMac, TabletAndroid,
+    Mouse, Phone, Videocam, SurroundSound, LaptopChromebook, LiveTv, Keyboard, VideoLabel, Send
 } from "@material-ui/icons";
 
 const icons = {
@@ -22,7 +23,24 @@ const icons = {
     matfyo: MenuBook,
     printer: Print,
     monitor: DesktopWindows,
-    scanner: Scanner
+    scanner: Scanner,
+    monoblok: DesktopMac,
+    tablet: TabletAndroid,
+    mouse: Mouse,
+    phone: Phone,
+    projector: Videocam,
+    pcset: LaptopChromebook,
+    screen: VideoLabel,
+    speaker: SurroundSound,
+    desktoppc: LaptopChromebook,
+    keyboard: Keyboard,
+    tv: LiveTv,
+    mfu: Print,
+    xerox: Print,
+    send: DesktopMac
+
 }
 
 export default icons
+
+

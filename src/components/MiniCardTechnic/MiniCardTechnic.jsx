@@ -1,7 +1,6 @@
-import {makeStyles} from "@material-ui/core/styles";
+// import {makeStyles} from "@material-ui/core/styles";
 import {
-    Avatar,
-    Button,
+        Button,
     Chip,
     ListItem,
     ListItemIcon,
@@ -10,56 +9,28 @@ import {
 } from "@material-ui/core";
 import {Link} from "react-router-dom";
 import React from "react";
-import Typography from "@material-ui/core/Typography";
+import Icon from "../Icon";
 
-const useStyles = makeStyles((theme) => ({}))
+// const useStyles = makeStyles((theme) => ({}))
 
-const MiniCardTechnic = ({el,keys}) => {
+const MiniCardTechnic = ({el, keys}) => {
 
-    const classes = useStyles();
+    // const classes = useStyles();
     return (
         <ListItem component={Link} key={el} to={`/technics/${el.id}`} button>
+
             <ListItemIcon>
-                <Avatar>{el.type.toString()[0]}</Avatar>
+                <Icon type={el.type} />
             </ListItemIcon>
             <ListItemText
-                primary={el.name}
-                secondary={
-                    <React.Fragment>
-                        <Typography
-                            component="span"
-                            variant="body2"
-                            color="textPrimary"
-                        >
-                            {el.fyo}
-                        </Typography>
-                        - [ {!el.invent ?
-                        <Button color="secondary">Заполнить</Button> : el.invent} ]
-                        <>
-                            {
-                                (typeof el.type === 'object')
-                                    ? <>{el.type.map(el => {
-                                        return <Chip
-                                            avatar={<Avatar>{el[0]}</Avatar>}
-                                            label={el}
-                                            variant="outlined"
-                                        />
-                                    })}</>
-
-
-                                    : <Chip
-                                        avatar={<Avatar>{el.type[0]}</Avatar>}
-                                        label={el.type}
-                                        variant="outlined"
-                                    />}
-                        </>
-                    </React.Fragment>
-                }
+                primary={`[${!el.invent ?
+                    <Button color="secondary">Заполнить</Button> : el.invent}] - ${el.name}`}
+                secondary={`${el.year} ${el.fyo}`}
             />
             <ListItemSecondaryAction style={{display: "flex"}}>
                 {Object.keys(keys).map(key => {
                     if (!el[keys[key].key]) {
-                        return <Tooltip title={keys[key].name}><span style={{
+                        return <Tooltip key={key} title={keys[key].name}><span style={{
                             display: "block",
                             width: "10px",
                             textAlign: "center",

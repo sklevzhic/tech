@@ -1,5 +1,5 @@
 import {
-    Button, Dialog, DialogActions, DialogContent,
+    Button, DialogActions, DialogContent,
     List,
     ListItem,
     ListItemIcon,
@@ -8,20 +8,20 @@ import {
     ListSubheader, TextField
 } from "@material-ui/core";
 import {Link,useParams} from "react-router-dom";
-import WifiIcon from "@material-ui/icons/Wifi";
 import {DeleteOutline} from "@material-ui/icons";
 import React, {useEffect} from "react";
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import {makeStyles} from '@material-ui/core/styles';
 import Modal from "../Modal";
 import {useForm} from "react-hook-form";
+import Icon from "../Icon";
 
 const useStyles = makeStyles((theme) => ({
     button: {
         margin: theme.spacing(1),
     },
     activeType: {
-      background: "#d5d5d5",
+      background: "#d5d5d5"
     }
 }));
 
@@ -49,7 +49,7 @@ const ListTypes = ({types, deleteType, getTypes, addType}) => {
                         return <ListItem className={(params.type === el.type) ? classes.activeType : ""} component={Link} to={`/types/${el.type}`} key={el.id}>
 
                             <ListItemIcon>
-                                <WifiIcon/>
+                                <Icon type={el.type} />
                             </ListItemIcon>
                             <ListItemText id="switch-list-label-wifi" primary={el.name}/>
                             <ListItemSecondaryAction>

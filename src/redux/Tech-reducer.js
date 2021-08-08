@@ -12,16 +12,20 @@ const ADD_USER = 'ADD_USER'
 const TOOGLE_LOADING_IN_FOR_TYPE = 'TOOGLE_LOADING_IN_FOR_TYPE'
 const TOOGLE_LOADING_TECHNICS = 'TOOGLE_LOADING_TECHNICS'
 const SET_ROOMS = 'SET_ROOMS'
+const ADD_COMMENT = 'ADD_COMMENT'
+const SET_COMMENTS = 'SET_COMMENTS'
 
 let initialState = {
     types: [],
     activeType: {},
     activeTechnic: {},
+    activeTechnicComments: [],
     yearsOfProduction: [],
     korpuses: [],
     matfyos: [],
     toogleLoadingInfoFotType: false,
     technics: [],
+    technicsByCategory: [],
     toogleLoadingTechnics: false,
     users: [],
     subdivisions: [
@@ -94,7 +98,7 @@ let initialState = {
             key: "korpus",
             bg: "#14cbcb",
             name: "Корпус",
-        }        ,
+        },
         {
             id: "11",
             key: "room",
@@ -140,11 +144,11 @@ const TechReducer = (state = initialState, action) => {
                         objType.properties.push(currentValue);
                     }
                     return previousValue;
-                }, []).sort((a,b) => a[property] - b[property])
+                }, []).sort((a, b) => a[property] - b[property])
             }
             return {
                 ...state,
-                technics: groupElements("room"),
+                technicsByCategory: groupElements("room"),
                 yearsOfProduction: groupElements("year"),
                 korpuses: groupElements("korpus"),
                 matfyos: groupElements("matfyo")
@@ -199,6 +203,18 @@ const TechReducer = (state = initialState, action) => {
                 users: [...state.users, action.payload]
             }
         }
+        case ADD_COMMENT: {
+            return {
+                ...state,
+                activeTechnicComments: [...state.activeTechnicComments, action.payload]
+            }
+        }
+        case SET_COMMENTS: {
+            return {
+                ...state,
+                activeTechnicComments: action.payload
+            }
+        }
         default:
             return state
     }
@@ -240,8 +256,15 @@ export const addUserAC = (payload) => {
     return {type: ADD_USER, payload}
 }
 
+export const addCommentAC = (payload) => {
+    return {type: ADD_COMMENT, payload}
+}
+
 export const setRoomsAC = (payload) => {
     return {type: SET_ROOMS, payload}
+}
+export const setCommentsAC = (payload) => {
+    return {type: SET_COMMENTS, payload}
 }
 
 
@@ -270,7 +293,6 @@ export const deleteType = (id) => {
 export const getActiveType = (value, years, builds) => {
     return async (dispatch) => {
         dispatch(toogleLoadingInForTypeAC(true))
-
         let response = await techAPI.getActiveType(value)
         if (response) {
             dispatch(setActiveTypeAC(response))
@@ -279,11 +301,11 @@ export const getActiveType = (value, years, builds) => {
     }
 }
 export const getTechnicsForType = (value) => {
-        return async (dispatch) => {
+    return async (dispatch) => {
         let response = await techAPI.getTechnicsForType(value)
 
         dispatch(setTechnicsAC(response))
-            dispatch(toogleLoadingInForTypeAC(false))
+        dispatch(toogleLoadingInForTypeAC(false))
 
     }
 }
@@ -312,7 +334,7 @@ export const getUsers = () => {
 export const getRooms = () => {
     return async (dispatch) => {
         let roomsResponse = await techAPI.getRooms()
-        let rooms = [...new Set(roomsResponse.map(el => el.room))].sort().map((el,i) => {
+        let rooms = [...new Set(roomsResponse.map(el => el.room))].sort().map((el, i) => {
             if (el) {
                 return {
                     room: el,
@@ -331,6 +353,18 @@ export const addUser = (data) => {
     return async (dispatch) => {
         let response = await techAPI.addUser(data)
         dispatch(addUserAC(response))
+    }
+}
+export const getComments = (id) => {
+    return async (dispatch) => {
+        let response = await techAPI.getComments(id)
+        dispatch(setCommentsAC(response))
+    }
+}
+export const addComment = (id, value) => {
+    return async (dispatch) => {
+        let response = await techAPI.addComment(id, value)
+        dispatch(addCommentAC(response))
     }
 }
 

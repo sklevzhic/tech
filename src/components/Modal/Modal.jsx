@@ -1,15 +1,10 @@
 import React from "react";
 import {
-    Button,
     Dialog,
-    DialogActions,
-    DialogContent,
-    DialogContentText,
     DialogTitle,
-    TextField, Typography
 } from "@material-ui/core";
 
-const Modal = ({open, handleClose, title, children, button}) => {
+const Modal = ({open, handleClose, title, children}) => {
     return (
         <div>
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">

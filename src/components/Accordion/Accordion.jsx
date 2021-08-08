@@ -5,6 +5,7 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import countDays from "../global/countDays";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -36,19 +37,13 @@ export default function ControlledAccordions({array}) {
             return new Date(el.receiverDate).getFullYear()
         }).sort((a,b) => b - a)
         let uniqueYears = [...new Set(years.map((year) => year))]
-        const countDays = (a,b) => {
-            let dateA = new Date(a).getTime()
-            let dateB = new Date(b).getTime()
-            let days = ((dateB - dateA) / (60*60*24*1000)) % 365
-            return days
-        }
+
         return uniqueYears.map(year => {
             return <>
                 <p>{year} год</p>
                 <ul>
-                    {arr.map((el,i) => {
+                    {arr.map((el) => {
                         if (new Date(el.receiverDate).getFullYear() === year) {
-                            // return <li>{i} == {el.receiverDate} - ({el.receiverName})</li>
                             return <Accordion expanded={expanded === el.id} onChange={handleChange(el.id)}>
                                 <AccordionSummary
                                     expandIcon={<ExpandMoreIcon />}
@@ -67,6 +62,7 @@ export default function ControlledAccordions({array}) {
                                 </AccordionDetails>
                             </Accordion>
                         }
+                        return ''
                     })}
                 </ul>
             </>

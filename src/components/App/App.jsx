@@ -5,11 +5,13 @@ import AppWithRouter from "./AppWithRouter";
 import Authorization from "./Authorization";
 import Preloader from "../Preloader";
 
-const App = ({isAuth, initialize, initialized}) => {
+const App = ({isAuth, initialize, getTypes, initialized}) => {
     // useEffect(() => {
     //     initialize()
     // },[initialize]);
-
+    useEffect(() => {
+        getTypes()
+    },[]);
     return (
         <>
             {

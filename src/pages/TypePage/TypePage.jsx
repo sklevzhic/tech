@@ -1,26 +1,23 @@
-import {withRouter, useParams, Link, useLocation, useHistory} from "react-router-dom";
+import {withRouter, useParams, useLocation, useHistory} from "react-router-dom";
 import {
     Card,
     Container,
     Divider,
     Grid,
-    List, ListItem, ListItemAvatar, ListItemIcon, ListItemText,
+    List, ListItem, ListItemIcon, ListItemText,
     Paper
 } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import React, {useEffect, useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
-import Modal from "../../components/Modal";
-import MiniCardTechnic from "../../components/MiniCardTechnic";
 import ListTypes from "../../components/ListTypes";
 import {Skeleton} from "@material-ui/lab";
-import MiniCardTechnicSkeleton from "../../components/MiniCardTechnic/MiniCardTechnicSceleton";
-import Avatar from '@material-ui/core/Avatar';
-import Chip from '@material-ui/core/Chip';
 import queryString from 'query-string'
 import FolderIcon from '@material-ui/icons/Folder';
-import {Print} from "@material-ui/icons";
-import icons from '../../components/global/global';
+import Icon from "../../components/Icon";
+import ListTechnics from "../../components/ListTechnics";
+import ActiveCategories from "../../components/ActiveCategories";
+import deepEqual from "../../components/global/deepEqual";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -34,6 +31,11 @@ const useStyles = makeStyles((theme) => ({
         whiteSpace: "nowrap",
         overflow: "hidden",
         textOverflow: "ellipsis",
+    },
+    years: {
+        height: "80%",
+        overflow: "overlay"
+
     },
     typeInfoWrapper: {
         display: "flex",
@@ -76,36 +78,42 @@ const useStyles = makeStyles((theme) => ({
 const TypePage = ({
                       getActiveType,
                       activeType,
-                      technics,
                       yearsOfProduction,
                       toogleLoadingInfoFotType,
                       matfyos,
                       korpuses
                   }) => {
     const {search} = useLocation()
-    let history = useHistory();
     const {years, builds} = queryString.parse(search)
     const classes = useStyles();
     const params = useParams();
+
+    const [filters, setFilters] = useState(() => [])
     const [yearsStart, setYearsStart] = useState([]);
     const [buildsStart, setBuildsStart] = useState([]);
-    useEffect(() => {
-        [
-            {type: years, arr: yearsStart},
-            {type: builds, arr: buildsStart},
-        ].map(el => {
-            (el.type !== undefined) && el.type.split(",").map(elArr => {
-                el.arr.push(elArr)
-            })
-        })
 
-    }, [])  // получение данных с url
     useEffect(() => {
         getActiveType(params.type)
-        setYearsStart([])
-        setBuildsStart([])
+        // setYearsStart([])
+        // setBuildsStart([])
     }, [params.type]) // получение техники по api-запросу, обновление при смене url
     const handleClickButton = (value, type) => {
+        let obj = {
+            "type": type,
+            "value": value
+        }
+        setFilters((oldObj) => {
+
+            // if (oldObj.includes(obj)) {
+            //     return oldObj.filter(el => {
+            //         let a = Object.toJSON(el)
+            //         let b = Object.toJSON(obj)
+            //         debugger
+            //         return Object.toJSON(el) !== Object.toJSON(obj)
+            //     })
+            // }
+
+        })
         if (type === "year") {
             setYearsStart((oldArray) => {
                 if (oldArray.includes(value)) {
@@ -122,30 +130,17 @@ const TypePage = ({
                 return [...oldArray, value]
             })
         }
-        history.push({
-            search: `${(yearsStart !== 0) ? `&years=${yearsStart}` : ''}${(buildsStart !== 0) ? `&builds=${buildsStart}` : ''}`
-        });
     } // добавление {годов выпуска, корпусов, фио сотруников} в url
-    const icon = (type) => {
-        if (icons[type] !== undefined) {
-            let Icon = icons[type]
-            return <Icon />
-        } else {
-            return <Print />
-        }
-
-
-    }
+console.log(filters)
     return (
         <Container>
             <Grid container className={classes.wrapperInfo} spacing={3}>
                 <Grid item xs={3}>
-
                     <Paper className={classes.paper}>
                         {toogleLoadingInfoFotType ? <SceletonInfoType/> : <>
                             <div className={classes.typeInfoWrapper}>
                                 <div className={classes.typeInfo}>
-                                    {icon(activeType.type)}
+                                    <Icon type={activeType.type}/>
                                     <Typography color={"primary"}>Тип</Typography>
                                     <Typography variant="h6">{activeType.name}</Typography>
                                     <Typography variant="body2" gutterBottom>
@@ -163,7 +158,7 @@ const TypePage = ({
                         {toogleLoadingInfoFotType ? <SceletonInfoType/> : <>
                             <Typography color={"primary"}>Годы выпуска</Typography>
                             <Divider/>
-                            <List dense={true}>
+                            <List dense={true} className={classes.years}>
                                 {
                                     yearsOfProduction.map(el => {
                                         return <ListItem button
@@ -232,33 +227,11 @@ const TypePage = ({
             </> : ""}
             <Grid container spacing={3}>
                 <Grid item xs={8}>
-                    <>
-                        {console.log(yearsStart)}
-                        {yearsStart.map(el => {
-                            return <Chip avatar={<Avatar>Y</Avatar>} label={el}/>
-                        })}
-                        {buildsStart.map(el => {
-                            return <Chip avatar={<Avatar>B</Avatar>} label={el}/>
-                        })}
-                    </>
-                    {/*  Активные свойства фильтрации */}
-                    {technics.map(key => {
-                        return (
-                            <Card key={key.room} className={classes.roomItem}>
-                                <Typography variant={"h5"}
-                                            className={`${classes.roomNumber} `}>{!(Number.parseInt(key.room)) ? key.room : `${key.room} кабинет`}</Typography>
-                                <List dense>
-                                    {key.properties.map((el, i) => {
-                                        return !toogleLoadingInfoFotType ? <MiniCardTechnic key={i} el={el}/> :
-                                            <MiniCardTechnicSkeleton key={i}/>
-                                    })}
-                                </List>
-                            </Card>
-                        )
+                    <ActiveCategories yearsStart={yearsStart} buildsStart={buildsStart}/>
 
-
-                    })} {/*  Список техники technics */}
-                </Grid>
+                    <ListTechnics yearsStart={yearsStart}/>
+ {/*  Список техники technics */}
+                </Grid> {/*  Список техники по кабинетам*/}
                 <Grid item xs={4}>
                     <ListTypes/>
                 </Grid> {/*  Список типов техникик */}

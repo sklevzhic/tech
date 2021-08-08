@@ -111,4 +111,14 @@ export const techAPI = {
     addUser(data) {
         return axios.post(`http://localhost:3004/users`,{name: data}).then(responce => responce.data)
     },
+    getComments(id) {
+        return axios.get(`http://localhost:3004/technics/${id}/comments`).then(responce => responce.data)
+    },
+    addComment(id, val) {
+        return axios.post(`http://localhost:3004/technics/${id}/comments`, {
+            "postId": id,
+            "date": new Date(),
+            "body": val
+        }).then(responce => responce.data)
+    },
 }

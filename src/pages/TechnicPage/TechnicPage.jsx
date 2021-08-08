@@ -4,20 +4,23 @@ import Paper from '@material-ui/core/Paper';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from "@material-ui/core/Typography";
 import {makeStyles} from '@material-ui/core/styles';
+import dateFormat from 'dateformat'
 import {
     Card,
     CardContent,
     Container,
     Divider,
-    Grid,
-    List,
+    Grid, IconButton,
+    List, ListItem, ListItemAvatar, ListItemText,
 } from "@material-ui/core";
 import {deepOrange} from '@material-ui/core/colors';
 import ControlledAccordions from "../../components/Accordion";
 import Button from "@material-ui/core/Button";
-import icons from "../../components/global/global";
-import {useForm} from "react-hook-form";
 import ListItemForm from "../../components/ListItemForm";
+import Icon from "../../components/Icon";
+import countDays from "../../components/global/countDays";
+import {useForm} from "react-hook-form";
+import {addComment, getComments} from "../../redux/Tech-reducer";
 
 const useStyles = makeStyles((theme) => ({
     avatarWrapper: {
@@ -40,22 +43,68 @@ const useStyles = makeStyles((theme) => ({
     listItemText: {
         fontSize: '1.1em',
         fontWeight: "bold"
+    },
+    paper: {
+        padding: "10px",
+        width: "100%"
+    },
+    repairs: {
+        display: "flex",
+        justifyContent: "space-around"
+    },
+    repair: {
+        minWidth: "200px",
+        width: "23%",
+        textAlign: "center"
+    },
+    margin: {
+        margin: "20px 0"
     }
 }))
+let repair = [
+    {
+        id: '1',
+        application: '2017-05-25',
+        message: 'message',
+        dispatch: '2017-05-27',
+        getting: '2017-05-29'
+    },
+    {
+        id: '2',
+        application: '2017-05-25',
+        message: 'message',
+        dispatch: '2017-05-27',
+        getting: '2017-05-29'
+    },
+    {
+        id: '3',
+        application: '2017-05-25',
+        message: 'message',
+        dispatch: '2017-05-27',
+        getting: '2017-05-29'
+    },
+    {
+        id: '4',
+        application: '2017-05-25',
+        message: 'message',
+        dispatch: '2017-05-27',
+        getting: '2017-05-29'
+    },
 
+]
 
-const TechnicPage = ({activeTechnic, getTechnicInfo, users}) => {
-    const {register, handleSubmit} = useForm();
+const TechnicPage = ({activeTechnic, getTechnicInfo, users, addComment, activeTechnicComments, getComments}) => {
     useEffect(() => {
         getTechnicInfo(params.id)
+        getComments(params.id)
+
     }, [])
-    const getIcon = (val, size) => {
-        let Icon = icons[val]
-        return <Icon style={{fontSize: `${size}px`}}/>
-    }
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const onSubmit = data => {
+        addComment(activeTechnic.id, data.msg)
+    };
     const classes = useStyles();
     const params = useParams();
-
     return (
         <Container>
             <Grid container spacing={2}>
@@ -65,7 +114,7 @@ const TechnicPage = ({activeTechnic, getTechnicInfo, users}) => {
                             <Avatar
                                 className={classes.avatar}
                             >
-                                {getIcon("printer", 75)}
+                                <Icon type={activeTechnic.type}/>
                             </Avatar>
                             <Divider className={classes.devider}/>
                             <Typography variant={"body2"} component={"span"}>{activeTechnic.type}</Typography>
@@ -85,6 +134,8 @@ const TechnicPage = ({activeTechnic, getTechnicInfo, users}) => {
                                 <ListItemForm activeTechnic={activeTechnic} property={"korpus"} text={"Корпус"}/>
                                 <ListItemForm activeTechnic={activeTechnic} property={"fyo"} text={"ФИО сотрудника"}
                                               array={users}/>
+                                <ListItemForm activeTechnic={activeTechnic} property={"date"}
+                                              text={"Дата получения"}/>
                             </List>
                         </CardContent>
                     </Card>
@@ -100,31 +151,77 @@ const TechnicPage = ({activeTechnic, getTechnicInfo, users}) => {
                             <ListItemForm activeTechnic={activeTechnic} property={"zavod"} text={"Заводской номер"}/>
                             <ListItemForm activeTechnic={activeTechnic} property={"matfyo"}
                                           text={"Материально-ответственное лицо"}/>
-
+                            <ListItemForm activeTechnic={activeTechnic} property={"year"}
+                                          text={"Год выпуска"}/>
                         </CardContent>
                     </Card>
                 </Grid>
-                {
-                    !activeTechnic && <Grid item xs={12}>
-                        <Card>
-                            <CardContent>
-                                <Typography gutterBottom variant="h6" component="h2">
-                                    Комментарий
-                                </Typography>
-                                <Divider/>
-                                <Typography>
-                                    {activeTechnic.desc}
-                                </Typography>
-                            </CardContent>
+            </Grid>
 
-                        </Card>
-                    </Grid>
-                }
+            <Grid className={classes.margin} container spacing={2}>
+                <Paper className={classes.paper}>
+                        <Typography gutterBottom variant="h6" component="h2">
+                            Комментарии
+                        </Typography>
+                    <Typography>Описание: {activeTechnic.desc}</Typography>
+                    <Typography>Проблема: {activeTechnic.problem}</Typography>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <input defaultValue="test" {...register("msg")} />
+                        <input type="submit" />
+                    </form>
+                    <List>
+                        {activeTechnicComments.map(el => {
+                            return <ListItem>
+                                <ListItemAvatar>
+                                    <Avatar>
+                                    </Avatar>
+                                </ListItemAvatar>
+                                <ListItemText primary={el.body} secondary={el.date || '----'} />
+                            </ListItem>
+                        })}
+
+                    </List>
+
+
+                </Paper>
+
+            </Grid>
+            <Grid container className={classes.margin} spacing={2}>
+                <Paper className={classes.paper}>
+                    <div style={{display: "flex"}}>
+                        <Typography gutterBottom variant="h6" component="h2">
+                            Заявки на ремонт
+                        </Typography>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            endIcon={<Icon type={"send"}></Icon>}
+                        >
+                            Send
+                        </Button>
+                    </div>
+
+                    <div className={classes.repairs}>
+                        {repair.map(el => {
+                            return <Card className={classes.repair}>
+                                <CardContent>
+                                    <Typography>Дата заявки: {el.application}</Typography>
+                                    <Typography>Проблема: {el.message}</Typography>
+                                    <Typography>Дата передачи: {el.dispatch}</Typography>
+                                    <Typography>Дата получения: {el.getting}</Typography>
+                                    <Typography>Всего в ремонте: {countDays(el.dispatch,el.getting)}</Typography>
+
+                                </CardContent>
+                            </Card>
+                        })}
+                    </div>
+                </Paper>
+
+            </Grid>
+            <Grid container className={classes.margin} spacing={2}>
                 {
                     ((activeTechnic.type === 'Принтер') || (activeTechnic.type === 'МФУ') || (activeTechnic.type === 'Ксерокс')) &&
-                    <Grid item xs={12}>
-                        <Card>
-                            <CardContent>
+                    <Paper className={classes.paper}>
                                 <Typography gutterBottom variant="h6" component="h2">
                                     Заправки
                                 </Typography>
@@ -136,12 +233,10 @@ const TechnicPage = ({activeTechnic, getTechnicInfo, users}) => {
                                 {activeTechnic.refill ? <>
                                     <ControlledAccordions array={activeTechnic.refill}/>
                                 </> : <Button>Заполнить</Button>}
-                            </CardContent>
-
-                        </Card>
-                    </Grid>
+                    </Paper>
                 }
             </Grid>
+
         </Container>
     )
 }

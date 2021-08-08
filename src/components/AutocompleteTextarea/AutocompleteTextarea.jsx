@@ -1,7 +1,7 @@
-import { IconButton, TextField} from "@material-ui/core";
+import {IconButton, TextField} from "@material-ui/core";
 import Autocomplete, {createFilterOptions} from "@material-ui/lab/Autocomplete";
 import React, {useEffect, useState} from "react";
-import {Controller, useForm, useFormContext} from "react-hook-form";
+import {Controller, useForm} from "react-hook-form";
 import {makeStyles} from "@material-ui/core/styles";
 import SaveIcon from '@material-ui/icons/Save';
 
@@ -18,7 +18,6 @@ const AutocompleteTextarea = ({activeTechnic, property, updateTechnic, setEditMo
     const classes = useStyles()
     const [array, setArray] = useState("")
     const [value, setValue] = useState(null)
-
     useEffect(() => {
         if (property === 'fyo') {
             async function fetchUsers() {
@@ -60,13 +59,11 @@ const AutocompleteTextarea = ({activeTechnic, property, updateTechnic, setEditMo
             setValue({
                 [property]: newValue,
             });
-        }
-        else if (newValue && newValue.inputValue) {
+        } else if (newValue && newValue.inputValue) {
             setValue({
                 [property]: newValue.inputValue,
             });
-        }
-        else {
+        } else {
             setValue(newValue);
         }
     }
@@ -76,71 +73,85 @@ const AutocompleteTextarea = ({activeTechnic, property, updateTechnic, setEditMo
             let val = {
                 [property]: value[property]
             }
+            debugger
             updateTechnic(activeTechnic.id, val)
             setEditMode(false)
             reset()
-        }
-        else {
+        } else {
             updateTechnic(activeTechnic.id, obj)
             setEditMode(false)
             reset()
         }
     }
-
-    return (<form className={classes.root} onSubmit={handleSubmit(onSubmit)}>
-        <div>
-            {!array ?
-                <TextField onKeyDown={handleKeyDown} defaultValue={activeTechnic[property]} autoFocus={true} {...register(property)} />
-                : <Controller
-                    name={property}
-                    control={control}
-                    render={({field}) => <Autocomplete
-                        filterOptions={(options, params) => {
-                            const filtered = filter(options, params);
-                            if (params.inputValue !== '') {
-                                filtered.push({
-                                    inputValue: params.inputValue,
-                                    [property]: `Add "${params.inputValue}"`,
-                                });
-                            }
-                            return filtered;
-                        }}
-                        selectOnFocus
-                        defaultValue={activeTechnic[property]}
-                        clearOnBlur
-                        onKeyDown={handleKeyDown}
-                        onChange={selectItem}
-                        handleHomeEndKeys
-                        id="free-solo-with-text-demo"
-                        options={array}
-                        getOptionLabel={(option) => {
-                            if (typeof option === 'string') {
-                                return option;
-                            }
-                            if (option.inputValue) {
-                                return option.inputValue;
-                            }
-                            return option[property];
-                        }}
-                        renderOption={(option) => option[property]}
-                        style={{width: 250}}
-                        freeSolo
-                        renderInput={(field) => (
-                            <TextField  autoFocus={true} {...field} label={text} variant="outlined"/>
-                        )}
-                    />}
+    return (
+        <form className={classes.root} onSubmit={handleSubmit(onSubmit)}>
+            { ((property === 'date') || (property === 'year'))
+                ? <TextField
+                    id="date"
+                    label="Birthday"
+                    type="date"
+                    {...register(property)}
+                    defaultValue="2017-05-24"
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
                 />
+                : <div>
+                    {!array ?
+                        <TextField onKeyDown={handleKeyDown} defaultValue={activeTechnic[property]}
+                                   autoFocus={true} {...register(property)} />
+                        : <Controller
+                            name={property}
+                            control={control}
+                            render={({field}) => <Autocomplete
+                                filterOptions={(options, params) => {
+                                    const filtered = filter(options, params);
+                                    if (params.inputValue !== '') {
+                                        filtered.push({
+                                            inputValue: params.inputValue,
+                                            [property]: `Add "${params.inputValue}"`,
+                                        });
+                                    }
+                                    return filtered;
+                                }}
+                                selectOnFocus
+                                defaultValue={activeTechnic[property]}
+                                clearOnBlur
+                                onKeyDown={handleKeyDown}
+                                onChange={selectItem}
+                                handleHomeEndKeys
+                                id="free-solo-with-text-demo"
+                                options={array}
+                                getOptionLabel={(option) => {
+                                    if (typeof option === 'string') {
+                                        return option;
+                                    }
+                                    if (option.inputValue) {
+                                        return option.inputValue;
+                                    }
+                                    return option[property];
+                                }}
+                                renderOption={(option) => option[property]}
+                                style={{width: 250}}
+                                freeSolo
+                                renderInput={(field) => (
+                                    <TextField autoFocus={true} {...field} label={text} variant="outlined"/>
+                                )}
+                            />}
+                        />
 
+                    }
+                </div>
             }
-        </div>
-        <div>
-            <IconButton
-                color="primary" aria-label="upload picture" type="submit"
-            >
-                <SaveIcon/>
-            </IconButton>
-        </div>
-    </form>)
+
+            <div>
+                <IconButton
+                    color="primary" aria-label="upload picture" type="submit"
+                >
+                    <SaveIcon/>
+                </IconButton>
+            </div>
+        </form>)
 }
 
 export default AutocompleteTextarea

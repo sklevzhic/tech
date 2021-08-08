@@ -1,4 +1,4 @@
-import {Button, Card, CardActionArea, CardActions, CardContent, CardMedia} from "@material-ui/core";
+import {Card, CardActionArea, CardContent, CardMedia} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
 import {makeStyles} from "@material-ui/styles";

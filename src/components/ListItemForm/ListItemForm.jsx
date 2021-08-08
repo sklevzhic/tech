@@ -1,10 +1,11 @@
-import {ListItem, ListItemIcon, ListItemText, TextField} from "@material-ui/core";
+import {ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import icons from "../global/global";
 import AutocompleteTextarea from "../AutocompleteTextarea";
 import {makeStyles} from "@material-ui/core/styles";
+import Icon from "../Icon";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -18,10 +19,10 @@ const ListItemForm = ({activeTechnic, property, text}) => {
 
     const classes = useStyles();
 
-    const getIcon = (val, size) => {
-        let Icon = icons[val]
-        return <Icon style={{fontSize: `${size}px`}}/>
-    }
+    // const getIcon = (val, size) => {
+    //   let Icon = icons[val]
+    //   return <Icon style={{fontSize: `${size}px`}}/>
+    //}
     const [editMode, setEditMode] = useState(false)
     const editPropertyTechnic = () => {
         setEditMode(true)
@@ -29,7 +30,7 @@ const ListItemForm = ({activeTechnic, property, text}) => {
 
     return <ListItem onDoubleClick={() => editPropertyTechnic(activeTechnic, property)}>
         <ListItemIcon>
-            <Avatar>{getIcon(property)}</Avatar>
+            <Icon type={property} />
         </ListItemIcon>
         {!editMode ? <ListItemText
             classes={{primary: classes.listItemText}}
