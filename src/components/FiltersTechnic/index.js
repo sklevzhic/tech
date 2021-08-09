@@ -1,3 +1,11 @@
 import FiltersTechnics from './FiltersTechnic'
+import {connect} from "react-redux";
+import {getStatistic} from "../../redux/Tech-reducer";
 
-export default FiltersTechnics
+let mapStateToProps = (state) => {
+    return {
+        technics: state.techs.technics,
+        statistics: state.techs.statistics
+    }
+}
+export default connect(mapStateToProps, {getStatistic})(FiltersTechnics)

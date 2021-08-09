@@ -3,7 +3,7 @@ import {
     GitHub,
     Instagram, Language, Link, Telegram, Twitter, YouTube, Contacts, MenuBook,
     Place, Store, TurnedInNot, Toc, Print, DesktopWindows, Scanner, DesktopMac, TabletAndroid,
-    Mouse, Phone, Videocam, SurroundSound, LaptopChromebook, LiveTv, Keyboard, VideoLabel, Send
+    Mouse, Phone, Videocam, SurroundSound, LaptopChromebook, LiveTv, Keyboard, VideoLabel, RecordVoiceOver,TrackChanges
 } from "@material-ui/icons";
 
 const icons = {
@@ -20,7 +20,7 @@ const icons = {
     invent: Toc,
     zavod: TurnedInNot,
     fyo: Contacts,
-    matfyo: MenuBook,
+    matfyo: RecordVoiceOver,
     printer: Print,
     monitor: DesktopWindows,
     scanner: Scanner,
@@ -37,7 +37,8 @@ const icons = {
     tv: LiveTv,
     mfu: Print,
     xerox: Print,
-    send: DesktopMac
+    send: DesktopMac,
+    year: TrackChanges,
 
 }
 

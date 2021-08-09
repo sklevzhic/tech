@@ -14,15 +14,14 @@ const TOOGLE_LOADING_TECHNICS = 'TOOGLE_LOADING_TECHNICS'
 const SET_ROOMS = 'SET_ROOMS'
 const ADD_COMMENT = 'ADD_COMMENT'
 const SET_COMMENTS = 'SET_COMMENTS'
+const SET_STATISTIC = 'SET_STATISTIC'
 
 let initialState = {
     types: [],
     activeType: {},
     activeTechnic: {},
     activeTechnicComments: [],
-    yearsOfProduction: [],
-    korpuses: [],
-    matfyos: [],
+    statistics: [],
     toogleLoadingInfoFotType: false,
     technics: [],
     technicsByCategory: [],
@@ -108,6 +107,22 @@ let initialState = {
     ]
 
 }
+const groupElements = (property, arr) => {
+    return arr.reduce((previousValue, currentValue) => {
+        let objType = previousValue.find(
+            (element) => element[property] === currentValue[property]
+        );
+        if (!objType) {
+            previousValue.push({
+                [property]: currentValue[property],
+                properties: [currentValue]
+            });
+        } else {
+            objType.properties.push(currentValue);
+        }
+        return previousValue;
+    }, []).sort((a, b) => a[property] - b[property])
+}
 
 const TechReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -130,29 +145,10 @@ const TechReducer = (state = initialState, action) => {
             }
         }
         case SET_TECHNICS: {
-            const groupElements = (property) => {
-                return action.payload.reduce((previousValue, currentValue) => {
-                    let objType = previousValue.find(
-                        (element) => element[property] === currentValue[property]
-                    );
-                    if (!objType) {
-                        previousValue.push({
-                            [property]: currentValue[property],
-                            properties: [currentValue]
-                        });
-                    } else {
-                        objType.properties.push(currentValue);
-                    }
-                    return previousValue;
-                }, []).sort((a, b) => a[property] - b[property])
-            }
             return {
                 ...state,
-                technicsByCategory: groupElements("room"),
-                yearsOfProduction: groupElements("year"),
-                korpuses: groupElements("korpus"),
-                matfyos: groupElements("matfyo")
-
+                technics: action.payload,
+                technicsByCategory: groupElements("room", action.payload),
             }
         }
         case SET_TECHNIC: {
@@ -215,6 +211,13 @@ const TechReducer = (state = initialState, action) => {
                 activeTechnicComments: action.payload
             }
         }
+        case SET_STATISTIC: {
+            let groupTechnics = groupElements(action.payload, state.technics)
+            return {
+                ...state,
+                statistics: groupTechnics
+            }
+        }
         default:
             return state
     }
@@ -265,6 +268,10 @@ export const setRoomsAC = (payload) => {
 }
 export const setCommentsAC = (payload) => {
     return {type: SET_COMMENTS, payload}
+}
+
+export const setStatisticAC = (payload) => {
+    return {type: SET_STATISTIC, payload}
 }
 
 
@@ -365,6 +372,12 @@ export const addComment = (id, value) => {
     return async (dispatch) => {
         let response = await techAPI.addComment(id, value)
         dispatch(addCommentAC(response))
+    }
+}
+
+export const getStatistic = (value) => {
+    return async (dispatch) => {
+        dispatch(setStatisticAC(value))
     }
 }
 

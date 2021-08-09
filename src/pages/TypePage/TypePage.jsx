@@ -18,7 +18,7 @@ import Icon from "../../components/Icon";
 import ListTechnics from "../../components/ListTechnics";
 import ActiveCategories from "../../components/ActiveCategories";
 import deepEqual from "../../components/global/deepEqual";
-import FiltersTechnic from "../../components/FiltersTechnic/FiltersTechnic";
+import FiltersTechnic from "../../components/FiltersTechnic";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(2),
         color: theme.palette.text.secondary,
         position: "relative",
-        height: "200px",
+        height: "250px",
         whiteSpace: "nowrap",
         overflow: "hidden",
         textOverflow: "ellipsis",
@@ -122,11 +122,8 @@ const TypePage = ({
         })
     } // добавление {годов выпуска, корпусов, фио сотруников} в url
     const isContains = (arr, obj) => {
-        console.log(arr)
-        console.log(obj)
         return true
     }
-    console.log(filters)
     return (
         <Container>
             <Grid container className={classes.wrapperInfo} spacing={3}>
@@ -156,77 +153,6 @@ const TypePage = ({
                         <FiltersTechnic />
                     </Paper>
                 </Grid> {/*  Годы выпуска */}
-
-
-                <Grid item xs={3}>
-                    <Paper className={classes.paper}>
-                        {toogleLoadingInfoFotType ? <SceletonInfoType/> : <>
-                            <Typography color={"primary"}>Годы выпуска</Typography>
-                            <Divider/>
-                            <List dense={true} className={classes.years}>
-                                {
-                                    yearsOfProduction.map(el => {
-                                        return <ListItem button
-                                                         className={(isContains(filters, el.year)) ? classes.activeItem : ''}
-                                                         onClick={() => handleClickButton(el.year)}
-                                                         key={el.year}>
-                                            <ListItemIcon>
-                                                <FolderIcon/>
-                                            </ListItemIcon>
-                                            <ListItemText
-                                                primary={`${el.year} - ${el.properties.length} шт`}
-                                            />
-                                        </ListItem>
-                                    })
-                                }
-
-                            </List>
-                        </>
-                        }
-                    </Paper>
-                </Grid> {/*  Годы выпуска */}
-                <Grid item xs={3}>
-                    <Paper className={classes.paper}>
-                        {toogleLoadingInfoFotType ? <SceletonInfoType/> : <>
-                            <Typography color={"primary"}>Корпуса</Typography>
-                            <Divider/>
-                            <List dense={true}>
-                                {korpuses.map((el) => {
-                                    return <ListItem button
-                                                     className={(buildsStart.includes(el.korpus)) ? classes.activeItem : ''}
-                                                     onClick={() => handleClickButton(el.korpus, "build")}
-                                                     key={el.korpus}>
-                                        <ListItemIcon>
-                                            <FolderIcon/>
-                                        </ListItemIcon>
-                                        <ListItemText
-                                            primary={`${el.korpus} - ${el.properties.length} шт`}
-                                        />
-                                    </ListItem>
-                                })}
-                            </List>
-                            <Divider/>
-                            <Typography color={"primary"}>Факультеты</Typography>
-                            {["1", "9"].map((key) => {
-                                return <Typography variant={"body2"} key={key}>{key} - 15 шт </Typography>
-                            })}
-                        </>
-                        }
-                    </Paper>
-                </Grid> {/*  Корпуса */}
-                <Grid item xs={3}>
-                    <Paper className={classes.paper}>
-                        {toogleLoadingInfoFotType ? <SceletonInfoType/> : <>
-                            <Typography>Материально-ответственные лица</Typography>
-                            <Divider/>
-                            {matfyos.map((el) => {
-                                return <Typography variant={"body2"}
-                                                   key={el.matfyo}>{el.matfyo} - {el.properties.length}</Typography>
-                            })}
-                        </>
-                        }
-                    </Paper>
-                </Grid> {/*  Материально ответственные лица */}
             </Grid> {/*  Сводная информация в столбцах */}
             {activeType ? <>
             </> : ""}
