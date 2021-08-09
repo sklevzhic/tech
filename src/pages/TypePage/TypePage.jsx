@@ -18,6 +18,7 @@ import Icon from "../../components/Icon";
 import ListTechnics from "../../components/ListTechnics";
 import ActiveCategories from "../../components/ActiveCategories";
 import deepEqual from "../../components/global/deepEqual";
+import FiltersTechnic from "../../components/FiltersTechnic/FiltersTechnic";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -103,35 +104,29 @@ const TypePage = ({
             "value": value
         }
         setFilters((oldObj) => {
+            let isTrue = oldObj.some(el => {
+                if (deepEqual(el, obj)) {
+                    return true
+                }
+            })
+            if (isTrue) {
+                return oldObj.filter(el => {
+                    return console.log('есть')
+                })
+            } else {
+                return [...oldObj, obj]
 
-            // if (oldObj.includes(obj)) {
-            //     return oldObj.filter(el => {
-            //         let a = Object.toJSON(el)
-            //         let b = Object.toJSON(obj)
-            //         debugger
-            //         return Object.toJSON(el) !== Object.toJSON(obj)
-            //     })
-            // }
+            }
+
 
         })
-        if (type === "year") {
-            setYearsStart((oldArray) => {
-                if (oldArray.includes(value)) {
-                    return oldArray.filter(el => el !== value)
-                }
-                return [...oldArray, value]
-            })
-        }
-        if (type === "build") {
-            setBuildsStart((oldArray) => {
-                if (oldArray.includes(value)) {
-                    return oldArray.filter(el => el !== value)
-                }
-                return [...oldArray, value]
-            })
-        }
     } // добавление {годов выпуска, корпусов, фио сотруников} в url
-console.log(filters)
+    const isContains = (arr, obj) => {
+        console.log(arr)
+        console.log(obj)
+        return true
+    }
+    console.log(filters)
     return (
         <Container>
             <Grid container className={classes.wrapperInfo} spacing={3}>
@@ -153,6 +148,16 @@ console.log(filters)
                         }
                     </Paper>
                 </Grid> {/*  Тип, картинка */}
+
+                <Grid item xs={9}>
+                    <Paper className={classes.paper}>
+                        <Typography color={"primary"}>Фильтрация</Typography>
+                        <Divider/>
+                        <FiltersTechnic />
+                    </Paper>
+                </Grid> {/*  Годы выпуска */}
+
+
                 <Grid item xs={3}>
                     <Paper className={classes.paper}>
                         {toogleLoadingInfoFotType ? <SceletonInfoType/> : <>
@@ -162,8 +167,8 @@ console.log(filters)
                                 {
                                     yearsOfProduction.map(el => {
                                         return <ListItem button
-                                                         className={(yearsStart.includes(el.year)) ? classes.activeItem : ''}
-                                                         onClick={() => handleClickButton(el.year, "year")}
+                                                         className={(isContains(filters, el.year)) ? classes.activeItem : ''}
+                                                         onClick={() => handleClickButton(el.year)}
                                                          key={el.year}>
                                             <ListItemIcon>
                                                 <FolderIcon/>
@@ -230,7 +235,7 @@ console.log(filters)
                     <ActiveCategories yearsStart={yearsStart} buildsStart={buildsStart}/>
 
                     <ListTechnics yearsStart={yearsStart}/>
- {/*  Список техники technics */}
+                    {/*  Список техники technics */}
                 </Grid> {/*  Список техники по кабинетам*/}
                 <Grid item xs={4}>
                     <ListTypes/>
