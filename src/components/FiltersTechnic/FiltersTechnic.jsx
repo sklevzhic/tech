@@ -1,12 +1,14 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import {makeStyles} from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import {List, ListItem, ListItemAvatar, ListItemText} from "@material-ui/core";
+import {List, ListItem, ListItemText} from "@material-ui/core";
 import Icon from "../Icon";
+import deepEqual from "../global/deepEqual";
+import getProperty from "../global/getProperty";
 
 let properties = [
     {
@@ -37,21 +39,66 @@ const useStyles = makeStyles((theme) => ({
         height: 224,
     },
     tabs: {
+        width: "30%",
         borderRight: `1px solid ${theme.palette.divider}`,
     },
+    statisticItems: {
+        height: "180px",
+        overflow: "auto"
+    },
+    tabPanel: {
+        width: "70%",
+    },
+    active: {
+        background: "red"
+    }
 }));
 
-const FiltersTechnics = ({getStatistic, technics, statistics}) => {
+
+const FiltersTechnics = ({getStatistic, technics, statistics, categories}) => {
+    const [filters, setFilters] = useState(() => [])
+    const handleClickButton = (prop, value) => {
+        let obj = {
+            "type": prop,
+            "value": value
+        }
+        console.log(obj)
+        setFilters((oldObj) => {
+            let isTrue = oldObj.some(el => {
+                if (deepEqual(el, obj)) {
+                    return true
+                }
+            })
+            if (isTrue) {
+                return oldObj.filter(el => {
+                    return console.log('есть')
+                })
+            } else {
+                return [...oldObj, obj]
+
+            }
+
+
+        })
+    } // добавление {годов выпуска, корпусов, фио сотруников} в url
+
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
-
+    let val = properties[value].property
+    if (val === 'user') {
+        val = 'fyo'
+    } else if (val === 'build') {
+        val = 'korpus'
+    } else if (val === 'faculty') {
+        val = 'faculty'
+    }
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
     useEffect(() => {
-        getStatistic(properties[value].property)
+        getStatistic(val)
     }, [value, technics])
-
+    console.log(categories)
     return (
         <div className={classes.root}>
             <Tabs
@@ -69,17 +116,24 @@ const FiltersTechnics = ({getStatistic, technics, statistics}) => {
             </Tabs>
 
             {properties.map((el, i) => {
-                return <TabPanel value={value} index={i}>
-                    <List>
-
+                return <TabPanel
+                    className={classes.tabPanel}
+                    value={value} index={i}>
+                    <List className={classes.statisticItems}>
                         {
                             statistics.map(obj => {
-                                let key = properties[value].property
-                                return <ListItem button>
-                                    <ListItemAvatar>
-                                        <Icon type={key} />
-                                    </ListItemAvatar>
-                                    <ListItemText primary={`${obj.[key]} - ${obj.properties.length} шт`}/>
+                                let prop = getProperty(obj)
+                                const a = () => {
+                                    if (categories[prop] !== undefined) {
+                                        if (categories[prop].includes(obj[prop]) === true) {
+                                            return true
+                                        }
+                                    }
+                                }
+                                return <ListItem button className={a() ? classes.active : null }>
+                                    <Icon type={val}/>
+                                    <ListItemText onClick={() => handleClickButton(val, obj.[val])}
+                                                  primary={`${obj.[val]} - ${obj.properties.length} шт`}/>
                                 </ListItem>
                             })
                         }
@@ -92,14 +146,14 @@ const FiltersTechnics = ({getStatistic, technics, statistics}) => {
     );
 }
 
-function a11yProps(index) {
+const a11yProps = (index) => {
     return {
         id: `vertical-tab-${index}`,
         'aria-controls': `vertical-tabpanel-${index}`,
     };
 }
 
-function TabPanel(props) {
+const TabPanel = (props) => {
     const {children, value, index, ...other} = props;
 
     return (

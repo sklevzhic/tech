@@ -89,38 +89,17 @@ const TypePage = ({
     const classes = useStyles();
     const params = useParams();
 
-    const [filters, setFilters] = useState(() => [])
-    const [yearsStart, setYearsStart] = useState([]);
-    const [buildsStart, setBuildsStart] = useState([]);
+    let a = {
+        "year": ["2005", "2007"],
+        "build": [],
+        "room": [],
+        "matfyo": ["Петрусев Сергей Викторович", "Маголина Алла Викторовна"],
+    }
+    const [categories, setCategories] = useState(() => a)
 
     useEffect(() => {
         getActiveType(params.type)
-        // setYearsStart([])
-        // setBuildsStart([])
     }, [params.type]) // получение техники по api-запросу, обновление при смене url
-    const handleClickButton = (value, type) => {
-        let obj = {
-            "type": type,
-            "value": value
-        }
-        setFilters((oldObj) => {
-            let isTrue = oldObj.some(el => {
-                if (deepEqual(el, obj)) {
-                    return true
-                }
-            })
-            if (isTrue) {
-                return oldObj.filter(el => {
-                    return console.log('есть')
-                })
-            } else {
-                return [...oldObj, obj]
-
-            }
-
-
-        })
-    } // добавление {годов выпуска, корпусов, фио сотруников} в url
     const isContains = (arr, obj) => {
         return true
     }
@@ -138,6 +117,7 @@ const TypePage = ({
                                     <Typography variant="body2" gutterBottom>
                                         [ {activeType.type} ]
                                     </Typography>
+                                    Всего
                                 </div>
                             </div>
                             <Divider/>
@@ -150,7 +130,7 @@ const TypePage = ({
                     <Paper className={classes.paper}>
                         <Typography color={"primary"}>Фильтрация</Typography>
                         <Divider/>
-                        <FiltersTechnic />
+                        <FiltersTechnic categories={categories} setCategories={setCategories}/>
                     </Paper>
                 </Grid> {/*  Годы выпуска */}
             </Grid> {/*  Сводная информация в столбцах */}
@@ -158,9 +138,9 @@ const TypePage = ({
             </> : ""}
             <Grid container spacing={3}>
                 <Grid item xs={8}>
-                    <ActiveCategories yearsStart={yearsStart} buildsStart={buildsStart}/>
+                    <ActiveCategories categories={categories} setCategories={setCategories}/>
 
-                    <ListTechnics yearsStart={yearsStart}/>
+                    <ListTechnics categories={categories} setCategories={setCategories}/>
                     {/*  Список техники technics */}
                 </Grid> {/*  Список техники по кабинетам*/}
                 <Grid item xs={4}>

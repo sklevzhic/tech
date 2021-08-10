@@ -2,9 +2,9 @@ import React, {useEffect, useState} from "react";
 import Chip from "@material-ui/core/Chip";
 import Avatar from "@material-ui/core/Avatar";
 import {useHistory} from "react-router-dom";
+import Icon from "../Icon";
 
-const ActiveCategories = ({yearsStart, buildsStart}) => {
-
+const ActiveCategories = ({categories}) => {
     const generateUrl = (array) => {
         return array.map(el => {
             if (el.array.length === 0) {
@@ -15,18 +15,17 @@ const ActiveCategories = ({yearsStart, buildsStart}) => {
         }).join('&')
     }
     let history = useHistory();
+    const categoriesElements = Object.keys(categories).map(key => {
+       return  categories[key].map(el => {
+           return <Chip avatar={<Icon type={key}></Icon>} label={el} />
+        })
+    })
 
     useEffect(() => {
-        let urlData = generateUrl(
-            [
-                {query: "years", array: yearsStart},
-                {query: "builds", array: buildsStart},
-            ]
-        )
+        // let urlData = generateUrl( )
         history.push({
-            search: `${(urlData === '&') ? '' : urlData}`
+            // search: `${(urlData === '&') ? '' : urlData}`
         });
-
 //переделать получение данных с url
         // [
         //     {type: years, arr: yearsStart},
@@ -37,16 +36,10 @@ const ActiveCategories = ({yearsStart, buildsStart}) => {
         //     })
         // })
 
-    }, [yearsStart, buildsStart])  // получение данных с url
-
+    }, [])  // получение данных с url
     return (
         <>
-            {yearsStart.map(el => {
-                return <Chip key={el} avatar={<Avatar>Y</Avatar>} label={el}/>
-            })}
-            {buildsStart.map(el => {
-                return <Chip key={el} avatar={<Avatar>B</Avatar>} label={el}/>
-            })}
+            { categoriesElements }
         </>
     )
 }
