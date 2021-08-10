@@ -1,5 +1,6 @@
 import {withRouter, useParams, useLocation, useHistory} from "react-router-dom";
 import {
+    Button,
     Card,
     Container,
     Divider,
@@ -90,12 +91,12 @@ const TypePage = ({
     const params = useParams();
 
     let a = {
-        "year": ["2005", "2007"],
-        "build": [],
-        "room": [],
-        "matfyo": ["Петрусев Сергей Викторович", "Маголина Алла Викторовна"],
+        year: [],
+        matfyo: [],
     }
     const [categories, setCategories] = useState(() => a)
+    const [bbb, setBbb] = useState({})
+
 
     useEffect(() => {
         getActiveType(params.type)
@@ -103,6 +104,7 @@ const TypePage = ({
     const isContains = (arr, obj) => {
         return true
     }
+    console.log(bbb)
     return (
         <Container>
             <Grid container className={classes.wrapperInfo} spacing={3}>
@@ -117,7 +119,9 @@ const TypePage = ({
                                     <Typography variant="body2" gutterBottom>
                                         [ {activeType.type} ]
                                     </Typography>
-                                    Всего
+                                    <Button onClick={() => setBbb({...bbb, ["type"]: ["10","11"]})}>
+                                        sss
+                                    </Button>
                                 </div>
                             </div>
                             <Divider/>

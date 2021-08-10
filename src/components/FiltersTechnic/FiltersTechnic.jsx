@@ -55,31 +55,33 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const FiltersTechnics = ({getStatistic, technics, statistics, categories}) => {
-    const [filters, setFilters] = useState(() => [])
+const FiltersTechnics = ({getStatistic, technics, statistics, categories, setCategories}) => {
     const handleClickButton = (prop, value) => {
-        let obj = {
-            "type": prop,
-            "value": value
-        }
-        console.log(obj)
-        setFilters((oldObj) => {
-            let isTrue = oldObj.some(el => {
-                if (deepEqual(el, obj)) {
-                    return true
-                }
-            })
-            if (isTrue) {
-                return oldObj.filter(el => {
-                    return console.log('есть')
-                })
-            } else {
-                return [...oldObj, obj]
-
-            }
-
-
-        })
+        setCategories(prevState => ({
+            ...prevState,
+            [prop]: [...prevState[prop], value]
+        }))
+        // let obj = {
+        //     "type": prop,
+        //     "value": value
+        // }
+        // setFilters((oldObj) => {
+        //     let isTrue = oldObj.some(el => {
+        //         if (deepEqual(el, obj)) {
+        //             return true
+        //         }
+        //     })
+        //     if (isTrue) {
+        //         return oldObj.filter(el => {
+        //             return console.log('есть')
+        //         })
+        //     } else {
+        //         return [...oldObj, obj]
+        //
+        //     }
+        //
+        //
+        // })
     } // добавление {годов выпуска, корпусов, фио сотруников} в url
 
     const classes = useStyles();
@@ -123,17 +125,19 @@ const FiltersTechnics = ({getStatistic, technics, statistics, categories}) => {
                         {
                             statistics.map(obj => {
                                 let prop = getProperty(obj)
-                                const a = () => {
+                                const isContains = () => {
                                     if (categories[prop] !== undefined) {
                                         if (categories[prop].includes(obj[prop]) === true) {
                                             return true
                                         }
+                                    } else {
+                                        return false
                                     }
                                 }
-                                return <ListItem button className={a() ? classes.active : null }>
+                                return <ListItem onClick={() => handleClickButton(val, obj.[val])} button
+                                                 className={isContains() ? classes.active : null}>
                                     <Icon type={val}/>
-                                    <ListItemText onClick={() => handleClickButton(val, obj.[val])}
-                                                  primary={`${obj.[val]} - ${obj.properties.length} шт`}/>
+                                    <ListItemText primary={`${obj.[val]} - ${obj.properties.length} шт`}/>
                                 </ListItem>
                             })
                         }
@@ -152,7 +156,6 @@ const a11yProps = (index) => {
         'aria-controls': `vertical-tabpanel-${index}`,
     };
 }
-
 const TabPanel = (props) => {
     const {children, value, index, ...other} = props;
 
@@ -172,8 +175,6 @@ const TabPanel = (props) => {
         </div>
     );
 }
-
-
 TabPanel.propTypes = {
     children: PropTypes.node,
     index: PropTypes.any.isRequired,

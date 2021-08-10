@@ -15,6 +15,7 @@ const ActiveCategories = ({categories}) => {
         }).join('&')
     }
     let history = useHistory();
+    console.log(categories)
     const categoriesElements = Object.keys(categories).map(key => {
        return  categories[key].map(el => {
            return <Chip avatar={<Icon type={key}></Icon>} label={el} />
