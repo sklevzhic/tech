@@ -25,7 +25,7 @@ const MiniCardTechnic = ({el, keys}) => {
             <ListItemText
                 primary={`[${!el.invent ?
                     <Button color="secondary">Заполнить</Button> : el.invent}] - ${el.name}`}
-                secondary={`${el.year} ${el.fyo}`}
+                secondary={`${el.year} ${el.user}`}
             />
             <ListItemSecondaryAction style={{display: "flex"}}>
                 {Object.keys(keys).map(key => {

@@ -35,6 +35,14 @@ let initialState = {
         {name: "Первое образование", id: 5},
         {name: "ЦДО Альтернатива", id: 6}
     ],
+    paramsTechnics: [
+        {title: "Годы выпуска", property: "year"},
+        {title: "Факультеты", property: "faculty"},
+        {title: "Корпуса",property: "build"},
+        {title: "Кабинеты",property: "room"},
+        {title: "Сотрудники",property: "user"},
+        {title: "Материально-ответственные лица",property: "matfyo"}
+    ],
     rooms: [],
     keys: [
         {

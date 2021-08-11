@@ -5,7 +5,8 @@ import {getStatistic} from "../../redux/Tech-reducer";
 let mapStateToProps = (state) => {
     return {
         technics: state.techs.technics,
-        statistics: state.techs.statistics
+        statistics: state.techs.statistics,
+        paramsTechnics: state.techs.paramsTechnics
     }
 }
 export default connect(mapStateToProps, {getStatistic})(FiltersTechnics)

@@ -4,7 +4,6 @@ import ActiveCategories from "./ActiveCategories";
 
 const mapStateToProps = (state) => {
     return {
-        activeCategories: state.techs.activeCategories
     }
 }
 const mapToDispatch = {

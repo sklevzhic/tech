@@ -1,46 +1,35 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import Chip from "@material-ui/core/Chip";
-import Avatar from "@material-ui/core/Avatar";
 import {useHistory} from "react-router-dom";
 import Icon from "../Icon";
 
 const ActiveCategories = ({categories}) => {
-    const generateUrl = (array) => {
-        return array.map(el => {
-            if (el.array.length === 0) {
+    const generateUrl = (arr) => {
+        let str = Object.keys(categories).map(key => {
+            if (categories[key].length === 0) {
                 return null
             } else {
-                return `${el.query}=${el.array}`
+                return `${key}=${categories[key]}`
             }
-        }).join('&')
-    }
-    let history = useHistory();
-    console.log(categories)
-    const categoriesElements = Object.keys(categories).map(key => {
-       return  categories[key].map(el => {
-           return <Chip avatar={<Icon type={key}></Icon>} label={el} />
         })
-    })
+        return str.filter(n => n).join('&')
+    } // Генерация URL на основе активных категорий
+    let history = useHistory();
+    const categoriesElements = Object.keys(categories).map(key => {
+        return categories[key].map(el => {
+            return <Chip avatar={<Icon type={key}></Icon>} label={el}/>
+        })
+    }) // Генерация карточек по кабинетам
 
     useEffect(() => {
-        // let urlData = generateUrl( )
+        let urlData = generateUrl(categories)
         history.push({
-            // search: `${(urlData === '&') ? '' : urlData}`
+            search: `${(urlData === '&') ? '' : urlData}`
         });
-//переделать получение данных с url
-        // [
-        //     {type: years, arr: yearsStart},
-        //     {type: builds, arr: buildsStart},
-        // ].map(el => {
-        //     (el.type !== undefined) && el.type.split(",").map(elArr => {
-        //         el.arr.push(elArr)
-        //     })
-        // })
-
-    }, [])  // получение данных с url
+    }, [categories])
     return (
         <>
-            { categoriesElements }
+            {categoriesElements}
         </>
     )
 }

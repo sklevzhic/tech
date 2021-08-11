@@ -4,7 +4,6 @@ import Paper from '@material-ui/core/Paper';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from "@material-ui/core/Typography";
 import {makeStyles} from '@material-ui/core/styles';
-import dateFormat from 'dateformat'
 import {
     Card,
     CardContent,
@@ -131,8 +130,8 @@ const TechnicPage = ({activeTechnic, getTechnicInfo, users, addComment, activeTe
                             <Divider/>
                             <List>
                                 <ListItemForm activeTechnic={activeTechnic} property={"room"} text={"Кабинет"}/>
-                                <ListItemForm activeTechnic={activeTechnic} property={"korpus"} text={"Корпус"}/>
-                                <ListItemForm activeTechnic={activeTechnic} property={"fyo"} text={"ФИО сотрудника"}
+                                <ListItemForm activeTechnic={activeTechnic} property={"build"} text={"Корпус"}/>
+                                <ListItemForm activeTechnic={activeTechnic} property={"user"} text={"ФИО сотрудника"}
                                               array={users}/>
                                 <ListItemForm activeTechnic={activeTechnic} property={"date"}
                                               text={"Дата получения"}/>

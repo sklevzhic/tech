@@ -7,30 +7,8 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import {List, ListItem, ListItemText} from "@material-ui/core";
 import Icon from "../Icon";
-import deepEqual from "../global/deepEqual";
 import getProperty from "../global/getProperty";
 
-let properties = [
-    {
-        "title": "Годы выпуска",
-        "property": "year"
-    }, {
-        "title": "Факультеты",
-        "property": "faculty"
-    }, {
-        "title": "Корпуса",
-        "property": "build"
-    }, {
-        "title": "Кабинеты",
-        "property": "room"
-    }, {
-        "title": "Сотрудники",
-        "property": "user"
-    }, {
-        "title": "Материально-ответственные лица",
-        "property": "matfyo"
-    }
-]
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
@@ -55,52 +33,34 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const FiltersTechnics = ({getStatistic, technics, statistics, categories, setCategories}) => {
+const FiltersTechnics = ({getStatistic, technics, paramsTechnics, statistics, categories, setCategories}) => {
     const handleClickButton = (prop, value) => {
-        setCategories(prevState => ({
-            ...prevState,
-            [prop]: [...prevState[prop], value]
-        }))
-        // let obj = {
-        //     "type": prop,
-        //     "value": value
-        // }
-        // setFilters((oldObj) => {
-        //     let isTrue = oldObj.some(el => {
-        //         if (deepEqual(el, obj)) {
-        //             return true
-        //         }
-        //     })
-        //     if (isTrue) {
-        //         return oldObj.filter(el => {
-        //             return console.log('есть')
-        //         })
-        //     } else {
-        //         return [...oldObj, obj]
-        //
-        //     }
-        //
-        //
-        // })
+        const writeParams = (params) => {
+            let arr = []
+            params.forEach(el => {
+               arr.push(el.property)
+            })
+            return arr
+        }
+        if (writeParams(paramsTechnics).includes(prop)) {
+            setCategories(prevState => ({
+                ...prevState,
+                [prop]: (!prevState[prop].includes(value)) ? [...prevState[prop], value] : prevState[prop].filter(el => el !== value) // Добавление/удаление из активных категорий
+            }))
+        }
+
+
     } // добавление {годов выпуска, корпусов, фио сотруников} в url
 
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
-    let val = properties[value].property
-    if (val === 'user') {
-        val = 'fyo'
-    } else if (val === 'build') {
-        val = 'korpus'
-    } else if (val === 'faculty') {
-        val = 'faculty'
-    }
+    let val = paramsTechnics[value].property
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
     useEffect(() => {
         getStatistic(val)
     }, [value, technics])
-    console.log(categories)
     return (
         <div className={classes.root}>
             <Tabs
@@ -111,13 +71,13 @@ const FiltersTechnics = ({getStatistic, technics, statistics, categories, setCat
                 aria-label="Vertical tabs example"
                 className={classes.tabs}
             >
-                {properties.map((el, i) => {
+                {paramsTechnics.map((el, i) => {
                     return <Tab label={el.title} {...a11yProps(i)} />
                 })}
 
             </Tabs>
 
-            {properties.map((el, i) => {
+            {paramsTechnics.map((el, i) => {
                 return <TabPanel
                     className={classes.tabPanel}
                     value={value} index={i}>
@@ -137,7 +97,7 @@ const FiltersTechnics = ({getStatistic, technics, statistics, categories, setCat
                                 return <ListItem onClick={() => handleClickButton(val, obj.[val])} button
                                                  className={isContains() ? classes.active : null}>
                                     <Icon type={val}/>
-                                    <ListItemText primary={`${obj.[val]} - ${obj.properties.length} шт`}/>
+                                    <ListItemText primary={`${obj.[val] || 'Не указано'} - ${obj.properties.length} шт`}/>
                                 </ListItem>
                             })
                         }

@@ -77,34 +77,26 @@ const useStyles = makeStyles((theme) => ({
     roomNumber: {}
 }));
 
-const TypePage = ({
-                      getActiveType,
-                      activeType,
-                      yearsOfProduction,
-                      toogleLoadingInfoFotType,
-                      matfyos,
-                      korpuses
-                  }) => {
-    const {search} = useLocation()
-    const {years, builds} = queryString.parse(search)
+const TypePage = ({ getActiveType,  activeType, toogleLoadingInfoFotType }) => {
+    // const {search} = useLocation()
+    // const {years, builds} = queryString.parse(search)
     const classes = useStyles();
     const params = useParams();
-
     let a = {
         year: [],
         matfyo: [],
+        build: [],
+        faculty: [],
+        room: [],
+        user: []
     }
     const [categories, setCategories] = useState(() => a)
-    const [bbb, setBbb] = useState({})
 
 
     useEffect(() => {
         getActiveType(params.type)
-    }, [params.type]) // получение техники по api-запросу, обновление при смене url
-    const isContains = (arr, obj) => {
-        return true
-    }
-    console.log(bbb)
+    }, [params.type]) // получение техники в соответствии с url, обновление при смене url
+
     return (
         <Container>
             <Grid container className={classes.wrapperInfo} spacing={3}>
@@ -119,9 +111,6 @@ const TypePage = ({
                                     <Typography variant="body2" gutterBottom>
                                         [ {activeType.type} ]
                                     </Typography>
-                                    <Button onClick={() => setBbb({...bbb, ["type"]: ["10","11"]})}>
-                                        sss
-                                    </Button>
                                 </div>
                             </div>
                             <Divider/>
@@ -136,16 +125,14 @@ const TypePage = ({
                         <Divider/>
                         <FiltersTechnic categories={categories} setCategories={setCategories}/>
                     </Paper>
-                </Grid> {/*  Годы выпуска */}
-            </Grid> {/*  Сводная информация в столбцах */}
+                </Grid>
+            </Grid> {/*  Сводная информация*/}
             {activeType ? <>
             </> : ""}
             <Grid container spacing={3}>
                 <Grid item xs={8}>
                     <ActiveCategories categories={categories} setCategories={setCategories}/>
-
                     <ListTechnics categories={categories} setCategories={setCategories}/>
-                    {/*  Список техники technics */}
                 </Grid> {/*  Список техники по кабинетам*/}
                 <Grid item xs={4}>
                     <ListTypes/>
