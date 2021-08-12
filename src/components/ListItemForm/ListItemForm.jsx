@@ -30,7 +30,7 @@ const ListItemForm = ({activeTechnic, property, text}) => {
 
     return <ListItem onDoubleClick={() => editPropertyTechnic(activeTechnic, property)}>
         <ListItemIcon>
-            <Icon type={property} />
+            <Icon type={property}/>
         </ListItemIcon>
         {!editMode ? <ListItemText
             classes={{primary: classes.listItemText}}
@@ -40,7 +40,8 @@ const ListItemForm = ({activeTechnic, property, text}) => {
                         editPropertyTechnic(activeTechnic, property)
                     }}>Заполнить</Button>}
             secondary={text}
-        /> : <AutocompleteTextarea activeTechnic={activeTechnic} property={property} text={text} setEditMode={setEditMode}/>}
+        /> : <AutocompleteTextarea activeTechnic={activeTechnic} property={property} text={text}
+                                   setEditMode={setEditMode}/>}
 
     </ListItem>
 }

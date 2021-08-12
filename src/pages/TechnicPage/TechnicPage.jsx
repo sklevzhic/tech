@@ -135,6 +135,8 @@ const TechnicPage = ({activeTechnic, getTechnicInfo, users, addComment, activeTe
                                               array={users}/>
                                 <ListItemForm activeTechnic={activeTechnic} property={"date"}
                                               text={"Дата получения"}/>
+                                <ListItemForm activeTechnic={activeTechnic} property={"faculty"}
+                                              text={"Факультет"}/>
                             </List>
                         </CardContent>
                     </Card>

@@ -16,30 +16,60 @@ const useStyles = makeStyles((theme) => ({
 
 const ListTechnics = ({technicsByCategory, toogleLoadingInfoFotType, categories}) => {
     const classes = useStyles();
+    let [condition, setCondition] = useState('')
+    // const checkCondition = (el) => {
+    //     let  cond = Object.keys(categories).map(key => {
+    //         if (categories[key].length === 0) {
+    //             return null
+    //         } else {
+    //             let a = categories[key].map(prop => {
+    //                     return `(${el}.${key} === '${prop}')`
+    //                 }
+    //             )
+    //             return a.join(' || ')
+    //         }
+    //     }).filter(n => n).join(' || ')
+    //     return cond
+    // }
+    const checkCondition = (el) => {
+        let cond = Object.keys(categories).map(key => {
+            debugger
+        })
+        return cond
+
+    }
+    console.log(checkCondition('2009'))
+
     const filteredTechnics = technicsByCategory.map(el => {
-        let str = getProperty(el)
-        // (categories[str].includes(el[str])) || ([...categories[str]].length === 0)
-        if (true) {
-            return <Card key={el.room} className={classes.roomItem}>
-                <Typography variant={"h5"} className={`${classes.roomNumber}`}>
-                    {!(Number.parseInt(el.room)) ? el.room : `${el.room} кабинет`}
-                </Typography>
-                <List dense>
-                    {el.properties.map((el1, i) => {
-                        return !toogleLoadingInfoFotType
-                            ? <MiniCardTechnic key={i} el={el1}/>
-                            : <MiniCardTechnicSkeleton key={i}/>
-                    })}
-                </List>
-            </Card>
-        } else {
-            return null
-        }
     })
+    {/*const filteredTechnics = technicsByCategory.map(el => {*/
+    }
+    //     el.properties.map(el => {
+    //         renderCondition(el)
+    //     })
+    //     if (true) {
+    //         return <Card key={el.room} className={classes.roomItem}>
+    //             <Typography variant={"h5"} className={`${classes.roomNumber}`}>
+    {/*                {!(Number.parseInt(el.room)) ? el.room : `${el.room} кабинет`}*/
+    }
+    {/*            </Typography>*/
+    }
+    //             <List dense>
+    //                 {el.properties.map((el1, i) => {
+    //                     return !toogleLoadingInfoFotType
+    //                         ? <MiniCardTechnic key={i} el={el1}/>
+    //                         : <MiniCardTechnicSkeleton key={i}/>
+    //                 })}
+    //             </List>
+    //         </Card>
+    //     } else {
+    //         return null
+    //     }
+    // })
 
     return (
         <>
-            {filteredTechnics}
+            {/*{filteredTechnics}*/}
         </>
     )
 }
