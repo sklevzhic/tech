@@ -35,22 +35,16 @@ const useStyles = makeStyles((theme) => ({
 
 const FiltersTechnics = ({getStatistic, technics, paramsTechnics, statistics, categories, setCategories}) => {
     const handleClickButton = (prop, value) => {
-        const writeParams = (params) => {
-            let arr = []
-            params.forEach(el => {
-               arr.push(el.property)
-            })
-            return arr
-        }
-        if (writeParams(paramsTechnics).includes(prop)) {
-            setCategories(prevState => ({
-                ...prevState,
-                [prop]: (!prevState[prop].includes(value)) ? [...prevState[prop], value] : prevState[prop].filter(el => el !== value) // Добавление/удаление из активных категорий
-            }))
-        }
-
-
-    } // добавление {годов выпуска, корпусов, фио сотруников} в url
+        let property = () => {
+            let obj = {[prop]: value}
+            if (JSON.stringify(categories).includes(JSON.stringify(obj))) {
+                return false
+            } else {
+                return true
+            }
+        } // Проверка наличия выбранной кабегории в массиве категорий
+        setCategories(prevState => (property()) ? [...prevState, {[prop]: value}] : prevState.filter(el => ((Object.keys(el)[0],Object.values(el)[0]) !== (prop,value))))
+    }
 
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
@@ -72,7 +66,7 @@ const FiltersTechnics = ({getStatistic, technics, paramsTechnics, statistics, ca
                 className={classes.tabs}
             >
                 {paramsTechnics.map((el, i) => {
-                    return <Tab label={el.title} {...a11yProps(i)} />
+                    return <Tab key={i} label={el.title} {...a11yProps(i)} />
                 })}
 
             </Tabs>
@@ -81,23 +75,23 @@ const FiltersTechnics = ({getStatistic, technics, paramsTechnics, statistics, ca
                 return <TabPanel
                     className={classes.tabPanel}
                     value={value} index={i}>
-                    <List className={classes.statisticItems}>
+                    <List key={i} className={classes.statisticItems}>
                         {
-                            statistics.map(obj => {
+                            statistics.map((obj,i) => {
                                 let prop = getProperty(obj)
                                 const isContains = () => {
-                                    if (categories[prop] !== undefined) {
-                                        if (categories[prop].includes(obj[prop]) === true) {
+                                    let a = categories.some(el => {
+                                        if (obj[prop] === el[prop]) {
                                             return true
                                         }
-                                    } else {
-                                        return false
-                                    }
+                                    })
+                                    return a
                                 }
-                                return <ListItem onClick={() => handleClickButton(val, obj.[val])} button
+                                return <ListItem key={i} onClick={() => handleClickButton(val, obj.[val])} button
                                                  className={isContains() ? classes.active : null}>
                                     <Icon type={val}/>
-                                    <ListItemText primary={`${obj.[val] || 'Не указано'} - ${obj.properties.length} шт`}/>
+                                    <ListItemText
+                                        primary={`${obj.[val] || 'Не указано'} - ${obj.properties.length} шт`}/>
                                 </ListItem>
                             })
                         }

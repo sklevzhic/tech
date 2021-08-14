@@ -15,10 +15,10 @@ const ActiveCategories = ({categories}) => {
         return str.filter(n => n).join('&')
     } // Генерация URL на основе активных категорий
     let history = useHistory();
-    const categoriesElements = Object.keys(categories).map(key => {
-        return categories[key].map(el => {
-            return <Chip avatar={<Icon type={key}></Icon>} label={el}/>
-        })
+    const categoriesElements = categories.map((el,i) => {
+        let type = Object.keys(el)[0]
+        let value = Object.values(el)[0]
+        return <Chip key={i} avatar={<Icon type={type}></Icon>} label={value}/>
     }) // Генерация карточек по кабинетам
 
     useEffect(() => {

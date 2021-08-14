@@ -73,7 +73,6 @@ const AutocompleteTextarea = ({activeTechnic, property, updateTechnic, setEditMo
             let val = {
                 [property]: value[property]
             }
-            debugger
             updateTechnic(activeTechnic.id, val)
             setEditMode(false)
             reset()

@@ -82,15 +82,7 @@ const TypePage = ({ getActiveType,  activeType, toogleLoadingInfoFotType }) => {
     // const {years, builds} = queryString.parse(search)
     const classes = useStyles();
     const params = useParams();
-    let a = {
-        year: [],
-        matfyo: [],
-        build: [],
-        faculty: [],
-        room: [],
-        user: []
-    }
-    const [categories, setCategories] = useState(() => a)
+    const [categories, setCategories] = useState(() => [])
 
 
     useEffect(() => {
