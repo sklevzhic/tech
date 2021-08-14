@@ -10,6 +10,8 @@ import {
 import {Link} from "react-router-dom";
 import React from "react";
 import Icon from "../Icon";
+import images from "../global/images";
+import Avatar from "@material-ui/core/Avatar";
 
 // const useStyles = makeStyles((theme) => ({}))
 
@@ -20,7 +22,8 @@ const MiniCardTechnic = ({el, keys}) => {
         <ListItem component={Link} key={el} to={`/technics/${el.id}`} button>
 
             <ListItemIcon>
-                <Icon type={el.type} />
+                <Avatar variant={"square"} src={images[el.name]}></Avatar>
+                {/*<Icon type={el.type} />*/}
             </ListItemIcon>
             <ListItemText
                 primary={`[${!el.invent ?

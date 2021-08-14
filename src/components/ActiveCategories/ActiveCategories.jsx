@@ -3,7 +3,7 @@ import Chip from "@material-ui/core/Chip";
 import {useHistory} from "react-router-dom";
 import Icon from "../Icon";
 
-const ActiveCategories = ({categories}) => {
+const ActiveCategories = ({categories, handlerCategory}) => {
     const generateUrl = (arr) => {
         let str = Object.keys(categories).map(key => {
             if (categories[key].length === 0) {
@@ -18,7 +18,7 @@ const ActiveCategories = ({categories}) => {
     const categoriesElements = categories.map((el,i) => {
         let type = Object.keys(el)[0]
         let value = Object.values(el)[0]
-        return <Chip key={i} avatar={<Icon type={type}></Icon>} label={value}/>
+        return <Chip style={{cursor: "pointer"}} onClick={() => handlerCategory(type,value)} key={i} avatar={<Icon type={type}></Icon>} label={value}/>
     }) // Генерация карточек по кабинетам
 
     useEffect(() => {

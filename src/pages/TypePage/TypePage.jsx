@@ -1,11 +1,8 @@
 import {withRouter, useParams, useLocation, useHistory} from "react-router-dom";
 import {
-    Button,
-    Card,
     Container,
     Divider,
     Grid,
-    List, ListItem, ListItemIcon, ListItemText,
     Paper
 } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
@@ -14,11 +11,9 @@ import {makeStyles} from "@material-ui/core/styles";
 import ListTypes from "../../components/ListTypes";
 import {Skeleton} from "@material-ui/lab";
 import queryString from 'query-string'
-import FolderIcon from '@material-ui/icons/Folder';
 import Icon from "../../components/Icon";
 import ListTechnics from "../../components/ListTechnics";
 import ActiveCategories from "../../components/ActiveCategories";
-import deepEqual from "../../components/global/deepEqual";
 import FiltersTechnic from "../../components/FiltersTechnic";
 
 const useStyles = makeStyles((theme) => ({
@@ -83,7 +78,17 @@ const TypePage = ({ getActiveType,  activeType, toogleLoadingInfoFotType }) => {
     const classes = useStyles();
     const params = useParams();
     const [categories, setCategories] = useState(() => [])
-
+    const handlerCategory = (prop, value) => {
+        let property = () => {
+            let obj = {[prop]: value}
+            if (JSON.stringify(categories).includes(JSON.stringify(obj))) {
+                return false
+            } else {
+                return true
+            }
+        } // Проверка наличия выбранной кабегории в массиве категорий
+        setCategories(prevState => (property()) ? [...prevState, {[prop]: value}] : prevState.filter(el => ((Object.keys(el)[0],Object.values(el)[0]) !== (prop,value))))
+    }
 
     useEffect(() => {
         getActiveType(params.type)
@@ -115,7 +120,7 @@ const TypePage = ({ getActiveType,  activeType, toogleLoadingInfoFotType }) => {
                     <Paper className={classes.paper}>
                         <Typography color={"primary"}>Фильтрация</Typography>
                         <Divider/>
-                        <FiltersTechnic categories={categories} setCategories={setCategories}/>
+                        <FiltersTechnic categories={categories} handlerCategory={handlerCategory}/>
                     </Paper>
                 </Grid>
             </Grid> {/*  Сводная информация*/}
@@ -123,7 +128,7 @@ const TypePage = ({ getActiveType,  activeType, toogleLoadingInfoFotType }) => {
             </> : ""}
             <Grid container spacing={3}>
                 <Grid item xs={8}>
-                    <ActiveCategories categories={categories} setCategories={setCategories}/>
+                    <ActiveCategories categories={categories} handlerCategory={handlerCategory}/>
                     <ListTechnics categories={categories} setCategories={setCategories}/>
                 </Grid> {/*  Список техники по кабинетам*/}
                 <Grid item xs={4}>

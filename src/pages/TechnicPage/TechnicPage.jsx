@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import Paper from '@material-ui/core/Paper';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from "@material-ui/core/Typography";
@@ -9,7 +9,7 @@ import {
     CardContent,
     Container,
     Divider,
-    Grid, IconButton,
+    Grid,
     List, ListItem, ListItemAvatar, ListItemText,
 } from "@material-ui/core";
 import {deepOrange} from '@material-ui/core/colors';
@@ -19,8 +19,8 @@ import ListItemForm from "../../components/ListItemForm";
 import Icon from "../../components/Icon";
 import countDays from "../../components/global/countDays";
 import {useForm} from "react-hook-form";
-import {addComment, getComments} from "../../redux/Tech-reducer";
-
+import {format} from "date-fns";
+import images from "../../components/global/images";
 const useStyles = makeStyles((theme) => ({
     avatarWrapper: {
         padding: "20px",
@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
         margin: "0 auto",
         color: theme.palette.getContrastText(deepOrange[500]),
         backgroundColor: deepOrange[500],
+        cursor: "pointer"
     },
     technicInfoWrapper: {
         padding: "20px"
@@ -104,6 +105,12 @@ const TechnicPage = ({activeTechnic, getTechnicInfo, users, addComment, activeTe
     };
     const classes = useStyles();
     const params = useParams();
+    const formatDate = (value) => {
+        return format(new Date(value), 'dd.MM.yyyy')
+    }
+    const addImage = (name) => {
+        console.log(images[name])
+    }
     return (
         <Container>
             <Grid container spacing={2}>
@@ -111,9 +118,12 @@ const TechnicPage = ({activeTechnic, getTechnicInfo, users, addComment, activeTe
                     <Paper>
                         <div className={classes.avatarWrapper}>
                             <Avatar
+                                variant={"square"}
+                                src={images[activeTechnic.name]}
                                 className={classes.avatar}
                             >
-                                <Icon type={activeTechnic.type}/>
+
+                                {/*<Icon type={activeTechnic.type}/>*/}
                             </Avatar>
                             <Divider className={classes.devider}/>
                             <Typography variant={"body2"} component={"span"}>{activeTechnic.type}</Typography>
@@ -171,13 +181,13 @@ const TechnicPage = ({activeTechnic, getTechnicInfo, users, addComment, activeTe
                         <input type="submit" />
                     </form>
                     <List>
-                        {activeTechnicComments.map(el => {
-                            return <ListItem>
+                        {activeTechnicComments.map((el,i) => {
+                            return <ListItem key={i}>
                                 <ListItemAvatar>
                                     <Avatar>
                                     </Avatar>
                                 </ListItemAvatar>
-                                <ListItemText primary={el.body} secondary={el.date || '----'} />
+                                <ListItemText primary={el.body} secondary={formatDate(el.date)} />
                             </ListItem>
                         })}
 
@@ -236,6 +246,28 @@ const TechnicPage = ({activeTechnic, getTechnicInfo, users, addComment, activeTe
                                 </> : <Button>Заполнить</Button>}
                     </Paper>
                 }
+            </Grid>
+            <Grid container className={classes.margin} spacing={2}>
+                <Paper className={classes.paper}>
+                    <div style={{display: "flex"}}>
+                        <Typography gutterBottom variant="h6" component="h2">
+                            Техника в этом кабинете
+                        </Typography>
+                    </div>
+                    <div>
+                        <Button component={Link} to={`/room/${activeTechnic.room}`}>Техника кабинета</Button>
+                        <ul>
+                            <li>Компьютер</li>
+                            <li>Колонки</li>
+                            <li>Принтер</li>
+                            <li>Монитор</li>
+                            <li>Клавиатура</li>
+                            <li>Мышь</li>
+                        </ul>
+                    </div>
+
+                </Paper>
+
             </Grid>
 
         </Container>

@@ -33,19 +33,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const FiltersTechnics = ({getStatistic, technics, paramsTechnics, statistics, categories, setCategories}) => {
-    const handleClickButton = (prop, value) => {
-        let property = () => {
-            let obj = {[prop]: value}
-            if (JSON.stringify(categories).includes(JSON.stringify(obj))) {
-                return false
-            } else {
-                return true
-            }
-        } // Проверка наличия выбранной кабегории в массиве категорий
-        setCategories(prevState => (property()) ? [...prevState, {[prop]: value}] : prevState.filter(el => ((Object.keys(el)[0],Object.values(el)[0]) !== (prop,value))))
-    }
-
+const FiltersTechnics = ({getStatistic, technics, paramsTechnics, statistics, categories, handlerCategory}) => {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
     let val = paramsTechnics[value].property
@@ -87,7 +75,7 @@ const FiltersTechnics = ({getStatistic, technics, paramsTechnics, statistics, ca
                                     })
                                     return a
                                 }
-                                return <ListItem key={i} onClick={() => handleClickButton(val, obj.[val])} button
+                                return <ListItem key={i} onClick={() => handlerCategory(val, obj.[val])} button
                                                  className={isContains() ? classes.active : null}>
                                     <Icon type={val}/>
                                     <ListItemText

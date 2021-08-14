@@ -1,0 +1,38 @@
+const images = {
+    "Ritter 75-02": "https://kiosks.ru/wp-content/uploads/2020/02/Interactive-panel-55-65-75-86_2.jpg",
+    "Epson L805": "https://sprinks.by/image/cache/catalog/printers/l805-500x500.jpg",
+    "Lenovo IdeaPad 320-15IAP": "https://www.nix.ru/images/Lenovo-320-15IAP-3018732302.jpg?good_id=301873&width=500&height=500&view_id=2302",
+    "HP bs053ur": "https://static.nix.ru/images/HP-15-bs053ur-3187732254.jpg?good_id=318773&width=500&height=500&view_id=2254",
+    "HP 15-bs053ur": "https://static.nix.ru/images/HP-15-bs053ur-3187732254.jpg?good_id=318773&width=500&height=500&view_id=2254",
+    "Fujitsu A512": "https://avatars.mds.yandex.net/get-mpic/199079/img_id4380977909699711347/9hq",
+    "Samsung UE49NU7100U": "https://24shop.by/images/cache/d3b/_thumb_582x434xin_upload_iblock_d3b_d3bda5ed07e93839cef59efd2835c267.jpeg",
+    "HP AIO PC/i3-7100": "https://cf.shopee.co.id/file/4f7c31261e64883c5ff8d9c3a512404b",
+    "HP LaserJet 1010": "https://prionta.com/upload/iblock/2f6/2f62ca4910e5d7f548849c8899f3855a.jpg",
+    "HP LaserJet P1005": "https://avatars.mds.yandex.net/get-mpic/1767083/img_id1362687115413355682/9hq",
+    "HP LaserJet P1005c": "https://avatars.mds.yandex.net/get-mpic/1767083/img_id1362687115413355682/9hq",
+    "KYOCERA FS-1370DN": "https://kyotrade.ru/image/cache/data/a4printer/fs-1370dn-500x500.jpg",
+    "Canon i-sensys MF 443dw": "https://avatars.mds.yandex.net/get-mpic/1581127/img_id2367457120523274624.jpeg/13hq",
+    "Canon IR 2206N (A3)": "https://avatars.mds.yandex.net/get-mpic/2016828/img_id3775255633665599408/9hq",
+    "Canon MF4730": "https://www.nix.ru/images/Canon-MF4730-1481452254.jpg?good_id=148145&width=500&height=500&view_id=2254",
+    "SAMSUNG SCX-4650N": "https://lh3.googleusercontent.com/proxy/96zqPXb11t1EVu8bc1gD3FcaPxN_v0YmgltonNYIbtmdlmu-2UTvi5YBJ8ZXhKYX4IZ9N-L-m_JB6eO9go8qgMIGjr4nmkXf5UrvRsUx0rqi-4elTqorXQ",
+    "Sharp AR-5618": "https://www.nairaland.com/attachments/745568_5618_jpg93a3ea34b30c7049f291c056bff53137",
+    "Canon MF3010": "https://www.nix.ru/images/Canon-MF3010-1220042254.jpg?good_id=122004&width=500&height=500&view_id=2254",
+    "HP LJ 1020": "https://www.nix.ru/images/HP-1020-366242254.jpg?good_id=36624&width=500&height=500&view_id=2254",
+    "HP LJ 10201": "https://www.nix.ru/images/HP-1020-366242254.jpg?good_id=36624&width=500&height=500&view_id=2254",
+    "Canon LBP6020B": "https://lh3.googleusercontent.com/proxy/sD4OTc_zQj4D3bFBYoqBeKsZMbHaKp51XMbJhJqNFNOmw8vbW0fAGWJBg2mhn6pTb8OaZAjPiy8T-sdl8NXsBbFBPLDlQWmH1c9oXzjVhTfiSmnd-5JAGySsT2S_BqTPcrkrme8h1SydLZN-zc3Ztu1dANJKGiTqkALKEdd8hvTGeKce1YZrxva367wzeAXMZfw",
+    "Canon LBP6030B": "https://lh3.googleusercontent.com/proxy/sD4OTc_zQj4D3bFBYoqBeKsZMbHaKp51XMbJhJqNFNOmw8vbW0fAGWJBg2mhn6pTb8OaZAjPiy8T-sdl8NXsBbFBPLDlQWmH1c9oXzjVhTfiSmnd-5JAGySsT2S_BqTPcrkrme8h1SydLZN-zc3Ztu1dANJKGiTqkALKEdd8hvTGeKce1YZrxva367wzeAXMZfw",
+    "Samsung Xpress М2020": "https://www.nix.ru/images/Samsung-SL-M2020-1913542254.jpg?good_id=191354&width=500&height=500&view_id=2254",
+    "Sven SPS-619": "https://static.nix.ru/images/SVEN-SPS-619-1546822254.jpg?good_id=154682&width=500&height=500&view_id=2254",
+    "Sven SPS-701": "https://www.sven.fi/upload/iblock_photos/multimedia_2.0/sps-701/020-photo-big.jpg",
+    "Sven MS-305": "https://i.unishop.by/models/kompyuternaya_akustika/sven/ms-305-1.webp?1603398196",
+    "Sven PS-460": "https://www.nix.ru/images/SVEN-PS-460-3200452246.jpg?good_id=320045&width=500&height=500&view_id=2246",
+    // "": "",
+    // "": "",
+    // "": "",
+    // "": "",
+    // "": "",
+}
+
+export default images
+
+

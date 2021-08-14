@@ -19,7 +19,7 @@ export const deepEqual = (a, b) => {
             return false;
         }
     }
-    return propertiesInA == propertiesInB;
+    return propertiesInA === propertiesInB;
 }
 
 export default deepEqual

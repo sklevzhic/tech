@@ -1,7 +1,7 @@
 import {
     Facebook,
     GitHub,
-    Instagram, Language, Link, Telegram, Twitter, YouTube, Contacts, MenuBook,
+    Instagram, Language, Link, Telegram, Twitter, YouTube, Contacts,
     Place, Store, TurnedInNot, Toc, Print, DesktopWindows, Scanner, DesktopMac, TabletAndroid,
     Mouse, Phone, Videocam, SurroundSound, LaptopChromebook, LiveTv, Keyboard, VideoLabel, RecordVoiceOver,TrackChanges
 } from "@material-ui/icons";

@@ -15,6 +15,8 @@ const SET_ROOMS = 'SET_ROOMS'
 const ADD_COMMENT = 'ADD_COMMENT'
 const SET_COMMENTS = 'SET_COMMENTS'
 const SET_STATISTIC = 'SET_STATISTIC'
+const SET_TECHNICS_BY_ROOM = 'SET_TECHNICS_BY_ROOM'
+
 
 let initialState = {
     types: [],
@@ -25,6 +27,7 @@ let initialState = {
     toogleLoadingInfoFotType: false,
     technics: [],
     technicsByCategory: [],
+    technicsByRoom: [],
     toogleLoadingTechnics: false,
     users: [],
     subdivisions: [
@@ -112,8 +115,7 @@ let initialState = {
             bg: "#cb14c8",
             name: "Кабинет"
         }
-    ]
-
+    ],
 }
 const groupElements = (property, arr) => {
     return arr.reduce((previousValue, currentValue) => {
@@ -157,6 +159,12 @@ const TechReducer = (state = initialState, action) => {
                 ...state,
                 technics: action.payload,
                 technicsByCategory: groupElements("room", action.payload),
+            }
+        }
+        case SET_TECHNICS_BY_ROOM: {
+            return {
+                ...state,
+                technicsByRoom: groupElements("user", action.payload)
             }
         }
         case SET_TECHNIC: {
@@ -281,6 +289,9 @@ export const setCommentsAC = (payload) => {
 export const setStatisticAC = (payload) => {
     return {type: SET_STATISTIC, payload}
 }
+export const setTechnicsByRoomAC = (payload) => {
+    return {type: SET_TECHNICS_BY_ROOM, payload}
+}
 
 
 export const getTypes = () => {
@@ -382,11 +393,15 @@ export const addComment = (id, value) => {
         dispatch(addCommentAC(response))
     }
 }
-
 export const getStatistic = (value) => {
     return async (dispatch) => {
         dispatch(setStatisticAC(value))
     }
 }
-
+export const getTechnicsByRoom = (room) => {
+    return async (dispatch) => {
+        let technicsByRoom = await techAPI.getTechnicsByRoom(room)
+        dispatch(setTechnicsByRoomAC(technicsByRoom))
+    }
+}
 export default TechReducer

@@ -17,9 +17,11 @@ const useStyles = makeStyles((theme) => ({
 const ListTechnics = ({technicsByCategory, toogleLoadingInfoFotType, categories}) => {
     const classes = useStyles();
     const generateCondition = (el) => {
+        let groupCategories = groupArray(categories)
 
-        console.log(groupArray(categories));
-        return categories.every(category => (el[Object.keys(category)] === category[Object.keys(category)]))
+        return Object.keys(groupCategories).every(key => {
+            return groupCategories[key].some(elArr => elArr === el[key])
+        })
     }
     const checkItem = (el) => {
         return (generateCondition(el)) ? true : false

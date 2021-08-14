@@ -18,11 +18,6 @@ const useStyles = makeStyles((theme) => ({
 const ListItemForm = ({activeTechnic, property, text}) => {
 
     const classes = useStyles();
-
-    // const getIcon = (val, size) => {
-    //   let Icon = icons[val]
-    //   return <Icon style={{fontSize: `${size}px`}}/>
-    //}
     const [editMode, setEditMode] = useState(false)
     const editPropertyTechnic = () => {
         setEditMode(true)

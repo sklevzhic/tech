@@ -121,4 +121,7 @@ export const techAPI = {
             "body": val
         }).then(responce => responce.data)
     },
+    getTechnicsByRoom(room) {
+        return axios.get(`http://localhost:3004/technics?room=${room}`).then(response => response.data)
+    }
 }

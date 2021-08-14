@@ -6,6 +6,7 @@ import UsersPage from "../../../pages/UsersPage";
 import TypesPage from "../../../pages/TypesTechnicsPage";
 import TypePage from "../../../pages/TypePage";
 import TechnicPage from "../../../pages/TechnicPage";
+import RoomPage from "../../../pages/RoomPage";
 
 const AppWithRouter = () => {
     return (
@@ -20,6 +21,7 @@ const AppWithRouter = () => {
             <Route exact path='/types' render={() => <TypesPage /> }/>
             <Route path='/types/:type' render={() => <TypePage /> }/>
             <Route path='/technics/:id' render={() => <TechnicPage /> }/>
+            <Route path='/room/:room' render={() => <RoomPage /> }/>
             <Route path='/signin' render={() => <SignInPage/>}/>
             <Route path='*' render={() => <div>404 NOT FOUND</div>}/>
         </Switch>
