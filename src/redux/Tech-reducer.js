@@ -16,7 +16,7 @@ const ADD_COMMENT = 'ADD_COMMENT'
 const SET_COMMENTS = 'SET_COMMENTS'
 const SET_STATISTIC = 'SET_STATISTIC'
 const SET_TECHNICS_BY_ROOM = 'SET_TECHNICS_BY_ROOM'
-
+const SET_ADDED_TECHNIC = 'SET_ADDED_TECHNIC'
 
 let initialState = {
     types: [],
@@ -30,21 +30,13 @@ let initialState = {
     technicsByRoom: [],
     toogleLoadingTechnics: false,
     users: [],
-    subdivisions: [
-        {name: "Фаукультет доуниверситетской подготовки", id: 1},
-        {name: "Фаукультет дополнительного профессионального образования", id: 2},
-        {name: "Фаукультет уx`правления и профессионального развития педагогов", id: 3},
-        {name: "Гостиница Университетская", id: 4},
-        {name: "Первое образование", id: 5},
-        {name: "ЦДО Альтернатива", id: 6}
-    ],
     paramsTechnics: [
         {title: "Годы выпуска", property: "year"},
         {title: "Факультеты", property: "faculty"},
-        {title: "Корпуса",property: "build"},
-        {title: "Кабинеты",property: "room"},
-        {title: "Сотрудники",property: "user"},
-        {title: "Материально-ответственные лица",property: "matfyo"}
+        {title: "Корпуса", property: "build"},
+        {title: "Кабинеты", property: "room"},
+        {title: "Сотрудники", property: "user"},
+        {title: "Материально-ответственные лица", property: "matfyo"}
     ],
     rooms: [],
     keys: [
@@ -63,7 +55,7 @@ let initialState = {
         },
         {
             id: "3",
-            key: "fyo",
+            key: "user",
             bg: "#887d1a",
             name: "ФИО сотрудника"
         },
@@ -105,7 +97,7 @@ let initialState = {
         },
         {
             id: "10",
-            key: "korpus",
+            key: "build",
             bg: "#14cbcb",
             name: "Корпус",
         },
@@ -161,10 +153,17 @@ const TechReducer = (state = initialState, action) => {
                 technicsByCategory: groupElements("room", action.payload),
             }
         }
+        case SET_ADDED_TECHNIC: {
+            return {
+                ...state,
+                technics: [...state.technics, action.payload],
+                technicsByCategory: groupElements("room", state.technics),
+            }
+        }
         case SET_TECHNICS_BY_ROOM: {
             return {
                 ...state,
-                technicsByRoom: groupElements("user", action.payload)
+                technicsByRoom: action.payload
             }
         }
         case SET_TECHNIC: {
@@ -292,6 +291,9 @@ export const setStatisticAC = (payload) => {
 export const setTechnicsByRoomAC = (payload) => {
     return {type: SET_TECHNICS_BY_ROOM, payload}
 }
+export const setAddedTechnicAC = (payload) => {
+    return {type: SET_ADDED_TECHNIC, payload}
+}
 
 
 export const getTypes = () => {
@@ -387,6 +389,14 @@ export const getComments = (id) => {
         dispatch(setCommentsAC(response))
     }
 }
+
+export const addTechnic = (data) => {
+    return async (dispatch) => {
+        let response = await techAPI.addTechnic(data)
+        dispatch(setAddedTechnicAC(response))
+
+    }
+}
 export const addComment = (id, value) => {
     return async (dispatch) => {
         let response = await techAPI.addComment(id, value)
@@ -401,7 +411,9 @@ export const getStatistic = (value) => {
 export const getTechnicsByRoom = (room) => {
     return async (dispatch) => {
         let technicsByRoom = await techAPI.getTechnicsByRoom(room)
-        dispatch(setTechnicsByRoomAC(technicsByRoom))
+        let groupTechnics = groupElements("user", technicsByRoom)
+        dispatch(setTechnicsByRoomAC(groupTechnics))
+        return groupTechnics
     }
 }
 export default TechReducer

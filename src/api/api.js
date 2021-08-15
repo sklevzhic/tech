@@ -102,6 +102,8 @@ export const techAPI = {
     updateTechnic(id, data) {
         return axios.patch(`http://localhost:3004/technics/${id}`, data).then(response => response)
     },
+    // id = "18", data = {date: "2019-01-01"}
+    // id = "18", data = {print: true}
     getUsers() {
         return axios.get(`http://localhost:3004/users`).then(responce => responce.data)
     },
@@ -123,5 +125,8 @@ export const techAPI = {
     },
     getTechnicsByRoom(room) {
         return axios.get(`http://localhost:3004/technics?room=${room}`).then(response => response.data)
+    },
+    addTechnic(data) {
+        return axios.post(`http://localhost:3004/technics`, data).then(responce => responce.data)
     }
 }

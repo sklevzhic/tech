@@ -1,24 +1,23 @@
 import icons from "../global/global";
 import React from "react";
 import {Help} from "@material-ui/icons";
+import {makeStyles} from "@material-ui/core/styles";
 
-const Icon = ({type, types}) => {
-    const regexp = /^[а-яА-Я]+$/i;
+const useStyles = makeStyles((theme) => ({
+        size: {
+            fontSize: "70px"
+        }
+    }
+))
 
+const Icon = ({type, size}) => {
+    const classes = useStyles();
     const icon = (type) => {
         if (icons[type] !== undefined) {
             let Icon = icons[type]
-            return <Icon/>
+            return <Icon className={(size) ? classes.size : null}/>
         } else
-        //     if (regexp.test(type)) {
-        //     let obj = types.filter(el => el.name === type)
-        //     if (icons[obj[0].type] !== undefined) {
-        //         let Icon = icons[obj[0].type]
-        //         return <Icon/>
-        //     } else {
-        //         return <Help/>
-        //     }
-        // } else
+
         {
             return <Help/>
         }

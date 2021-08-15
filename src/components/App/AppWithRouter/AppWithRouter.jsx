@@ -12,16 +12,16 @@ const AppWithRouter = () => {
     return (
         <Switch>
             <Route exact path='/' render={() => <Redirect to='/profile'/>}/>
-            <Route exact path='/profile' render={() => <Profile />}/>
+            <Route exact path='/profile' render={() => <Profile/>}/>
             <Route path='/profile/:uID' render={() => <Profile/>}/>
             <Route path='/messages' render={() => <div>messages</div>}/>
-            <Route exact path='/users' render={() => <Redirect to='/users/allusers'/> } />
+            <Route exact path='/users' render={() => <Redirect to='/users/allusers'/>}/>
             <Route path='/users/:section' render={() => <UsersPage/>}/>
             <Route path='/following' render={() => <div>following</div>}/>
-            <Route exact path='/types' render={() => <TypesPage /> }/>
-            <Route path='/types/:type' render={() => <TypePage /> }/>
-            <Route path='/technics/:id' render={() => <TechnicPage /> }/>
-            <Route path='/room/:room' render={() => <RoomPage /> }/>
+            <Route exact path='/types' render={() => <TypesPage/>}/>
+            <Route path='/types/:type' render={() => <TypePage/>}/>
+            <Route path='/technics/:id' render={() => <TechnicPage/>}/>
+            <Route path='/room/:room' render={() => <RoomPage/>}/>
             <Route path='/signin' render={() => <SignInPage/>}/>
             <Route path='*' render={() => <div>404 NOT FOUND</div>}/>
         </Switch>

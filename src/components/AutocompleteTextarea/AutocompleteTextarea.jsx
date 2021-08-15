@@ -19,7 +19,7 @@ const AutocompleteTextarea = ({activeTechnic, property, updateTechnic, setEditMo
     const [array, setArray] = useState("")
     const [value, setValue] = useState(null)
     useEffect(() => {
-        if (property === 'fyo') {
+        if (property === 'user1') {
             async function fetchUsers() {
                 let response = await getUsers()
                 return response
@@ -84,10 +84,10 @@ const AutocompleteTextarea = ({activeTechnic, property, updateTechnic, setEditMo
     }
     return (
         <form className={classes.root} onSubmit={handleSubmit(onSubmit)}>
-            { ((property === 'date') || (property === 'year'))
+            {((property === 'date') || (property === 'year'))
                 ? <TextField
                     id="date"
-                    label="Birthday"
+                    label={text}
                     type="date"
                     {...register(property)}
                     defaultValue="2017-05-24"

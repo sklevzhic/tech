@@ -21,6 +21,7 @@ import countDays from "../../components/global/countDays";
 import {useForm} from "react-hook-form";
 import {format} from "date-fns";
 import images from "../../components/global/images";
+
 const useStyles = makeStyles((theme) => ({
     avatarWrapper: {
         padding: "20px",
@@ -99,7 +100,7 @@ const TechnicPage = ({activeTechnic, getTechnicInfo, users, addComment, activeTe
         getComments(params.id)
 
     }, [])
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const {register, handleSubmit, watch, formState: {errors}} = useForm();
     const onSubmit = data => {
         addComment(activeTechnic.id, data.msg)
     };
@@ -122,8 +123,6 @@ const TechnicPage = ({activeTechnic, getTechnicInfo, users, addComment, activeTe
                                 src={images[activeTechnic.name]}
                                 className={classes.avatar}
                             >
-
-                                {/*<Icon type={activeTechnic.type}/>*/}
                             </Avatar>
                             <Divider className={classes.devider}/>
                             <Typography variant={"body2"} component={"span"}>{activeTechnic.type}</Typography>
@@ -162,8 +161,8 @@ const TechnicPage = ({activeTechnic, getTechnicInfo, users, addComment, activeTe
                             <ListItemForm activeTechnic={activeTechnic} property={"zavod"} text={"Заводской номер"}/>
                             <ListItemForm activeTechnic={activeTechnic} property={"matfyo"}
                                           text={"Материально-ответственное лицо"}/>
-                            <ListItemForm activeTechnic={activeTechnic} property={"year"}
-                                          text={"Год выпуска"}/>
+                            <ListItemForm activeTechnic={activeTechnic} property={"year"} text={"Год выпуска"}/>
+                            <ListItemForm activeTechnic={activeTechnic} property={"print"} text={"Наклейка"}/>
                         </CardContent>
                     </Card>
                 </Grid>
@@ -171,23 +170,23 @@ const TechnicPage = ({activeTechnic, getTechnicInfo, users, addComment, activeTe
 
             <Grid className={classes.margin} container spacing={2}>
                 <Paper className={classes.paper}>
-                        <Typography gutterBottom variant="h6" component="h2">
-                            Комментарии
-                        </Typography>
+                    <Typography gutterBottom variant="h6" component="h2">
+                        Комментарии
+                    </Typography>
                     <Typography>Описание: {activeTechnic.desc}</Typography>
                     <Typography>Проблема: {activeTechnic.problem}</Typography>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <input defaultValue="test" {...register("msg")} />
-                        <input type="submit" />
+                        <input type="submit"/>
                     </form>
                     <List>
-                        {activeTechnicComments.map((el,i) => {
+                        {activeTechnicComments.map((el, i) => {
                             return <ListItem key={i}>
                                 <ListItemAvatar>
                                     <Avatar>
                                     </Avatar>
                                 </ListItemAvatar>
-                                <ListItemText primary={el.body} secondary={formatDate(el.date)} />
+                                <ListItemText primary={el.body} secondary={formatDate(el.date)}/>
                             </ListItem>
                         })}
 
@@ -220,7 +219,7 @@ const TechnicPage = ({activeTechnic, getTechnicInfo, users, addComment, activeTe
                                     <Typography>Проблема: {el.message}</Typography>
                                     <Typography>Дата передачи: {el.dispatch}</Typography>
                                     <Typography>Дата получения: {el.getting}</Typography>
-                                    <Typography>Всего в ремонте: {countDays(el.dispatch,el.getting)}</Typography>
+                                    <Typography>Всего в ремонте: {countDays(el.dispatch, el.getting)}</Typography>
 
                                 </CardContent>
                             </Card>
@@ -233,17 +232,17 @@ const TechnicPage = ({activeTechnic, getTechnicInfo, users, addComment, activeTe
                 {
                     ((activeTechnic.type === 'Принтер') || (activeTechnic.type === 'МФУ') || (activeTechnic.type === 'Ксерокс')) &&
                     <Paper className={classes.paper}>
-                                <Typography gutterBottom variant="h6" component="h2">
-                                    Заправки
-                                </Typography>
-                                <Typography variant={"body2"}>Максимальное количество
-                                    заправок за год: 2</Typography>
-                                <Divider/>
-                                {/*<Steppers/>*/}
+                        <Typography gutterBottom variant="h6" component="h2">
+                            Заправки
+                        </Typography>
+                        <Typography variant={"body2"}>Максимальное количество
+                            заправок за год: 2</Typography>
+                        <Divider/>
+                        {/*<Steppers/>*/}
 
-                                {activeTechnic.refill ? <>
-                                    <ControlledAccordions array={activeTechnic.refill}/>
-                                </> : <Button>Заполнить</Button>}
+                        {activeTechnic.refill ? <>
+                            <ControlledAccordions array={activeTechnic.refill}/>
+                        </> : <Button>Заполнить</Button>}
                     </Paper>
                 }
             </Grid>

@@ -1,20 +1,22 @@
 import {withRouter, useParams, useLocation, useHistory} from "react-router-dom";
 import {
-    Container,
+    Button,
+    Container, DialogActions, DialogContent,
     Divider,
     Grid,
-    Paper
+    Paper, TextField
 } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import React, {useEffect, useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import ListTypes from "../../components/ListTypes";
 import {Skeleton} from "@material-ui/lab";
-import queryString from 'query-string'
 import Icon from "../../components/Icon";
 import ListTechnics from "../../components/ListTechnics";
 import ActiveCategories from "../../components/ActiveCategories";
 import FiltersTechnic from "../../components/FiltersTechnic";
+import Modal from "../../components/Modal";
+import {useForm} from "react-hook-form";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -36,7 +38,11 @@ const useStyles = makeStyles((theme) => ({
     },
     typeInfoWrapper: {
         display: "flex",
-        alignItems: "center"
+        textAlign: "center"
+
+    },
+    typeInfo: {
+        width: "100%"
     },
     imageType: {
         background: "#3f51b5",
@@ -72,12 +78,41 @@ const useStyles = makeStyles((theme) => ({
     roomNumber: {}
 }));
 
-const TypePage = ({ getActiveType,  activeType, toogleLoadingInfoFotType }) => {
+const schema = [
+    [
+        {type: "name", name: "Наименование"},
+        {type: "type", name: "Тип"},
+    ],
+    [
+        {type: "room", name: "Кабинет"},
+        {type: "build", name: "Корпус"},
+        {type: "user", name: "ФИО сторудника"},
+        {type: "date", name: "Дата выдачи"},
+        {type: "faculty", name: "Факультет"}
+    ],
+    [
+        {type: "invent", name: "Инвентарный номер"},
+        {type: "zavod", name: "Заводской номер"},
+        {type: "matfyo", name: "Материально-ответственное лицо"},
+        {type: "year", name: "Год выпуска"},
+    ]
+]
+
+const TypePage = ({getActiveType, activeType,addTechnic, toogleLoadingInfoFotType, technicsLength}) => {
     // const {search} = useLocation()
     // const {years, builds} = queryString.parse(search)
     const classes = useStyles();
     const params = useParams();
     const [categories, setCategories] = useState(() => [])
+    const [open, setOpen] = React.useState(false);
+    const {register, handleSubmit} = useForm();
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+    const handleClose = () => {
+        setOpen(false);
+    };
+    const onSubmit = data => addTechnic(data);
     const handlerCategory = (prop, value) => {
         let property = () => {
             let obj = {[prop]: value}
@@ -87,7 +122,7 @@ const TypePage = ({ getActiveType,  activeType, toogleLoadingInfoFotType }) => {
                 return true
             }
         } // Проверка наличия выбранной кабегории в массиве категорий
-        setCategories(prevState => (property()) ? [...prevState, {[prop]: value}] : prevState.filter(el => ((Object.keys(el)[0],Object.values(el)[0]) !== (prop,value))))
+        setCategories(prevState => (property()) ? [...prevState, {[prop]: value}] : prevState.filter(el => ((Object.keys(el)[0], Object.values(el)[0]) !== (prop, value))))
     }
 
     useEffect(() => {
@@ -102,27 +137,39 @@ const TypePage = ({ getActiveType,  activeType, toogleLoadingInfoFotType }) => {
                         {toogleLoadingInfoFotType ? <SceletonInfoType/> : <>
                             <div className={classes.typeInfoWrapper}>
                                 <div className={classes.typeInfo}>
-                                    <Icon type={activeType.type}/>
+                                    <Icon type={activeType.type} size={3}/>
                                     <Typography color={"primary"}>Тип</Typography>
                                     <Typography variant="h6">{activeType.name}</Typography>
                                     <Typography variant="body2" gutterBottom>
                                         [ {activeType.type} ]
                                     </Typography>
+                                    <Divider/>
+                                    <Typography
+                                        variant={"subtitle2"}>
+                                        Всего:
+                                        <Typography
+                                            variant={"subtitle1"}
+                                            component={"span"}
+                                        >
+                                            {technicsLength}
+                                        </Typography>
+                                    </Typography>
+                                    <Button color={"primary"} variant={"contained"}
+                                            onClick={handleClickOpen}> Добавить</Button>
                                 </div>
+
                             </div>
-                            <Divider/>
                         </>
                         }
                     </Paper>
                 </Grid> {/*  Тип, картинка */}
-
                 <Grid item xs={9}>
                     <Paper className={classes.paper}>
                         <Typography color={"primary"}>Фильтрация</Typography>
                         <Divider/>
                         <FiltersTechnic categories={categories} handlerCategory={handlerCategory}/>
                     </Paper>
-                </Grid>
+                </Grid> {/*  Фильтрация*/}
             </Grid> {/*  Сводная информация*/}
             {activeType ? <>
             </> : ""}
@@ -135,6 +182,44 @@ const TypePage = ({ getActiveType,  activeType, toogleLoadingInfoFotType }) => {
                     <ListTypes/>
                 </Grid> {/*  Список типов техникик */}
             </Grid>
+            <Modal open={open} handleClose={handleClose} title={"Добавить тип"}>
+                <form onSubmit={handleSubmit(onSubmit)}>
+
+                    <DialogContent>
+                        <div>
+                            {
+                                schema[0].map(el => {
+                                    return <TextField {...register(el.type)} label={el.name}/>
+                                })
+                            }
+                        </div>
+                        <div style={{display: "flex"}}>
+                            <div>
+                                {
+                                    schema[1].map(el => {
+                                        return <TextField {...register(el.type)} defaultValue={""} label={el.name}/>
+                                    })
+                                }
+                            </div>
+                            <div>
+                                {
+                                    schema[2].map(el => {
+                                        return <TextField {...register(el.type)} label={el.name}/>
+                                    })
+                                }
+                            </div>
+                        </div>
+
+
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleClose} color="primary">
+                            Cancel
+                        </Button>
+                        <Button type="submit">Submit</Button>
+                    </DialogActions>
+                </form>
+            </Modal>
         </Container>
     )
 }
