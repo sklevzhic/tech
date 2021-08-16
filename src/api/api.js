@@ -130,3 +130,14 @@ export const techAPI = {
         return axios.post(`http://localhost:3004/technics`, data).then(responce => responce.data)
     }
 }
+export const printersAPI = {
+    getRefills(id) {
+        return axios.get(`http://localhost:3004/technics/${id}/refills`).then(response => response.data)
+    },
+    getAllRefills() {
+        return axios.get(`http://localhost:3004/refills`).then(response => response.data)
+    },
+    getCurrentRefills() {
+        return axios.get(`http://localhost:3004/refillsCurrent`).then(response => response.data)
+    },
+}

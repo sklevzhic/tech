@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -32,10 +32,10 @@ export default function ControlledAccordions({array}) {
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
     };
-    const aaaa = (arr) => {
+    const refillsGroup = (arr) => {
         let years = arr.map(el => {
             return new Date(el.receiverDate).getFullYear()
-        }).sort((a,b) => b - a)
+        }).sort((a, b) => b - a)
         let uniqueYears = [...new Set(years.map((year) => year))]
 
         return uniqueYears.map(year => {
@@ -46,7 +46,7 @@ export default function ControlledAccordions({array}) {
                         if (new Date(el.receiverDate).getFullYear() === year) {
                             return <Accordion expanded={expanded === el.id} onChange={handleChange(el.id)}>
                                 <AccordionSummary
-                                    expandIcon={<ExpandMoreIcon />}
+                                    expandIcon={<ExpandMoreIcon/>}
                                     aria-controls={`${el.id}bh-content`}
                                     id={`${el.id}bh-content`}
                                 >
@@ -55,10 +55,17 @@ export default function ControlledAccordions({array}) {
                                 </AccordionSummary>
                                 <AccordionDetails className={classes.details}>
                                     <Typography variant={"p"}>Дата заявки: {el.report}</Typography>
-                                    <Typography variant={"p"}><Typography variant={"subtitle2"} component={"span"}>({countDays(el.report,el.transmissionDate)} дней)</Typography> Дата передачи картриджей в ЦРИТ: {el.transmissionDate}</Typography>
-                                    <Typography variant={"p"}><Typography variant={"subtitle2"} component={"span"}>({countDays(el.report,el.dateOfReceiving)} дней)</Typography> Дата получения картриджей из ЦРИТ: {el.dateOfReceiving}</Typography>
-                                    <Typography variant={"p"}><Typography variant={"subtitle2"} component={"span"}>({countDays(el.report,el.receiverDate)} дней)</Typography>Выдача сотруднику: {el.receiverDate}</Typography>
-                                    <Typography variant={"p"}>Сотрудник, который получил картридж: {el.receiverName}</Typography>
+                                    <Typography variant={"p"}><Typography variant={"subtitle2"}
+                                                                          component={"span"}>({countDays(el.report, el.transmissionDate)} дней)</Typography> Дата
+                                        передачи картриджей в ЦРИТ: {el.transmissionDate}</Typography>
+                                    <Typography variant={"p"}><Typography variant={"subtitle2"}
+                                                                          component={"span"}>({countDays(el.report, el.dateOfReceiving)} дней)</Typography> Дата
+                                        получения картриджей из ЦРИТ: {el.dateOfReceiving}</Typography>
+                                    <Typography variant={"p"}><Typography variant={"subtitle2"}
+                                                                          component={"span"}>({countDays(el.report, el.receiverDate)} дней)</Typography>Выдача
+                                        сотруднику: {el.receiverDate}</Typography>
+                                    <Typography variant={"p"}>Сотрудник, который получил
+                                        картридж: {el.receiverName}</Typography>
                                 </AccordionDetails>
                             </Accordion>
                         }
@@ -70,7 +77,7 @@ export default function ControlledAccordions({array}) {
     }
     return (
         <div className={classes.root}>
-            {aaaa(array)}
+            {refillsGroup(array)}
         </div>
     );
 }

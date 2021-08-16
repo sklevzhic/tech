@@ -125,7 +125,6 @@ const groupElements = (property, arr) => {
         return previousValue;
     }, []).sort((a, b) => a[property] - b[property])
 }
-
 const TechReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_TYPES: {

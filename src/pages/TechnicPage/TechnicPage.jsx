@@ -94,11 +94,11 @@ let repair = [
 
 ]
 
-const TechnicPage = ({activeTechnic, getTechnicInfo, users, addComment, activeTechnicComments, getComments}) => {
+const TechnicPage = ({activeTechnic, getTechnicInfo, users, addComment, activeTechnicComments, getComments, getRefills, refills}) => {
     useEffect(() => {
         getTechnicInfo(params.id)
         getComments(params.id)
-
+        getRefills(params.id)
     }, [])
     const {register, handleSubmit, watch, formState: {errors}} = useForm();
     const onSubmit = data => {
@@ -235,14 +235,18 @@ const TechnicPage = ({activeTechnic, getTechnicInfo, users, addComment, activeTe
                         <Typography gutterBottom variant="h6" component="h2">
                             Заправки
                         </Typography>
+                        <Button component={Link} to={"/printers"} variant={"contained"} color={"primary"}>Заполнить</Button>
                         <Typography variant={"body2"}>Максимальное количество
                             заправок за год: 2</Typography>
                         <Divider/>
                         {/*<Steppers/>*/}
 
-                        {activeTechnic.refill ? <>
-                            <ControlledAccordions array={activeTechnic.refill}/>
-                        </> : <Button>Заполнить</Button>}
+                        {refills ? <>
+                            <div>
+
+                                <ControlledAccordions array={refills}/>
+                            </div>
+                        </> : <Button component={Link} to={"/printers"}>Заполнить</Button>}
                     </Paper>
                 }
             </Grid>
@@ -255,14 +259,7 @@ const TechnicPage = ({activeTechnic, getTechnicInfo, users, addComment, activeTe
                     </div>
                     <div>
                         <Button component={Link} to={`/room/${activeTechnic.room}`}>Техника кабинета</Button>
-                        <ul>
-                            <li>Компьютер</li>
-                            <li>Колонки</li>
-                            <li>Принтер</li>
-                            <li>Монитор</li>
-                            <li>Клавиатура</li>
-                            <li>Мышь</li>
-                        </ul>
+
                     </div>
 
                 </Paper>

@@ -7,6 +7,8 @@ import TypesPage from "../../../pages/TypesTechnicsPage";
 import TypePage from "../../../pages/TypePage";
 import TechnicPage from "../../../pages/TechnicPage";
 import RoomPage from "../../../pages/RoomPage";
+import PrintersPage from "../../../pages/PrintersPage";
+import EventsPage from "../../../pages/EventsPage";
 
 const AppWithRouter = () => {
     return (
@@ -21,7 +23,10 @@ const AppWithRouter = () => {
             <Route exact path='/types' render={() => <TypesPage/>}/>
             <Route path='/types/:type' render={() => <TypePage/>}/>
             <Route path='/technics/:id' render={() => <TechnicPage/>}/>
+            <Route exact path='/room' render={() => <div>По кабинетам</div>}/>
             <Route path='/room/:room' render={() => <RoomPage/>}/>
+            <Route path='/printers' render={() => <PrintersPage/>}/>
+            <Route path='/events' render={() => <EventsPage/>}/>
             <Route path='/signin' render={() => <SignInPage/>}/>
             <Route path='*' render={() => <div>404 NOT FOUND</div>}/>
         </Switch>

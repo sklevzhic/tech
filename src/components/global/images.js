@@ -1,13 +1,45 @@
+import Ritter7502 from '../../assets/img/technics/Ritter 75-02.jpg'
+import EpsonL805 from '../../assets/img/technics/Epson L805.jpg'
+import Lenovo32015IAP from '../../assets/img/technics/Lenovo IdeaPad 320-15IAP.jpg'
+import bs053ur from '../../assets/img/technics/HP bs053ur.jpg'
+import hp1010 from '../../assets/img/technics/HP LJ 1010.jpg'
+import samsung740N from '../../assets/img/technics/Samsung SyncMaster 740N.jpg'
+import Philips190V3LSB from '../../assets/img/technics/Philips 190V3LSB.jpg'
+import ELPDC11 from '../../assets/img/technics/ELPDC11.jpg'
+import HPLJ1020 from '../../assets/img/technics/HP LJ 1020.jpg'
+import LaserJet6L from '../../assets/img/technics/LaserJet 6L.jpg'
+import LJ1018 from '../../assets/img/technics/LJ1018.jpg'
+import LBP6020B from '../../assets/img/technics/LBP6020B.jpg'
+import IntegralTFTLCD17 from '../../assets/img/technics/Integral TFT LCD 17.jpg'
+import LogitechHDC270 from '../../assets/img/technics/LogitechHDC270.jpg'
+import LGFlatronE1942CBNA from '../../assets/img/technics/LG Flatron E1942C-BNA.jpg'
+import HPScanJeG2710 from '../../assets/img/technics/LG Flatron E1942C-BNA.jpg'
+import FlatronL1718S from '../../assets/img/technics/FlatronL1718S.jpg'
+
+
 const images = {
-    "Ritter 75-02": "https://kiosks.ru/wp-content/uploads/2020/02/Interactive-panel-55-65-75-86_2.jpg",
-    "Epson L805": "https://sprinks.by/image/cache/catalog/printers/l805-500x500.jpg",
-    "Lenovo IdeaPad 320-15IAP": "https://www.nix.ru/images/Lenovo-320-15IAP-3018732302.jpg?good_id=301873&width=500&height=500&view_id=2302",
-    "HP bs053ur": "https://static.nix.ru/images/HP-15-bs053ur-3187732254.jpg?good_id=318773&width=500&height=500&view_id=2254",
-    "HP 15-bs053ur": "https://static.nix.ru/images/HP-15-bs053ur-3187732254.jpg?good_id=318773&width=500&height=500&view_id=2254",
+    "Ritter 75-02": Ritter7502,
+    "Epson L805": EpsonL805,
+    "Lenovo IdeaPad 320-15IAP": Lenovo32015IAP,
+    "HP bs053ur": bs053ur,
+    "HP 15-bs053ur": bs053ur,
+    "Samsung SyncMaster 740N": samsung740N,
+    "Philips 190V3LSB/01": Philips190V3LSB,
+    "Epson (ELPDC11)": ELPDC11,
+    "HP LJ 1020": HPLJ1020,
+    "LaserJet 6L": LaserJet6L,
+    "HP LaserJet 1018": LJ1018,
+    "Canon LBP6020B": LBP6020B,
+    "Canon LBP6030B": LBP6020B,
+    "Integral TFT LCD 17": IntegralTFTLCD17,
+    "HP LJ 10201": "https://www.nix.ru/images/HP-1020-366242254.jpg?good_id=36624&width=500&height=500&view_id=2254",
     "Fujitsu A512": "https://avatars.mds.yandex.net/get-mpic/199079/img_id4380977909699711347/9hq",
-    "Samsung UE49NU7100U": "https://24shop.by/images/cache/d3b/_thumb_582x434xin_upload_iblock_d3b_d3bda5ed07e93839cef59efd2835c267.jpeg",
     "HP AIO PC/i3-7100": "https://cf.shopee.co.id/file/4f7c31261e64883c5ff8d9c3a512404b",
-    "HP LaserJet 1010": "https://prionta.com/upload/iblock/2f6/2f62ca4910e5d7f548849c8899f3855a.jpg",
+    "HP LaserJet 1010": hp1010,
+    "Logitech HD C270": LogitechHDC270,
+    "HP ScanJet G2710": HPScanJeG2710,
+    "Flatron L1718S": FlatronL1718S,
+    "LG Flatron E1942C-BNA": LGFlatronE1942CBNA,
     "HP LaserJet P1005": "https://avatars.mds.yandex.net/get-mpic/1767083/img_id1362687115413355682/9hq",
     "HP LaserJet P1005c": "https://avatars.mds.yandex.net/get-mpic/1767083/img_id1362687115413355682/9hq",
     "Kyocera FS-1370DN": "https://kyotrade.ru/image/cache/data/a4printer/fs-1370dn-500x500.jpg",
@@ -17,10 +49,6 @@ const images = {
     "SAMSUNG SCX-4650N": "https://lh3.googleusercontent.com/proxy/96zqPXb11t1EVu8bc1gD3FcaPxN_v0YmgltonNYIbtmdlmu-2UTvi5YBJ8ZXhKYX4IZ9N-L-m_JB6eO9go8qgMIGjr4nmkXf5UrvRsUx0rqi-4elTqorXQ",
     "Sharp AR-5618": "https://www.nairaland.com/attachments/745568_5618_jpg93a3ea34b30c7049f291c056bff53137",
     "Canon MF3010": "https://www.nix.ru/images/Canon-MF3010-1220042254.jpg?good_id=122004&width=500&height=500&view_id=2254",
-    "HP LJ 1020": "https://www.nix.ru/images/HP-1020-366242254.jpg?good_id=36624&width=500&height=500&view_id=2254",
-    "HP LJ 10201": "https://www.nix.ru/images/HP-1020-366242254.jpg?good_id=36624&width=500&height=500&view_id=2254",
-    "Canon LBP6020B": "https://lh3.googleusercontent.com/proxy/sD4OTc_zQj4D3bFBYoqBeKsZMbHaKp51XMbJhJqNFNOmw8vbW0fAGWJBg2mhn6pTb8OaZAjPiy8T-sdl8NXsBbFBPLDlQWmH1c9oXzjVhTfiSmnd-5JAGySsT2S_BqTPcrkrme8h1SydLZN-zc3Ztu1dANJKGiTqkALKEdd8hvTGeKce1YZrxva367wzeAXMZfw",
-    "Canon LBP6030B": "https://lh3.googleusercontent.com/proxy/sD4OTc_zQj4D3bFBYoqBeKsZMbHaKp51XMbJhJqNFNOmw8vbW0fAGWJBg2mhn6pTb8OaZAjPiy8T-sdl8NXsBbFBPLDlQWmH1c9oXzjVhTfiSmnd-5JAGySsT2S_BqTPcrkrme8h1SydLZN-zc3Ztu1dANJKGiTqkALKEdd8hvTGeKce1YZrxva367wzeAXMZfw",
     "Samsung Xpress М2020": "https://www.nix.ru/images/Samsung-SL-M2020-1913542254.jpg?good_id=191354&width=500&height=500&view_id=2254",
     "Sven SPS-619": "https://static.nix.ru/images/SVEN-SPS-619-1546822254.jpg?good_id=154682&width=500&height=500&view_id=2254",
     "Sven SPS-701": "https://www.sven.fi/upload/iblock_photos/multimedia_2.0/sps-701/020-photo-big.jpg",
