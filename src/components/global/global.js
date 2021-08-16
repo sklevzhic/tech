@@ -40,7 +40,8 @@ const icons = {
     xerox: Print,
     send: DesktopMac,
     year: TrackChanges,
-
+    name: Keyboard,
+    type: LiveTv
 }
 
 export default icons

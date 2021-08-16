@@ -6,6 +6,7 @@ import icons from "../global/global";
 import AutocompleteTextarea from "../AutocompleteTextarea";
 import {makeStyles} from "@material-ui/core/styles";
 import Icon from "../Icon";
+import {Link} from "react-router-dom";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -41,7 +42,7 @@ const ListItemForm = ({updateTechnic, activeTechnic, property, text}) => {
     } else {
         return <ListItem onDoubleClick={() => editPropertyTechnic(activeTechnic, property)}>
             <ListItemIcon>
-                <Icon type={property}/>
+                <Icon component={Link} to={"/test"} type={property}/>
             </ListItemIcon>
             {!editMode ? <ListItemText
                 classes={{primary: classes.listItemText}}

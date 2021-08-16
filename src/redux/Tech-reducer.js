@@ -34,6 +34,7 @@ let initialState = {
         {title: "Годы выпуска", property: "year"},
         {title: "Факультеты", property: "faculty"},
         {title: "Корпуса", property: "build"},
+        {title: "Наименование", property: "name"},
         {title: "Кабинеты", property: "room"},
         {title: "Сотрудники", property: "user"},
         {title: "Материально-ответственные лица", property: "matfyo"}

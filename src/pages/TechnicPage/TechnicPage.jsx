@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {Link, useParams} from "react-router-dom";
 import Paper from '@material-ui/core/Paper';
 import Avatar from '@material-ui/core/Avatar';
@@ -9,7 +9,7 @@ import {
     CardContent,
     Container,
     Divider,
-    Grid,
+    Grid, IconButton,
     List, ListItem, ListItemAvatar, ListItemText,
 } from "@material-ui/core";
 import {deepOrange} from '@material-ui/core/colors';
@@ -21,6 +21,10 @@ import countDays from "../../components/global/countDays";
 import {useForm} from "react-hook-form";
 import {format} from "date-fns";
 import images from "../../components/global/images";
+import SettingsIcon from '@material-ui/icons/Settings';
+import CommentIcon from '@material-ui/icons/Comment';
+import DynamicFeedIcon from '@material-ui/icons/DynamicFeed';
+
 
 const useStyles = makeStyles((theme) => ({
     avatarWrapper: {
@@ -94,13 +98,27 @@ let repair = [
 
 ]
 
-const TechnicPage = ({activeTechnic, getTechnicInfo, users, addComment, activeTechnicComments, getComments, getRefills, refills}) => {
+const TechnicPage = ({
+                         activeTechnic,
+                         getTechnicInfo,
+                         users,
+                         addComment,
+                         activeTechnicComments,
+                         getComments,
+                         getRefills,
+                         refills
+                     }) => {
     useEffect(() => {
         getTechnicInfo(params.id)
         getComments(params.id)
         getRefills(params.id)
     }, [])
     const {register, handleSubmit, watch, formState: {errors}} = useForm();
+
+    const [aaa, setAaa] = useState(false)
+    const [bbb, setBbb] = useState(false)
+    const [ccc, setCcc] = useState(false)
+
     const onSubmit = data => {
         addComment(activeTechnic.id, data.msg)
     };
@@ -125,10 +143,20 @@ const TechnicPage = ({activeTechnic, getTechnicInfo, users, addComment, activeTe
                             >
                             </Avatar>
                             <Divider className={classes.devider}/>
-                            <Typography variant={"body2"} component={"span"}>{activeTechnic.type}</Typography>
-                            <Typography variant={"h6"} component={"h1"}>{activeTechnic.name}</Typography>
+                            <ListItemForm activeTechnic={activeTechnic} property={"type"} text={"Тип"}/>
+                            <ListItemForm activeTechnic={activeTechnic} property={"name"} text={"Наименование"}/>
+
                         </div>
                     </Paper>
+                    <div style={{display: "flex", justifyContent: "center"}}>
+                        <IconButton aria-label="delete" color={aaa ? "primary" : "secondary"} onClick={() => setAaa(!aaa)}>
+                            <SettingsIcon />
+                        </IconButton>
+                        <IconButton aria-label="delete" color={bbb ? "primary" : "secondary"} onClick={() => setBbb(!bbb)}>
+                            <CommentIcon />
+                        </IconButton>
+                    </div>
+
                 </Grid>
                 <Grid item xs={4}>
                     <Card>
@@ -168,7 +196,7 @@ const TechnicPage = ({activeTechnic, getTechnicInfo, users, addComment, activeTe
                 </Grid>
             </Grid>
 
-            <Grid className={classes.margin} container spacing={2}>
+            {aaa && <Grid className={classes.margin} container spacing={2}>
                 <Paper className={classes.paper}>
                     <Typography gutterBottom variant="h6" component="h2">
                         Комментарии
@@ -195,8 +223,8 @@ const TechnicPage = ({activeTechnic, getTechnicInfo, users, addComment, activeTe
 
                 </Paper>
 
-            </Grid>
-            <Grid container className={classes.margin} spacing={2}>
+            </Grid>}
+            {bbb && <Grid container className={classes.margin} spacing={2}>
                 <Paper className={classes.paper}>
                     <div style={{display: "flex"}}>
                         <Typography gutterBottom variant="h6" component="h2">
@@ -227,7 +255,7 @@ const TechnicPage = ({activeTechnic, getTechnicInfo, users, addComment, activeTe
                     </div>
                 </Paper>
 
-            </Grid>
+            </Grid>}
             <Grid container className={classes.margin} spacing={2}>
                 {
                     ((activeTechnic.type === 'Принтер') || (activeTechnic.type === 'МФУ') || (activeTechnic.type === 'Ксерокс')) &&
@@ -235,7 +263,8 @@ const TechnicPage = ({activeTechnic, getTechnicInfo, users, addComment, activeTe
                         <Typography gutterBottom variant="h6" component="h2">
                             Заправки
                         </Typography>
-                        <Button component={Link} to={"/printers"} variant={"contained"} color={"primary"}>Заполнить</Button>
+                        <Button component={Link} to={"/printers"} variant={"contained"}
+                                color={"primary"}>Заполнить</Button>
                         <Typography variant={"body2"}>Максимальное количество
                             заправок за год: 2</Typography>
                         <Divider/>
@@ -250,6 +279,7 @@ const TechnicPage = ({activeTechnic, getTechnicInfo, users, addComment, activeTe
                     </Paper>
                 }
             </Grid>
+
             <Grid container className={classes.margin} spacing={2}>
                 <Paper className={classes.paper}>
                     <div style={{display: "flex"}}>
