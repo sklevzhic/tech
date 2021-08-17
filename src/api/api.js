@@ -1,4 +1,5 @@
 import axios from "axios";
+import {sendOrder, updateCurrentRefills} from "../redux/Printers-reducer";
 
 let instance = axios.create({
     withCredentials: true,
@@ -138,6 +139,15 @@ export const printersAPI = {
         return axios.get(`http://localhost:3004/refills`).then(response => response.data)
     },
     getCurrentRefills() {
-        return axios.get(`http://localhost:3004/refillsCurrent`).then(response => response.data)
+        return axios.get(`http://localhost:3004/refillsCurrent/1`).then(response => response.data.arr)
     },
+    getPrintersAll() {
+        return axios.get(`http://localhost:3004/technics?type=Принтер&type=МФУ&type=Ксерокс`).then(response => response.data)
+    },
+    updateCurrentRefills(data) {
+        let obj = {
+            "arr": data
+        }
+        return axios.patch(`http://localhost:3004/refillsCurrent/1`,obj).then(response => response.data)
+    }
 }

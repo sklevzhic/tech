@@ -23,7 +23,6 @@ import {format} from "date-fns";
 import images from "../../components/global/images";
 import SettingsIcon from '@material-ui/icons/Settings';
 import CommentIcon from '@material-ui/icons/Comment';
-import DynamicFeedIcon from '@material-ui/icons/DynamicFeed';
 
 
 const useStyles = makeStyles((theme) => ({
