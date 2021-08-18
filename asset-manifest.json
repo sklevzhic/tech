@@ -1,22 +1,37 @@
 {
   "files": {
-    "main.css": "/tech/static/css/main.ef988a8d.chunk.css",
-    "main.js": "/tech/static/js/main.479a1edb.chunk.js",
-    "main.js.map": "/tech/static/js/main.479a1edb.chunk.js.map",
-    "runtime-main.js": "/tech/static/js/runtime-main.54b23053.js",
-    "runtime-main.js.map": "/tech/static/js/runtime-main.54b23053.js.map",
-    "static/js/2.2e1af214.chunk.js": "/tech/static/js/2.2e1af214.chunk.js",
-    "static/js/2.2e1af214.chunk.js.map": "/tech/static/js/2.2e1af214.chunk.js.map",
-    "static/js/3.cca7822a.chunk.js": "/tech/static/js/3.cca7822a.chunk.js",
-    "static/js/3.cca7822a.chunk.js.map": "/tech/static/js/3.cca7822a.chunk.js.map",
+    "main.css": "/tech/static/css/main.f064c4fd.chunk.css",
+    "main.js": "/tech/static/js/main.bf7ac3d7.chunk.js",
+    "main.js.map": "/tech/static/js/main.bf7ac3d7.chunk.js.map",
+    "runtime-main.js": "/tech/static/js/runtime-main.58d09de1.js",
+    "runtime-main.js.map": "/tech/static/js/runtime-main.58d09de1.js.map",
+    "static/js/2.babd2e93.chunk.js": "/tech/static/js/2.babd2e93.chunk.js",
+    "static/js/2.babd2e93.chunk.js.map": "/tech/static/js/2.babd2e93.chunk.js.map",
+    "static/js/3.5f7f00bb.chunk.js": "/tech/static/js/3.5f7f00bb.chunk.js",
+    "static/js/3.5f7f00bb.chunk.js.map": "/tech/static/js/3.5f7f00bb.chunk.js.map",
     "index.html": "/tech/index.html",
-    "static/css/main.ef988a8d.chunk.css.map": "/tech/static/css/main.ef988a8d.chunk.css.map",
-    "static/js/2.2e1af214.chunk.js.LICENSE.txt": "/tech/static/js/2.2e1af214.chunk.js.LICENSE.txt"
+    "static/css/main.f064c4fd.chunk.css.map": "/tech/static/css/main.f064c4fd.chunk.css.map",
+    "static/js/2.babd2e93.chunk.js.LICENSE.txt": "/tech/static/js/2.babd2e93.chunk.js.LICENSE.txt",
+    "static/media/ELPDC11.d52c9bd2.jpg": "/tech/static/media/ELPDC11.d52c9bd2.jpg",
+    "static/media/Epson L805.24612ea6.jpg": "/tech/static/media/Epson L805.24612ea6.jpg",
+    "static/media/FlatronL1718S.58516ff4.jpg": "/tech/static/media/FlatronL1718S.58516ff4.jpg",
+    "static/media/HP LJ 1010.76973c2f.jpg": "/tech/static/media/HP LJ 1010.76973c2f.jpg",
+    "static/media/HP LJ 1020.7aa2f29d.jpg": "/tech/static/media/HP LJ 1020.7aa2f29d.jpg",
+    "static/media/HP bs053ur.3db6e64e.jpg": "/tech/static/media/HP bs053ur.3db6e64e.jpg",
+    "static/media/LBP6020B.e8882e0f.jpg": "/tech/static/media/LBP6020B.e8882e0f.jpg",
+    "static/media/LG Flatron E1942C-BNA.c4b665a2.jpg": "/tech/static/media/LG Flatron E1942C-BNA.c4b665a2.jpg",
+    "static/media/LJ1018.4a6125fe.jpg": "/tech/static/media/LJ1018.4a6125fe.jpg",
+    "static/media/LaserJet 6L.100e53a1.jpg": "/tech/static/media/LaserJet 6L.100e53a1.jpg",
+    "static/media/Lenovo IdeaPad 320-15IAP.fff97759.jpg": "/tech/static/media/Lenovo IdeaPad 320-15IAP.fff97759.jpg",
+    "static/media/LogitechHDC270.9de9e264.jpg": "/tech/static/media/LogitechHDC270.9de9e264.jpg",
+    "static/media/Philips 190V3LSB.5bd4c48e.jpg": "/tech/static/media/Philips 190V3LSB.5bd4c48e.jpg",
+    "static/media/Ritter 75-02.87aa653c.jpg": "/tech/static/media/Ritter 75-02.87aa653c.jpg",
+    "static/media/Samsung SyncMaster 740N.fd4dc4de.jpg": "/tech/static/media/Samsung SyncMaster 740N.fd4dc4de.jpg"
   },
   "entrypoints": [
-    "static/js/runtime-main.54b23053.js",
-    "static/js/2.2e1af214.chunk.js",
-    "static/css/main.ef988a8d.chunk.css",
-    "static/js/main.479a1edb.chunk.js"
+    "static/js/runtime-main.58d09de1.js",
+    "static/js/2.babd2e93.chunk.js",
+    "static/css/main.f064c4fd.chunk.css",
+    "static/js/main.bf7ac3d7.chunk.js"
   ]
 }
