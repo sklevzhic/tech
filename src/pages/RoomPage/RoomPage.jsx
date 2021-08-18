@@ -1,7 +1,6 @@
 import {Avatar, Card, Container, Grid, List, ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
 import {Link, useParams} from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
 import {useEffect, useState} from "react";
 import images from "../../components/global/images";
 import Test from "../../components/Test/Test";
