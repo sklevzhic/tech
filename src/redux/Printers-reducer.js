@@ -4,7 +4,7 @@ const GET_REFILLS = 'GET_REFILLS';
 const GET_ALL_REFILLS = 'GET_ALL_REFILLS'
 const GET_CURRENT_REFILLS = 'GET_CURRENT_REFILLS'
 const SET_PRINTERS = 'SET_PRINTERS'
-
+const SET_REFILL = 'SET_REFILL'
 
 let initialState = {
     refills: [],
@@ -39,6 +39,12 @@ const PrintersReducer = (state = initialState, action) => {
                 printers: action.payload
             }
         }
+        case SET_REFILL: {
+            return {
+                ...state,
+                allRefills: [...state.allRefills, action.payload]
+            }
+        }
         default:
             return state
     }
@@ -50,6 +56,9 @@ export const setAllRefillsAC = (payload) => {
 export const setCurrentRefillsAC = (payload) => {
     return {type: GET_CURRENT_REFILLS, payload}
 }
+export const setRefillAC = (payload) => {
+    return {type: SET_REFILL, payload}
+}
 
 export const setRefillsAC = (payload) => {
     return {type: GET_REFILLS, payload}
@@ -60,7 +69,6 @@ export const setPrintersAC = (payload) => {
 
 export const getAllRefills = () => async (dispatch) => {
     let response = await printersAPI.getAllRefills()
-    debugger
     dispatch(setAllRefillsAC(response))
 }
 export const getRefills = (id) => async (dispatch) => {
@@ -87,10 +95,9 @@ export const updateCurrentRefills = (data) => async (dispatch) => {
 }
 
 export const addRefillForPrinter = (id, data) => {
-    debugger
     return async (dispatch) => {
         let response = await printersAPI.addRefillForPrinter(id, data)
-        debugger
+        dispatch(setRefillAC(response))
     }
 }
 

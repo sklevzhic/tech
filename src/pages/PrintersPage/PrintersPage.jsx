@@ -1,6 +1,6 @@
 import Typography from "@material-ui/core/Typography";
 import {
-    Button, Container, Divider,
+    Button, Card, CardContent, Container, Divider, Grid,
     IconButton,
     List,
     ListItem, ListItemAvatar,
@@ -10,13 +10,14 @@ import {
 import {useEffect, useState} from "react";
 import Avatar from "@material-ui/core/Avatar";
 import images from "../../components/global/images";
-import AlarmIcon from '@material-ui/icons/Alarm';
+import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
+import InfoIcon from '@material-ui/icons/Info';
 import {Link} from "react-router-dom";
+import groupElementsByDate from "../../components/global/groupElementsByDate";
 
 const PrintersPage = ({
                           getAllRefills,
                           getCurrentRefills,
-                          currentRefills,
                           allRefills,
                           getPrintersAll,
                           printers,
@@ -34,7 +35,6 @@ const PrintersPage = ({
 
         fetchCurrentRefills()
     }, [])
-
     useEffect(() => {
         getPrintersAll()
         getAllRefills()
@@ -94,39 +94,53 @@ const PrintersPage = ({
         updateCurrentRefills(a)
     }
 
-    const getCountRefill = () => {
-        return 2
+    const getCountRefill = (id) => {
+        let count = allRefills.filter(el => el.technicId === id).length
+        return count
     }
 
-
+    let refoiellElements = groupElementsByDate(allRefills, "receiverDate").map(el => {
+        return <div>
+            <div>{el.date}</div>
+            <ul>{el.properties.map(element => {
+                return <li>[{element.countRefill}]{element.name} {element.receiverDate - element.createDate}</li>
+            })}</ul>
+        </div>
+    })
     const handlerRefills = (el) => {
         let obj = {
             "technicId": el.id,
             "name": el.name,
             "user": el.user,
             "createDate": Date.now(),
-            "countRefill": getCountRefill()
+            "countRefill": getCountRefill(el.id) + 1
         }
         changeCategory(obj, 'new')
     }
 
     return (
         <Container>
-            {currentRefill && <div style={{display: "flex", justifyContent: "space-evenly"}}>
+            {currentRefill && <div style={{display: "flex", justifyContent: "space-evenly", margin: "20px 0"}}>
                 {currentRefill.map((obj, i) => {
-                    return <div>
-                        <Typography variant={"h6"}>{obj.name}</Typography>
-                        <List dense>
-                            {obj.arr.map(el => {
-                                return <ListItem  button>
-                                    <ListItemText primary={`[${el.countRefill}] ${el.name}`}
-                                                  secondary={`${el.user}`}></ListItemText>
-                                    <ListItemSecondaryAction><Button onClick={() => changeCategory(el, i)}
-                                                                     variant={"contained"}>=></Button></ListItemSecondaryAction>
-                                </ListItem>
-                            })}
-                        </List>
-                    </div>
+                    return <Card style={{width: "23%"}}>
+                        <CardContent>
+                            <Typography variant={"h6"}>{obj.name}</Typography>
+                            <List dense>
+                                {obj.arr.map(el => {
+                                    return <ListItem button>
+                                        <ListItemText primary={`[${el.countRefill || 1}]  ${el.name}`}
+                                                      secondary={`${el.user}`}></ListItemText>
+                                        <ListItemSecondaryAction>
+                                            <IconButton onClick={() => changeCategory(el, i)} color="secondary"
+                                                        aria-label="add an alarm">
+                                                <DoubleArrowIcon/>
+                                            </IconButton>
+                                        </ListItemSecondaryAction>
+                                    </ListItem>
+                                })}
+                            </List>
+                        </CardContent>
+                    </Card>
                 })
                 }
 
@@ -134,10 +148,18 @@ const PrintersPage = ({
             <Divider/>
             <div>
                 <Typography>Последние заправки</Typography>
+                {refoiellElements}
+            </div>
+            <Divider/>
+            <div>
+                <Typography>Картриджи в шкафу</Typography>
                 <div>
-                    {allRefills.map(el => {
-                        return el.user
-                    })}
+                    <ul>
+                        <li>23124</li>
+                        <li>23124</li>
+                        <li>23124</li>
+                        <li>23124</li>
+                    </ul>
                 </div>
             </div>
             <Divider/>
@@ -154,7 +176,7 @@ const PrintersPage = ({
                                 <ListItemSecondaryAction>
                                     <IconButton onClick={() => handlerRefills(el)} color="secondary"
                                                 aria-label="add an alarm">
-                                        <AlarmIcon/>
+                                        <DoubleArrowIcon/>
                                     </IconButton>
                                 </ListItemSecondaryAction>
                             </ListItem>

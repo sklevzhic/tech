@@ -114,7 +114,7 @@ export const techAPI = {
         return axios.get(`${URL}/technics`).then(responce => responce.data)
     },
     addUser(data) {
-        return axios.post(`${URL}/users`,{name: data}).then(responce => responce.data)
+        return axios.post(`${URL}/users`, {name: data}).then(responce => responce.data)
     },
     getComments(id) {
         return axios.get(`${URL}/technics/${id}/comments`).then(responce => responce.data)
@@ -150,7 +150,7 @@ export const printersAPI = {
         let obj = {
             "arr": data
         }
-        return axios.patch(`${URL}/refillsCurrent/1`,obj).then(response => response.data)
+        return axios.patch(`${URL}/refillsCurrent/1`, obj).then(response => response.data)
     },
     addRefillForPrinter(id, data) {
         let obj = {

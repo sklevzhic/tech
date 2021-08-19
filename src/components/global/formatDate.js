@@ -1,7 +1,7 @@
 import {format} from "date-fns";
 
 const formatDate = (value) => {
-    debugger
-    return format(new Date(value), 'dd.MM.yyyy')
+    let currentDate = new Date(value)
+    return format(currentDate, 'dd.MM.yyyy')
 }
-export default formatDate()
+export default formatDate
