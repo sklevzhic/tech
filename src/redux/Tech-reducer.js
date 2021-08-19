@@ -416,4 +416,5 @@ export const getTechnicsByRoom = (room) => {
         return groupTechnics
     }
 }
+
 export default TechReducer

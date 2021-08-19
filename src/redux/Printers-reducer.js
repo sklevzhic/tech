@@ -1,4 +1,4 @@
-import {printersAPI} from "../api/api";
+import {printersAPI, techAPI} from "../api/api";
 
 const GET_REFILLS = 'GET_REFILLS';
 const GET_ALL_REFILLS = 'GET_ALL_REFILLS'
@@ -60,6 +60,7 @@ export const setPrintersAC = (payload) => {
 
 export const getAllRefills = () => async (dispatch) => {
     let response = await printersAPI.getAllRefills()
+    debugger
     dispatch(setAllRefillsAC(response))
 }
 export const getRefills = (id) => async (dispatch) => {
@@ -83,6 +84,14 @@ export const sendOrder = (id) => async (dispatch) => {
 
 export const updateCurrentRefills = (data) => async (dispatch) => {
     let response = await printersAPI.updateCurrentRefills(data)
+}
+
+export const addRefillForPrinter = (id, data) => {
+    debugger
+    return async (dispatch) => {
+        let response = await printersAPI.addRefillForPrinter(id, data)
+        debugger
+    }
 }
 
 export default PrintersReducer

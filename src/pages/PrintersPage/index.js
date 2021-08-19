@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
 import PrintersPage from "./PrintersPage";
-import {getAllRefills, getCurrentRefills, getPrintersAll, sendOrder, updateCurrentRefills} from "../../redux/Printers-reducer";
+import {getAllRefills, getCurrentRefills, getPrintersAll, sendOrder, updateCurrentRefills, addRefillForPrinter} from "../../redux/Printers-reducer";
 
 const mapStateToProps = (state) => {
     return {
@@ -14,7 +14,8 @@ const mapToDispatch = {
     getCurrentRefills,
     getPrintersAll,
     sendOrder,
-    updateCurrentRefills
+    updateCurrentRefills,
+    addRefillForPrinter
 }
 
 export default connect(mapStateToProps, mapToDispatch)(PrintersPage)

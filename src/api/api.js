@@ -1,6 +1,8 @@
 import axios from "axios";
 import {sendOrder, updateCurrentRefills} from "../redux/Printers-reducer";
 
+// const URL = 'https://technicsklevzhits.herokuapp.com'
+const URL = 'http://localhost:3004'
 let instance = axios.create({
     withCredentials: true,
     baseURL: 'https://social-network.samuraijs.com/api/1.0',
@@ -68,19 +70,19 @@ export const authAPI = {
 
 export const techAPI = {
     getTypes() {
-        return axios.get(`https://technicsklevzhits.herokuapp.com/types`).then(responce => responce.data)
+        return axios.get(`${URL}/types`).then(responce => responce.data)
     },
     addType(obj) {
-        return axios.post(`https://technicsklevzhits.herokuapp.com/types`, obj).then(response => response)
+        return axios.post(`${URL}/types`, obj).then(response => response)
     },
     deleteType(id) {
-        return axios.delete(`https://technicsklevzhits.herokuapp.com/types/${id}`).then(response => response)
+        return axios.delete(`${URL}/types/${id}`).then(response => response)
     },
     editType(id, obj) {
-        return axios.put(`https://technicsklevzhits.herokuapp.com/types/${id}`, obj).then(response => response)
+        return axios.put(`${URL}/types/${id}`, obj).then(response => response)
     },
     getActiveType(value) {
-        return axios.get(`https://technicsklevzhits.herokuapp.com/types?type=${value}`).then(response => response.data[0])
+        return axios.get(`${URL}/types?type=${value}`).then(response => response.data[0])
     },
     getTechnicsForType(value) {
         // const arrayToQuery = (property, arr) => {
@@ -95,59 +97,67 @@ export const techAPI = {
         // }
         // let queryYears = arrayToQuery("year", years)
         // let buildsYears = arrayToQuery("korpus", builds)
-        return axios.get(`https://technicsklevzhits.herokuapp.com/technics?type_like=${value}`).then(response => response.data)
+        return axios.get(`${URL}/technics?type_like=${value}`).then(response => response.data)
     },
     getTechnicInfo(id) {
-        return axios.get(`https://technicsklevzhits.herokuapp.com/technics/${id}`).then(response => response.data)
+        return axios.get(`${URL}/technics/${id}`).then(response => response.data)
     },
     updateTechnic(id, data) {
-        return axios.patch(`https://technicsklevzhits.herokuapp.com/technics/${id}`, data).then(response => response)
+        return axios.patch(`${URL}/technics/${id}`, data).then(response => response)
     },
     // id = "18", data = {date: "2019-01-01"}
     // id = "18", data = {print: true}
     getUsers() {
-        return axios.get(`https://technicsklevzhits.herokuapp.com/users`).then(responce => responce.data)
+        return axios.get(`${URL}/users`).then(responce => responce.data)
     },
     getRooms() {
-        return axios.get(`https://technicsklevzhits.herokuapp.com/technics`).then(responce => responce.data)
+        return axios.get(`${URL}/technics`).then(responce => responce.data)
     },
     addUser(data) {
-        return axios.post(`https://technicsklevzhits.herokuapp.com/users`,{name: data}).then(responce => responce.data)
+        return axios.post(`${URL}/users`,{name: data}).then(responce => responce.data)
     },
     getComments(id) {
-        return axios.get(`https://technicsklevzhits.herokuapp.com/technics/${id}/comments`).then(responce => responce.data)
+        return axios.get(`${URL}/technics/${id}/comments`).then(responce => responce.data)
     },
     addComment(id, val) {
-        return axios.post(`https://technicsklevzhits.herokuapp.com/technics/${id}/comments`, {
+        return axios.post(`${URL}/technics/${id}/comments`, {
             "postId": id,
             "date": new Date(),
             "body": val
         }).then(responce => responce.data)
     },
     getTechnicsByRoom(room) {
-        return axios.get(`https://technicsklevzhits.herokuapp.com/technics?room=${room}`).then(response => response.data)
+        return axios.get(`${URL}/technics?room=${room}`).then(response => response.data)
     },
     addTechnic(data) {
-        return axios.post(`https://technicsklevzhits.herokuapp.com/technics`, data).then(responce => responce.data)
+        return axios.post(`${URL}/technics`, data).then(responce => responce.data)
     }
 }
 export const printersAPI = {
     getRefills(id) {
-        return axios.get(`https://technicsklevzhits.herokuapp.com/technics/${id}/refills`).then(response => response.data)
+        return axios.get(`${URL}/technics/${id}/refills`).then(response => response.data)
     },
     getAllRefills() {
-        return axios.get(`https://technicsklevzhits.herokuapp.com/refills`).then(response => response.data)
+        return axios.get(`${URL}/refills`).then(response => response.data)
     },
     getCurrentRefills() {
-        return axios.get(`https://technicsklevzhits.herokuapp.com/refillsCurrent/1`).then(response => response.data.arr)
+        return axios.get(`${URL}/refillsCurrent/1`).then(response => response.data.arr)
     },
     getPrintersAll() {
-        return axios.get(`https://technicsklevzhits.herokuapp.com/technics?type=Принтер&type=МФУ&type=Ксерокс`).then(response => response.data)
+        return axios.get(`${URL}/technics?type=Принтер&type=МФУ&type=Ксерокс`).then(response => response.data)
     },
     updateCurrentRefills(data) {
         let obj = {
             "arr": data
         }
-        return axios.patch(`https://technicsklevzhits.herokuapp.com/refillsCurrent/1`,obj).then(response => response.data)
+        return axios.patch(`${URL}/refillsCurrent/1`,obj).then(response => response.data)
+    },
+    addRefillForPrinter(id, data) {
+        let obj = {
+            ...data,
+            "receiverDate": Date.now(),
+        }
+        return axios.post(`${URL}/technics/${id}/refills`, obj).then(response => response.data)
     }
 }
+
