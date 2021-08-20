@@ -13,7 +13,7 @@ import EventsPage from "../../../pages/EventsPage";
 const AppWithRouter = () => {
     return (
         <Switch>
-            <Route exact path='/' render={() => <Redirect to='/profile'/>}/>
+            <Route exact path='/' render={() => <Redirect to='/types'/>}/>
             <Route exact path='/profile' render={() => <Profile/>}/>
             <Route path='/profile/:uID' render={() => <Profile/>}/>
             <Route path='/messages' render={() => <div>messages</div>}/>
