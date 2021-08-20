@@ -5,7 +5,7 @@ import {
     List,
     ListItem, ListItemAvatar,
     ListItemSecondaryAction,
-    ListItemText
+    ListItemText, Menu, MenuItem, Paper
 } from "@material-ui/core";
 import {useEffect, useState} from "react";
 import Avatar from "@material-ui/core/Avatar";
@@ -98,12 +98,11 @@ const PrintersPage = ({
         let count = allRefills.filter(el => el.technicId === id).length
         return count
     }
-
-    let refoiellElements = groupElementsByDate(allRefills, "receiverDate").map(el => {
+    let latestRefueling = groupElementsByDate(allRefills, "receiverDate").map(el => {
         return <div>
             <div>{el.date}</div>
             <ul>{el.properties.map(element => {
-                return <li>[{element.countRefill}]{element.name} {element.receiverDate - element.createDate}</li>
+                return <li>[{element.countRefill}]{element.name} {element.user}</li>
             })}</ul>
         </div>
     })
@@ -117,6 +116,14 @@ const PrintersPage = ({
         }
         changeCategory(obj, 'new')
     }
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     return (
         <Container>
@@ -127,13 +134,14 @@ const PrintersPage = ({
                             <Typography variant={"h6"}>{obj.name}</Typography>
                             <List dense>
                                 {obj.arr.map(el => {
-                                    return <ListItem button>
+                                    return <ListItem onDoubleClick={() => changeCategory(el, i)} button>
                                         <ListItemText primary={`[${el.countRefill || 1}]  ${el.name}`}
                                                       secondary={`${el.user}`}></ListItemText>
                                         <ListItemSecondaryAction>
-                                            <IconButton onClick={() => changeCategory(el, i)} color="secondary"
+                                            <IconButton color="secondary"
                                                         aria-label="add an alarm">
-                                                <DoubleArrowIcon/>
+                                                <DoubleArrowIcon aria-controls="simple-menu" aria-haspopup="true"
+                                                                 onClick={handleClick}/>
                                             </IconButton>
                                         </ListItemSecondaryAction>
                                     </ListItem>
@@ -145,11 +153,24 @@ const PrintersPage = ({
                 }
 
             </div>}
-            <Divider/>
-            <div>
-                <Typography>Последние заправки</Typography>
-                {refoiellElements}
-            </div>
+            <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+            >
+                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={handleClose}>Logout</MenuItem>
+            </Menu>
+            <Grid>
+                <Paper style={{margin: "10px", padding: "10px"}}>
+                    <Typography variant={"h6"}>Последние заправки</Typography>
+                    <Divider/>
+                    {latestRefueling}
+                </Paper>
+            </Grid>
             <Divider/>
             <div>
                 <Typography>Картриджи в шкафу</Typography>

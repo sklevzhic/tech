@@ -2,9 +2,9 @@ import formatDate from "./formatDate";
 
 const groupElementsByDate = (array, property) => {
     return array.reduce((previousValue, currentValue) => {
+        let b = formatDate(currentValue[property])
         let objType = previousValue.find((element) => {
             let a = element["date"]
-            let b = formatDate(Number.parseInt(currentValue[property]))
                 if (a === b) {
                     return element
                 }
@@ -20,6 +20,6 @@ const groupElementsByDate = (array, property) => {
             objType.properties.push(currentValue);
         }
         return previousValue;
-    }, []).sort((a, b) => a["date"] - b["date"])
+    }, [])
 }
 export default groupElementsByDate
