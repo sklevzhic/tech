@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/tech/static/css/main.e0f9d29d.chunk.css",
-    "main.js": "/tech/static/js/main.2c36283b.chunk.js",
-    "main.js.map": "/tech/static/js/main.2c36283b.chunk.js.map",
-    "runtime-main.js": "/tech/static/js/runtime-main.a6f299fd.js",
-    "runtime-main.js.map": "/tech/static/js/runtime-main.a6f299fd.js.map",
-    "static/js/2.52bfce2a.chunk.js": "/tech/static/js/2.52bfce2a.chunk.js",
-    "static/js/2.52bfce2a.chunk.js.map": "/tech/static/js/2.52bfce2a.chunk.js.map",
-    "static/js/3.293dc01a.chunk.js": "/tech/static/js/3.293dc01a.chunk.js",
-    "static/js/3.293dc01a.chunk.js.map": "/tech/static/js/3.293dc01a.chunk.js.map",
+    "main.css": "/tech/static/css/main.d49ef606.chunk.css",
+    "main.js": "/tech/static/js/main.1f3a2b2d.chunk.js",
+    "main.js.map": "/tech/static/js/main.1f3a2b2d.chunk.js.map",
+    "runtime-main.js": "/tech/static/js/runtime-main.b3554b95.js",
+    "runtime-main.js.map": "/tech/static/js/runtime-main.b3554b95.js.map",
+    "static/js/2.7b88ccb4.chunk.js": "/tech/static/js/2.7b88ccb4.chunk.js",
+    "static/js/2.7b88ccb4.chunk.js.map": "/tech/static/js/2.7b88ccb4.chunk.js.map",
+    "static/js/3.7872e4c0.chunk.js": "/tech/static/js/3.7872e4c0.chunk.js",
+    "static/js/3.7872e4c0.chunk.js.map": "/tech/static/js/3.7872e4c0.chunk.js.map",
     "index.html": "/tech/index.html",
-    "static/css/main.e0f9d29d.chunk.css.map": "/tech/static/css/main.e0f9d29d.chunk.css.map",
-    "static/js/2.52bfce2a.chunk.js.LICENSE.txt": "/tech/static/js/2.52bfce2a.chunk.js.LICENSE.txt",
+    "static/css/main.d49ef606.chunk.css.map": "/tech/static/css/main.d49ef606.chunk.css.map",
+    "static/js/2.7b88ccb4.chunk.js.LICENSE.txt": "/tech/static/js/2.7b88ccb4.chunk.js.LICENSE.txt",
     "static/media/ELPDC11.d52c9bd2.jpg": "/tech/static/media/ELPDC11.d52c9bd2.jpg",
     "static/media/Epson L805.24612ea6.jpg": "/tech/static/media/Epson L805.24612ea6.jpg",
     "static/media/FlatronL1718S.58516ff4.jpg": "/tech/static/media/FlatronL1718S.58516ff4.jpg",
@@ -26,12 +26,13 @@
     "static/media/LogitechHDC270.9de9e264.jpg": "/tech/static/media/LogitechHDC270.9de9e264.jpg",
     "static/media/Philips 190V3LSB.5bd4c48e.jpg": "/tech/static/media/Philips 190V3LSB.5bd4c48e.jpg",
     "static/media/Ritter 75-02.87aa653c.jpg": "/tech/static/media/Ritter 75-02.87aa653c.jpg",
-    "static/media/Samsung SyncMaster 740N.fd4dc4de.jpg": "/tech/static/media/Samsung SyncMaster 740N.fd4dc4de.jpg"
+    "static/media/Samsung SyncMaster 740N.fd4dc4de.jpg": "/tech/static/media/Samsung SyncMaster 740N.fd4dc4de.jpg",
+    "static/media/klevzhits.4a09ac26.jpg": "/tech/static/media/klevzhits.4a09ac26.jpg"
   },
   "entrypoints": [
-    "static/js/runtime-main.a6f299fd.js",
-    "static/js/2.52bfce2a.chunk.js",
-    "static/css/main.e0f9d29d.chunk.css",
-    "static/js/main.2c36283b.chunk.js"
+    "static/js/runtime-main.b3554b95.js",
+    "static/js/2.7b88ccb4.chunk.js",
+    "static/css/main.d49ef606.chunk.css",
+    "static/js/main.1f3a2b2d.chunk.js"
   ]
 }
