@@ -1,9 +1,7 @@
 import React, {useEffect} from "react";
 import {Container, Paper, Tab, Tabs} from "@material-ui/core";
-import Preloader from "../../components/Preloader";
 import Typography from "@material-ui/core/Typography";
 import {Link, withRouter} from "react-router-dom";
-// import {makeStyles} from "@material-ui/styles";
 import Users from "../../components/Users";
 
 // const useStyles = makeStyles({
@@ -50,7 +48,7 @@ const UsersPage = ({isFetching, rowsPerPage, currentPage, getUsers, match}) => {
                     </Paper>
                     <Users/>
                 </Container>
-                : <Preloader/>
+                : null
             }
         </>
     )

@@ -1,14 +1,9 @@
 import Profile from './Profile'
 import {connect} from "react-redux";
-import {getUserInfo, updateUserInfo, uploadPhoto} from "../../redux/Profile-reducer";
-
 let mapStateToProps = (state) => {
-
     return {
-        user: state.profilePage.user,
-        id: state.auth.id,
-        isUpdateProfile: state.profilePage.isUpdateProfile,
+        user: state.profilePage.user
     }
 }
 
-export default connect(mapStateToProps, {getUserInfo, updateUserInfo, uploadPhoto})(Profile)
+export default connect(mapStateToProps)(Profile)

@@ -6,7 +6,6 @@ import {Button, Card, Container, FormControlLabel, Icon} from "@material-ui/core
 import Typography from "@material-ui/core/Typography";
 import {Checkbox, TextField} from 'formik-material-ui';
 import s from './SignInPage.module.scss'
-import Preloader from "../../components/Preloader";
 import {Redirect} from "react-router-dom";
 
 const SignInPage = ({captchaUrl, isAuth, login, isButtonDisabled}) => {
@@ -42,7 +41,6 @@ const SignInPage = ({captchaUrl, isAuth, login, isButtonDisabled}) => {
             <Typography component="h1" align="center" variant="h5">
                 Sign in
             </Typography>
-            {isButtonDisabled && <Preloader/>}
 
             <Formik
                 initialValues={initialValues}

@@ -3,7 +3,6 @@ import {Link, useParams} from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import {useEffect, useState} from "react";
 import images from "../../components/global/images";
-import Test from "../../components/Test/Test";
 
 const layout = ["Системный блок", "Компьютер (комплект)", "Монитор", "Моноблок", "Ноутбук","Телевизор",  "Проектор","Принтер", "МФУ","Сканер","Ксерокс",
     "Акустическая система","Планшет","Веб-камера", "Мышь",  "Клавиатура", "Фотоаппарат", "Документ-камера", "Перфобиндер"]
@@ -51,9 +50,7 @@ const RoomPage = ({getTechnicsByRoom, technicsByRoom}) => {
 
             </Grid>
         </Grid>
-        <Grid container>
-            <Test initialColumns={technics} />
-        </Grid>
+
     </Container>
 }
 

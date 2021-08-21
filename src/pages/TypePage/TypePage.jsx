@@ -98,7 +98,7 @@ const schema = [
     ]
 ]
 
-const TypePage = ({getActiveType, activeType,addTechnic, toogleLoadingInfoFotType, technicsLength}) => {
+const TypePage = ({getActiveType, activeType, addTechnic, toogleLoadingInfoFotType, technicsLength}) => {
     // const {search} = useLocation()
     // const {years, builds} = queryString.parse(search)
     const classes = useStyles();
