@@ -37,8 +37,8 @@ const ProfilePage = () => {
                 <div>
                     <div
                         className={`${classes.div} ${(bbb) ? classes.divheight : ""}`}
-                        onMouseEnter={() => setBBB(!bbb)}
-                        onMouseLeave={() => setBBB(!bbb)}
+                        onMouseOver={() => setBBB(!bbb)}
+                        onClick={() => { }}
                     ></div>
                 </div>
 
