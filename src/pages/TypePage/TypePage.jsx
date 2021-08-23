@@ -12,7 +12,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import ListTypes from "../../components/ListTypes";
 import {Skeleton} from "@material-ui/lab";
 import Icon from "../../components/Icon";
-import ListTechnics from "../../components/ListTechnics";
+import ListTechnics from "../../components/ListTechnics1";
 import ActiveCategories from "../../components/ActiveCategories";
 import FiltersTechnic from "../../components/FiltersTechnic";
 import Modal from "../../components/Modal";

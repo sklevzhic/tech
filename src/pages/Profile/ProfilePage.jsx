@@ -17,40 +17,11 @@ const useStyles = makeStyles((theme) => ({
 
 
 const ProfilePage = () => {
-    let [aaa, setAAA] = useState(false)
-    let [bbb, setBBB] = useState(false)
-    let [ccc, setCCC] = useState(false)
-
     const classes = useStyles();
-    console.log(aaa)
     return (
         <Container>
             <ProfileInfo/>
             <Portfolio/>
-            <div style={{display: "flex", justifyContent: "space-around"}}>
-                <div>
-                    <div
-                        className={`${classes.div} ${(aaa) ? classes.divheight : ""}`}
-                        onClick={() => setAAA(!aaa)}
-                    ></div>
-                </div>
-                <div>
-                    <div
-                        className={`${classes.div} ${(bbb) ? classes.divheight : ""}`}
-                        onMouseOver={() => setBBB(!bbb)}
-                        onClick={() => { }}
-                    ></div>
-                </div>
-
-                <div>
-                    <div
-                        className={`${classes.div} ${(ccc) ? classes.divheight : ""}`}
-                        onTouchStart={() => setCCC(!ccc)}
-                    ></div>
-                </div>
-
-            </div>
-
         </Container>
     )
 }

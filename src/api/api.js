@@ -131,6 +131,9 @@ export const techAPI = {
     },
     addTechnic(data) {
         return axios.post(`${URL}/technics`, data).then(responce => responce.data)
+    },
+    getSchema() {
+        return axios.get(`${URL}/shemaTechnics`).then(responce => responce.data)
     }
 }
 export const printersAPI = {
@@ -158,6 +161,8 @@ export const printersAPI = {
             "receiverDate": Date.now(),
         }
         return axios.post(`${URL}/technics/${id}/refills`, obj).then(response => response.data)
-    }
+    },
+
+
 }
 

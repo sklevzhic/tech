@@ -17,7 +17,7 @@ const SET_COMMENTS = 'SET_COMMENTS'
 const SET_STATISTIC = 'SET_STATISTIC'
 const SET_TECHNICS_BY_ROOM = 'SET_TECHNICS_BY_ROOM'
 const SET_ADDED_TECHNIC = 'SET_ADDED_TECHNIC'
-
+const SET_SCHEMA = 'SET_SCHEMA'
 let initialState = {
     types: [],
     activeType: {},
@@ -40,6 +40,7 @@ let initialState = {
         {title: "Материально-ответственные лица", property: "matfyo"}
     ],
     rooms: [],
+    schema: [],
     keys: [
         {
             id: "1",
@@ -233,6 +234,12 @@ const TechReducer = (state = initialState, action) => {
                 statistics: groupTechnics
             }
         }
+        case SET_SCHEMA: {
+            return {
+                ...state,
+                schema: action.payload
+            }
+        }
         default:
             return state
     }
@@ -293,6 +300,9 @@ export const setTechnicsByRoomAC = (payload) => {
 }
 export const setAddedTechnicAC = (payload) => {
     return {type: SET_ADDED_TECHNIC, payload}
+}
+export const setSchema = (payload) => {
+    return {type: SET_SCHEMA, payload}
 }
 
 
@@ -416,5 +426,14 @@ export const getTechnicsByRoom = (room) => {
         return groupTechnics
     }
 }
+
+export const getSchemaTechnics = () => {
+    return async (dispatch) => {
+        let schema = await techAPI.getSchema()
+        dispatch(setSchema(schema))
+    }
+}
+
+
 
 export default TechReducer

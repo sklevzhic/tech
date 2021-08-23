@@ -1,62 +1,36 @@
-import Typography from "@material-ui/core/Typography";
 import {
-    Button, Card, CardContent, Container, DialogActions, DialogContent, DialogContentText, Divider, Grid,
-    IconButton,
-    List,
-    ListItem, ListItemAvatar,
-    ListItemSecondaryAction,
-    ListItemText, Menu, MenuItem, Paper, TextField
+    Button,
+    Container, Divider,
+
 } from "@material-ui/core";
 import React, {useEffect, useState} from "react";
-import Avatar from "@material-ui/core/Avatar";
-import images from "../../components/global/images";
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import {Link} from "react-router-dom";
+
 import groupElementsByDate from "../../components/global/groupElementsByDate";
-import Modal from "../../components/Modal";
 import {makeStyles} from "@material-ui/styles";
 import StagesFueling from "../../components/StagesFueling";
-
-const useStyles = makeStyles((theme) => ({
-    // copyText: {
-    //     marginLeft: "10px",
-    //     border: "1px solid #a0a0a0",
-    //     borderRadius: "7px",
-    //     cursor: "pointer",
-    //     padding: "6px",
-    //     '&:hover': {
-    //             backgroundColor: '#e6e6e6'
-    //     }
-    // },
-}))
+import LastRefueling from "../../components/LastRefueling";
+import {Link} from "react-router-dom";
 
 const PrintersPage = ({
-                          getAllRefills,
                           allRefills,
                           getPrintersAll,
                           printers,
+                          addRefillForPrinter,
+                          updateCurrentRefills
                       }) => {
-    // const classes = useStyles();
 
     useEffect(() => {
         getPrintersAll()
-        getAllRefills()
     }, [])
 
+    const [currentRefill, setCurrentRefill] = useState([])
 
 
     const getCountRefill = (id) => {
         let count = allRefills.filter(el => el.technicId === id).length
         return count
     }
-    let latestRefueling = groupElementsByDate(allRefills, "receiverDate").map(el => {
-        return <div>
-            <div>{el.date}</div>
-            <ul>{el.properties.map(element => {
-                return <li>[{element.countRefill}]{element.name} {element.user}</li>
-            })}</ul>
-        </div>
-    })
+
     const handlerRefills = (el) => {
         let obj = {
             "technicId": el.id,
@@ -65,43 +39,74 @@ const PrintersPage = ({
             "createDate": Date.now(),
             "countRefill": getCountRefill(el.id) + 1
         }
-        // changeCategory(obj, 'new')
+        changeCategory(obj, 'new')
     }
+    const changeCategory = (el, index) => {
+        let a = currentRefill.map((obj, i) => {
+            if (index === 3) {
+                index = 'finish'
+            }
+            if (index === 'new') {
+                if (i === 0) {
+                    return {
+                        name: obj.name,
+                        arr: [...obj.arr, el]
+                    }
+                } else {
+                    return {
+                        name: obj.name,
+                        arr: obj.arr
+                    }
+                }
+            } else if (index === 'finish') {
+                if (i === 3) {
+                    addRefillForPrinter(el.technicId, el)
+                    return {
+                        name: obj.name,
+                        arr: obj.arr.filter(elem => el.technicId !== elem.technicId)
+                    }
+                } else {
+                    return {
+                        name: obj.name,
+                        arr: [...obj.arr]
+                    }
+                }
+            } else {
+                if (i === index) {
+                    return {
+                        name: obj.name,
+                        arr: obj.arr.filter(elem => el.technicId !== elem.technicId)
+                    }
+                } else if (i === (index + 1)) {
+                    return {
+                        name: obj.name,
+                        arr: [...obj.arr, el]
+                    }
+                } else {
+                    return {
+                        name: obj.name,
+                        arr: obj.arr
+                    }
+                }
 
+            }
+        })
+        setCurrentRefill(a)
+        updateCurrentRefills(a)
+    }
     return (
         <Container>
-            <StagesFueling />
-            <Grid>
-                <Paper style={{margin: "10px", padding: "10px"}}>
-                    <Typography variant={"h6"}>Последние заправки</Typography>
-                    <Divider/>
-                    {latestRefueling}
-                </Paper>
-            </Grid>
-            <Divider/>
-            <div>
-                <Typography>Перечень техники</Typography>
-                <List>
-                    {
-                        printers.map(el => {
-                            return <ListItem component={Link} to={`/technics/${el.id}`} button>
-                                <ListItemAvatar>
-                                    <Avatar variant={"square"} src={images[el.name]}></Avatar>
-                                </ListItemAvatar>
-                                <ListItemText primary={el.name} secondary={el.user}/>
-                                <ListItemSecondaryAction>
-                                    <IconButton onClick={() => handlerRefills(el)} color="secondary"
-                                                aria-label="add an alarm">
-                                        <ArrowDropDownIcon/>
-                                    </IconButton>
-                                </ListItemSecondaryAction>
-                            </ListItem>
-                        })
-                    }
-                </List>
-            </div>
-
-
+            <StagesFueling
+                changeCategory={changeCategory}
+                currentRefill={currentRefill}
+                setCurrentRefill={setCurrentRefill}
+            />
+            {/*<Divider/>*/}
+            {/*<Button variant={"contained"} color={"primary"}>Добавить</Button>*/}
+            {/*<Button variant={"contained"} color={"primary"} component={Link} to={"/printers/lastrefueling"}>Список*/}
+            {/*    последних заправок</Button>*/}
+            {/*<Divider/>*/}
+            <LastRefueling printers={printers} handlerRefills={handlerRefills}/>
         </Container>
     )
 }

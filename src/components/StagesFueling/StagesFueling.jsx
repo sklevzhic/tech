@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const StagesFueling = ({getCurrentRefills, addRefillForPrinter, updateCurrentRefills}) => {
+const StagesFueling = ({getCurrentRefills, addRefillForPrinter, setCurrentRefill, currentRefill, changeCategory}) => {
     const classes = useStyles();
 
     useEffect(() => {
@@ -40,62 +40,9 @@ const StagesFueling = ({getCurrentRefills, addRefillForPrinter, updateCurrentRef
 
         fetchCurrentRefills()
     }, [])
-    const changeCategory = (el, index) => {
-        let a = currentRefill.map((obj, i) => {
-            if (index === 3) {
-                index = 'finish'
-            }
-            if (index === 'new') {
-                if (i === 0) {
-                    return {
-                        name: obj.name,
-                        arr: [...obj.arr, el]
-                    }
-                } else {
-                    return {
-                        name: obj.name,
-                        arr: obj.arr
-                    }
-                }
-            } else if (index === 'finish') {
-                if (i === 3) {
-                    addRefillForPrinter(el.technicId, el)
-                    return {
-                        name: obj.name,
-                        arr: obj.arr.filter(elem => el.technicId !== elem.technicId)
-                    }
-                } else {
-                    return {
-                        name: obj.name,
-                        arr: [...obj.arr]
-                    }
-                }
-            } else {
-                if (i === index) {
-                    return {
-                        name: obj.name,
-                        arr: obj.arr.filter(elem => el.technicId !== elem.technicId)
-                    }
-                } else if (i === (index + 1)) {
-                    return {
-                        name: obj.name,
-                        arr: [...obj.arr, el]
-                    }
-                } else {
-                    return {
-                        name: obj.name,
-                        arr: obj.arr
-                    }
-                }
 
-            }
-        })
-        setCurrentRefill(a)
-        updateCurrentRefills(a)
-    }
     const [anchorEl, setAnchorEl] = useState(null);
     const [activeElement, setActiveElement] = useState('')
-    const [currentRefill, setCurrentRefill] = useState([])
     const [open, setOpen] = React.useState(false);
 
 

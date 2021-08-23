@@ -1,5 +1,5 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, {useEffect, useState} from 'react';
+import {makeStyles} from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
@@ -22,13 +22,15 @@ const useStyles = makeStyles((theme) => ({
 
 const EventsPage = () => {
     const classes = useStyles();
-
     return (
         <Container>
+            <div>
+
+            </div>
             <List className={classes.root}>
                 <ListItem alignItems="flex-start">
                     <ListItemAvatar>
-                        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg"/>
                     </ListItemAvatar>
                     <ListItemText
                         primary="Клевжиц А.Ю. изменил инвентарный номер в принтере HP 1005"
@@ -47,10 +49,10 @@ const EventsPage = () => {
                         }
                     />
                 </ListItem>
-                <Divider variant="inset" component="li" />
+                <Divider variant="inset" component="li"/>
                 <ListItem alignItems="flex-start">
                     <ListItemAvatar>
-                        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg"/>
                     </ListItemAvatar>
                     <ListItemText
                         primary="Клевжиц А.Ю. изменил инвентарный номер в принтере HP 1005"
@@ -69,10 +71,10 @@ const EventsPage = () => {
                         }
                     />
                 </ListItem>
-                <Divider variant="inset" component="li" />
+                <Divider variant="inset" component="li"/>
                 <ListItem alignItems="flex-start">
                     <ListItemAvatar>
-                        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg"/>
                     </ListItemAvatar>
                     <ListItemText
                         primary="Клевжиц А.Ю. изменил инвентарный номер в принтере HP 1005"
@@ -91,10 +93,10 @@ const EventsPage = () => {
                         }
                     />
                 </ListItem>
-                <Divider variant="inset" component="li" />
+                <Divider variant="inset" component="li"/>
                 <ListItem alignItems="flex-start">
                     <ListItemAvatar>
-                        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg"/>
                     </ListItemAvatar>
                     <ListItemText
                         primary="Клевжиц А.Ю. изменил инвентарный номер в принтере HP 1005"

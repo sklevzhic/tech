@@ -9,6 +9,8 @@ import TechnicPage from "../../../pages/TechnicPage";
 import RoomPage from "../../../pages/RoomPage";
 import PrintersPage from "../../../pages/PrintersPage";
 import EventsPage from "../../../pages/EventsPage";
+import LastRefuelingPage from "../../../pages/LastRefuelingPage";
+
 
 const AppWithRouter = () => {
     return (
@@ -21,7 +23,8 @@ const AppWithRouter = () => {
             <Route path='/technics/:id' render={() => <TechnicPage/>}/>
             <Route exact path='/room' render={() => <div>По кабинетам</div>}/>
             <Route path='/room/:room' render={() => <RoomPage/>}/>
-            <Route path='/printers' render={() => <PrintersPage/>}/>
+            <Route exact path='/printers' render={() => <PrintersPage/>}/>
+            <Route exact path='/printers/lastrefueling' render={() => <LastRefuelingPage />}/>
             <Route path='/events' render={() => <EventsPage/>}/>
             <Route path='/signin' render={() => <SignInPage/>}/>
             <Route path='*' render={() => <div>404 NOT FOUND</div>}/>
