@@ -1,8 +1,6 @@
 import {FormControlLabel, ListItem, ListItemIcon, ListItemText, Switch} from "@material-ui/core";
-import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import React, {useEffect, useState} from "react";
-import icons from "../global/global";
 import AutocompleteTextarea from "../AutocompleteTextarea";
 import {makeStyles} from "@material-ui/core/styles";
 import Icon from "../Icon";

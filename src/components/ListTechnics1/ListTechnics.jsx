@@ -5,6 +5,7 @@ import {Divider, List, Paper} from "@material-ui/core";
 import Title from "../Title";
 import MiniCardTechnic from "../MiniCardTechnic";
 import MiniCardTechnicSkeleton from "../MiniCardTechnic/MiniCardTechnicSceleton";
+import {Link} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     "address": {
@@ -111,7 +112,7 @@ const CardBlock = ({block, technics, build}) => {
             block.rooms.map(room => {
                 if (technics.some(el => ((el.room === room) && (el.visible !== false))) ) {
                     return <div>
-                        <Typography>{block.name} {room} кабинет</Typography>
+                        <Typography>{block.name} <Link to={`/room/${room}`}>{room} кабинет</Link></Typography>
                         {
                             technics && <CardRoom technics={technics} room={room} build={build}/>
                         }

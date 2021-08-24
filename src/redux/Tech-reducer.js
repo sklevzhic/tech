@@ -7,7 +7,7 @@ const SET_ACTIVE_TYPE = 'SET_ACTIVE_TYPE'
 const SET_TECHNICS = 'SET_TECHNICS'
 const SET_TECHNIC = 'SET_TECHNIC'
 const UPDATE_TECHNIC = 'UPDATE_TECHNIC'
-const SET_USERS1 = 'SET_USERS1'
+const SET_DATA_AUTOCOMPLETE = 'SET_DATA_AUTOCOMPLETE'
 const ADD_USER = 'ADD_USER'
 const TOOGLE_LOADING_IN_FOR_TYPE = 'TOOGLE_LOADING_IN_FOR_TYPE'
 const TOOGLE_LOADING_TECHNICS = 'TOOGLE_LOADING_TECHNICS'
@@ -29,7 +29,7 @@ let initialState = {
     technicsByCategory: [],
     technicsByRoom: [],
     toogleLoadingTechnics: false,
-    users: [],
+    autocompleteData: [],
     paramsTechnics: [
         {title: "Годы выпуска", property: "year"},
         {title: "Факультеты", property: "faculty"},
@@ -135,10 +135,10 @@ const TechReducer = (state = initialState, action) => {
                 types: action.payload
             }
         }
-        case SET_USERS1: {
+        case SET_DATA_AUTOCOMPLETE: {
             return {
                 ...state,
-                users: action.payload
+                autocompleteData: action.payload
             }
         }
         case SET_ROOMS: {
@@ -238,6 +238,7 @@ const TechReducer = (state = initialState, action) => {
             return {
                 ...state,
                 schema: action.payload
+
             }
         }
         default:
@@ -261,7 +262,6 @@ export const updateTechnicAC = (payload) => {
 export const setActiveTypeAC = (payload) => {
     return {type: SET_ACTIVE_TYPE, payload}
 }
-
 export const toogleLoadingInForTypeAC = (payload) => {
     return {type: TOOGLE_LOADING_IN_FOR_TYPE, payload}
 }
@@ -274,8 +274,8 @@ export const setTechnic = (payload) => {
 export const toogleLoadingTechnicsAC = (payload) => {
     return {type: TOOGLE_LOADING_TECHNICS, payload}
 }
-export const setUsersAC = (payload) => {
-    return {type: SET_USERS1, payload}
+export const setDataAutocomplete = (payload) => {
+    return {type: SET_DATA_AUTOCOMPLETE, payload}
 }
 export const addUserAC = (payload) => {
     return {type: ADD_USER, payload}
@@ -362,11 +362,26 @@ export const updateTechnic = (id, data) => {
         }
     }
 }
-export const getUsers = () => {
+export const getDataAutocomplete = (property) => {
     return async (dispatch) => {
-        let usersResponse = await techAPI.getUsers()
-        dispatch(setUsersAC(usersResponse))
-        return usersResponse
+        let response = await techAPI.getRooms()
+
+        const getUniqueValue = (property) => {
+            let array = [...new Set(response.map(el => el.[property]))].sort().map((el, i) => {
+                if (el) {
+                    return {
+                        [property]: el,
+                        id: i
+                    }
+                } else {
+                    return ''
+                }
+
+            })
+            return array
+
+        }
+        dispatch(setDataAutocomplete(getUniqueValue(property)))
     }
 }
 export const getRooms = () => {
@@ -436,7 +451,6 @@ export const getSchemaTechnics = () => {
 export const deleteTechnic = (id) => {
     return async (dispatch) => {
         let response = await techAPI.deleteTechnic(id)
-        debugger
     }
 }
 

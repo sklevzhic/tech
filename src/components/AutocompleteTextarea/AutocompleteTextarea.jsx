@@ -1,9 +1,10 @@
 import {IconButton, TextField} from "@material-ui/core";
 import Autocomplete, {createFilterOptions} from "@material-ui/lab/Autocomplete";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Controller, useForm} from "react-hook-form";
 import {makeStyles} from "@material-ui/core/styles";
 import SaveIcon from '@material-ui/icons/Save';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -13,26 +14,28 @@ const useStyles = makeStyles((theme) => ({
 
 const filter = createFilterOptions();
 
-const AutocompleteTextarea = ({activeTechnic, property, updateTechnic, setEditMode, getUsers, getRooms, text}) => {
-
-
-
+const AutocompleteTextarea = ({
+                                  activeTechnic,
+                                  property,
+                                  updateTechnic,
+                                  setEditMode,
+                                  getDataAutocomplete,
+                                  text,
+                                  autocompleteData
+                              }) => {
     const classes = useStyles()
-    const [array, setArray] = useState("")
+    const [array, setArray] = useState([''])
     const [value, setValue] = useState(null)
 
     const {register, handleSubmit, control, reset} = useForm();
 
     useEffect(() => {
-        if (property === 'room') {
-            async function fetchRooms() {
-                let response = await getRooms()
-                return response
-            }
-
-            fetchRooms().then(response => setArray(response))
-        }
+        getDataAutocomplete(property)
     }, [])
+    useEffect(() => {
+        setArray(autocompleteData)
+    }, [autocompleteData])
+
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
             handleSubmit(onSubmit)();
@@ -41,7 +44,6 @@ const AutocompleteTextarea = ({activeTechnic, property, updateTechnic, setEditMo
         if (e.key === 'Escape') {
             setEditMode(false)
         }
-
     }
     const selectItem = (event, newValue) => {
         if (typeof newValue === 'string') {
@@ -54,6 +56,7 @@ const AutocompleteTextarea = ({activeTechnic, property, updateTechnic, setEditMo
             });
         } else {
             setValue(newValue);
+            debugger
         }
     }
     const onSubmit = (obj) => {
@@ -70,11 +73,16 @@ const AutocompleteTextarea = ({activeTechnic, property, updateTechnic, setEditMo
             reset()
         }
     }
+    const handleClickAway = () => {
+        setEditMode(false)
+        setArray('')
+    };
     return (
         <form className={classes.root} onSubmit={handleSubmit(onSubmit)}>
 
-            {((property === 'date') || (property === 'year'))
-                ? <TextField
+            {
+                ((property === 'date') || (property === 'year')) &&
+                <ClickAwayListener onClickAway={handleClickAway}><TextField
                     id="date"
                     label={text}
                     type="date"
@@ -83,53 +91,69 @@ const AutocompleteTextarea = ({activeTechnic, property, updateTechnic, setEditMo
                     InputLabelProps={{
                         shrink: true,
                     }}
-                />
-                : <div>
-                    {!array ?
-                        <TextField onKeyDown={handleKeyDown} defaultValue={activeTechnic[property]}
-                                   autoFocus={true} {...register(property)} />
-                        : <Controller
-                            name={property}
-                            control={control}
-                            render={({field}) => <Autocomplete
-                                filterOptions={(options, params) => {
-                                    const filtered = filter(options, params);
-                                    if (params.inputValue !== '') {
-                                        filtered.push({
-                                            inputValue: params.inputValue,
-                                            [property]: `Add "${params.inputValue}"`,
-                                        });
-                                    }
-                                    return filtered;
-                                }}
-                                selectOnFocus
-                                defaultValue={activeTechnic[property]}
-                                clearOnBlur
-                                onKeyDown={handleKeyDown}
-                                onChange={selectItem}
-                                handleHomeEndKeys
-                                id="free-solo-with-text-demo"
-                                options={array}
-                                getOptionLabel={(option) => {
-                                    if (typeof option === 'string') {
-                                        return option;
-                                    }
-                                    if (option.inputValue) {
-                                        return option.inputValue;
-                                    }
-                                    return option[property];
-                                }}
-                                renderOption={(option) => option[property]}
-                                style={{width: 250}}
-                                freeSolo
-                                renderInput={(field) => (
-                                    <TextField autoFocus={true} {...field} label={text} variant="outlined"/>
-                                )}
-                            />}
-                        />
+                /></ClickAwayListener>
+            }
+
+            {
+                ((property === 'invent') || (property === 'zavod')) &&
+                <ClickAwayListener onClickAway={handleClickAway}>
+                    <TextField onKeyDown={handleKeyDown} defaultValue={activeTechnic[property]}
+                               autoFocus={true} {...register(property)} />
+                </ClickAwayListener>
+            }
+
+            {
+                (
+                    (property === 'room')
+                    || (property === 'build')
+                    || (property === 'user')
+                    || (property === 'faculty')
+                    || (property === 'matfyo')
+                    || (property === 'type')
+                    || (property === 'name')
+                ) &&
+                <Controller
+                    name={property}
+                    control={control}
+                    render={({field}) =><Autocomplete
+                        filterOptions={(options, params) => {
+                            const filtered = filter(options, params);
+                            if (params.inputValue !== '') {
+                                filtered.push({
+                                    inputValue: params.inputValue,
+                                    [property]: `Add "${params.inputValue}"`,
+                                });
+                            }
+                            return filtered;
+                        }}
+                        selectOnFocus
+                        defaultValue={activeTechnic[property]}
+                        clearOnBlur
+                        onKeyDown={handleKeyDown}
+                        onChange={selectItem}
+                        handleHomeEndKeys
+                        id="free-solo-with-text-demo"
+                        options={array}
+                        getOptionLabel={(option) => {
+                            if (typeof option === 'string') {
+                                return option;
+                            }
+                            if (option.inputValue) {
+                                return option.inputValue;
+                            }
+                            return option[property];
+                        }}
+                        renderOption={(option) => option[property]}
+                        style={{width: 250}}
+                        freeSolo
+                        renderInput={(field) => (
+                            <TextField autoFocus={true} {...field} label={text} variant="outlined"/>
+                        )}
+                    />
+
 
                     }
-                </div>
+                />
             }
 
             <div>

@@ -1,5 +1,5 @@
 import ListItemForm from './ListItemForm'
-import {getUsers, updateTechnic} from "../../redux/Tech-reducer";
+import {updateTechnic} from "../../redux/Tech-reducer";
 import {connect} from "react-redux";
 
 const mapStateToProps = (state) => {
@@ -8,8 +8,7 @@ const mapStateToProps = (state) => {
     }
 }
 const mapToDispatch = {
-    updateTechnic,
-    getUsers
+    updateTechnic
 }
 export default  connect(mapStateToProps, mapToDispatch)(ListItemForm)
 

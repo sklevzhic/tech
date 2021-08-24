@@ -1,14 +1,14 @@
 import AutocompleteTextarea from './AutocompleteTextarea'
-import {getRooms, getUsers, updateTechnic} from "../../redux/Tech-reducer";
+import {getDataAutocomplete, updateTechnic} from "../../redux/Tech-reducer";
 import {connect} from "react-redux";
 const mapStateToProps = (state) => {
     return {
         users: state.techs.users,
+        autocompleteData: state.techs.autocompleteData
     }
 }
 const mapToDispatch = {
     updateTechnic,
-    getUsers,
-    getRooms
+    getDataAutocomplete
 }
 export default  connect(mapStateToProps, mapToDispatch)(AutocompleteTextarea)
