@@ -23,7 +23,9 @@ import {format} from "date-fns";
 import images from "../../components/global/images";
 import SettingsIcon from '@material-ui/icons/Settings';
 import CommentIcon from '@material-ui/icons/Comment';
-
+import DeleteIcon from '@material-ui/icons/Delete';
+import LineWeightIcon from '@material-ui/icons/LineWeight';
+import {useHistory} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     avatarWrapper: {
@@ -105,6 +107,7 @@ const TechnicPage = ({
                          activeTechnicComments,
                          getComments,
                          getRefills,
+                         deleteTechnic,
                          refills
                      }) => {
     useEffect(() => {
@@ -112,23 +115,29 @@ const TechnicPage = ({
         getComments(params.id)
         getRefills(params.id)
     }, [])
-    const {register, handleSubmit, watch, formState: {errors}} = useForm();
+
+    const classes = useStyles();
+    const params = useParams();
+    let history = useHistory();
+
 
     const [aaa, setAaa] = useState(false)
     const [bbb, setBbb] = useState(false)
     const [ccc, setCcc] = useState(false)
 
+    const {register, handleSubmit, watch, formState: {errors}} = useForm();
     const onSubmit = data => {
         addComment(activeTechnic.id, data.msg)
     };
-    const classes = useStyles();
-    const params = useParams();
+
     const formatDate = (value) => {
         return format(new Date(value), 'dd.MM.yyyy')
     }
-    const addImage = (name) => {
-        console.log(images[name])
+    const deleteTech = (id) => {
+        deleteTechnic(id)
+        history.goBack()
     }
+
     return (
         <Container>
             <Grid container spacing={2}>
@@ -148,11 +157,23 @@ const TechnicPage = ({
                         </div>
                     </Paper>
                     <div style={{display: "flex", justifyContent: "center"}}>
-                        <IconButton aria-label="delete" color={aaa ? "primary" : "secondary"} onClick={() => setAaa(!aaa)}>
-                            <SettingsIcon />
+                        <IconButton aria-label="delete" color={aaa ? "primary" : "secondary"}
+                                    onClick={() => setAaa(!aaa)}>
+                            <SettingsIcon/>
                         </IconButton>
-                        <IconButton aria-label="delete" color={bbb ? "primary" : "secondary"} onClick={() => setBbb(!bbb)}>
-                            <CommentIcon />
+                        <IconButton aria-label="delete" color={bbb ? "primary" : "secondary"}
+                                    onClick={() => setBbb(!bbb)}>
+                            <CommentIcon/>
+                        </IconButton>
+                        {
+                            ((activeTechnic.type === 'Принтер') || (activeTechnic.type === 'МФУ') || (activeTechnic.type === 'Ксерокс')) &&
+                            <IconButton aria-label="delete" color={bbb ? "primary" : "secondary"}
+                                        onClick={() => setCcc(!ccc)}>
+                                <LineWeightIcon/>
+                            </IconButton>
+                        }
+                        <IconButton aria-label="delete" onClick={() => deleteTech(params.id)}>
+                            <DeleteIcon/>
                         </IconButton>
                     </div>
 
@@ -169,10 +190,8 @@ const TechnicPage = ({
                                 <ListItemForm activeTechnic={activeTechnic} property={"build"} text={"Корпус"}/>
                                 <ListItemForm activeTechnic={activeTechnic} property={"user"} text={"ФИО сотрудника"}
                                               array={users}/>
-                                <ListItemForm activeTechnic={activeTechnic} property={"date"}
-                                              text={"Дата получения"}/>
-                                <ListItemForm activeTechnic={activeTechnic} property={"faculty"}
-                                              text={"Факультет"}/>
+                                <ListItemForm activeTechnic={activeTechnic} property={"date"} text={"Дата получения"}/>
+                                <ListItemForm activeTechnic={activeTechnic} property={"faculty"} text={"Факультет"}/>
                             </List>
                         </CardContent>
                     </Card>
@@ -255,7 +274,7 @@ const TechnicPage = ({
                 </Paper>
 
             </Grid>}
-            <Grid container className={classes.margin} spacing={2}>
+            {ccc && <Grid container className={classes.margin} spacing={2}>
                 {
                     ((activeTechnic.type === 'Принтер') || (activeTechnic.type === 'МФУ') || (activeTechnic.type === 'Ксерокс')) &&
                     <Paper className={classes.paper}>
@@ -277,7 +296,7 @@ const TechnicPage = ({
                         </> : <Button component={Link} to={"/printers"}>Заполнить</Button>}
                     </Paper>
                 }
-            </Grid>
+            </Grid>}
 
             <Grid container className={classes.margin} spacing={2}>
                 <Paper className={classes.paper}>

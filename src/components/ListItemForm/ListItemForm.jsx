@@ -19,21 +19,24 @@ const useStyles = makeStyles((theme) => ({
 const ListItemForm = ({updateTechnic, activeTechnic, property, text}) => {
 
     const classes = useStyles();
+
     const [editMode, setEditMode] = useState(false)
     const [checked, setChecked] = React.useState('');
+
     useEffect(() => {
         setChecked(activeTechnic.print)
     }, [activeTechnic])
+
     const toggleChecked = () => {
         setChecked((prev) => !prev);
         updateTechnic(activeTechnic.id, {
             [property]: !checked
         })
     };
-
     const editPropertyTechnic = () => {
         setEditMode(true)
     }
+
     if (property === 'print') {
         return <FormControlLabel
             control={<Switch checked={checked} onChange={toggleChecked}/>}

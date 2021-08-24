@@ -15,26 +15,15 @@ const filter = createFilterOptions();
 
 const AutocompleteTextarea = ({activeTechnic, property, updateTechnic, setEditMode, getUsers, getRooms, text}) => {
 
+
+
     const classes = useStyles()
     const [array, setArray] = useState("")
     const [value, setValue] = useState(null)
+
+    const {register, handleSubmit, control, reset} = useForm();
+
     useEffect(() => {
-        if (property === 'user1') {
-            async function fetchUsers() {
-                let response = await getUsers()
-                return response
-            }
-
-            fetchUsers().then(response => setArray(response))
-        }
-        if (property === 'matfyo') {
-            async function fetchUsers() {
-                let response = await getUsers()
-                return response
-            }
-
-            fetchUsers().then(response => setArray(response))
-        }
         if (property === 'room') {
             async function fetchRooms() {
                 let response = await getRooms()
@@ -67,7 +56,6 @@ const AutocompleteTextarea = ({activeTechnic, property, updateTechnic, setEditMo
             setValue(newValue);
         }
     }
-    const {register, handleSubmit, control, reset} = useForm();
     const onSubmit = (obj) => {
         if (obj[property] === undefined) {
             let val = {
@@ -84,6 +72,7 @@ const AutocompleteTextarea = ({activeTechnic, property, updateTechnic, setEditMo
     }
     return (
         <form className={classes.root} onSubmit={handleSubmit(onSubmit)}>
+
             {((property === 'date') || (property === 'year'))
                 ? <TextField
                     id="date"

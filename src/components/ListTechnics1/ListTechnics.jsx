@@ -33,7 +33,7 @@ const ListTechnics = ({getSchemaTechnics, schema, tech, categories, setCategorie
     }, [tech]) // Записываем в useState выбранный тип техники
     useEffect(() => {
         if (technics) {
-            const isVisible = (el) => {
+            const isVisibleMinicard = (el) => {
                 let result = categories.some(element => {
                     let aa = el.[Object.keys(element)]
                     let bb = element.[Object.keys(element)]
@@ -46,15 +46,20 @@ const ListTechnics = ({getSchemaTechnics, schema, tech, categories, setCategorie
                 return result
             }
             let bbb = technics.map(el => {
-                if (isVisible(el)) {
+                if (isVisibleMinicard(el)) {
                     return {...el, "visible": true}
                 } else {
-                    return {...el, "visible": false}
+                    if (categories.length === 0) {
+                        return {...el, "visible": true}
+                    } else {
+                        return {...el, "visible": false}
+                    }
+
                 }
             })
             setSTechnics(bbb)
         }
-    }, [categories])
+    }, [categories]) // Скрываем элементы при фильтрации
 
 
     return (
@@ -104,7 +109,7 @@ const CardBlock = ({block, technics, build}) => {
     return <>
         {
             block.rooms.map(room => {
-                if (technics.some(el => el.room === room)) {
+                if (technics.some(el => ((el.room === room) && (el.visible !== false))) ) {
                     return <div>
                         <Typography>{block.name} {room} кабинет</Typography>
                         {

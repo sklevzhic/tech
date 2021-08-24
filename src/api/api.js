@@ -134,7 +134,10 @@ export const techAPI = {
     },
     getSchema() {
         return axios.get(`${URL}/shemaTechnics`).then(responce => responce.data)
-    }
+    },
+    deleteTechnic(id) {
+        return axios.delete(`${URL}/technics/${id}`).then(response => response)
+    },
 }
 export const printersAPI = {
     getRefills(id) {
@@ -161,7 +164,7 @@ export const printersAPI = {
             "receiverDate": Date.now(),
         }
         return axios.post(`${URL}/technics/${id}/refills`, obj).then(response => response.data)
-    },
+    }
 
 
 }

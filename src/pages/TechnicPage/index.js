@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
 import TechnicPage from "./TechnicPage";
-import {addComment, getComments, getTechnicInfo} from "../../redux/Tech-reducer";
+import {addComment, getComments, getTechnicInfo, deleteTechnic} from "../../redux/Tech-reducer";
 import {getRefills} from "../../redux/Printers-reducer";
 
 const mapStateToProps = (state) => {
@@ -16,8 +16,8 @@ const mapToDispatch = {
     getTechnicInfo,
     addComment,
     getComments,
-    getRefills
-
+    getRefills,
+    deleteTechnic
 }
 
 export default connect(mapStateToProps, mapToDispatch)(TechnicPage)

@@ -433,7 +433,11 @@ export const getSchemaTechnics = () => {
         dispatch(setSchema(schema))
     }
 }
-
-
+export const deleteTechnic = (id) => {
+    return async (dispatch) => {
+        let response = await techAPI.deleteTechnic(id)
+        debugger
+    }
+}
 
 export default TechReducer
