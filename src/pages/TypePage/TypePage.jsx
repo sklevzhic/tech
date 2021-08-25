@@ -98,13 +98,14 @@ const schema = [
     ]
 ]
 
-const TypePage = ({getActiveType, activeType, addTechnic, toogleLoadingInfoFotType, technicsLength}) => {
+const TypePage = ({getTechnics, addTechnic, toogleLoadingInfoFotType, technicsLength}) => {
     // const {search} = useLocation()
     // const {years, builds} = queryString.parse(search)
     const classes = useStyles();
     const params = useParams();
     const [categories, setCategories] = useState(() => [])
     const [open, setOpen] = React.useState(false);
+    const [activeTypes, setActiveTypes] = React.useState('');
     const {register, handleSubmit} = useForm();
     const handleClickOpen = () => {
         setOpen(true);
@@ -125,9 +126,12 @@ const TypePage = ({getActiveType, activeType, addTechnic, toogleLoadingInfoFotTy
         setCategories(prevState => (property()) ? [...prevState, {[prop]: value}] : prevState.filter(el => ((Object.keys(el)[0], Object.values(el)[0]) !== (prop, value))))
     }
 
+
+
     useEffect(() => {
-        getActiveType(params.type)
-    }, [params.type]) // получение техники в соответствии с url, обновление при смене url
+
+        getTechnics(activeTypes)
+    }, [activeTypes]) // получение техники
 
     return (
         <Container>
@@ -179,7 +183,7 @@ const TypePage = ({getActiveType, activeType, addTechnic, toogleLoadingInfoFotTy
                     <ListTechnics categories={categories} setCategories={setCategories}/>
                 </Grid> {/*  Список техники по кабинетам*/}
                 <Grid item xs={4}>
-                    <ListTypes/>
+                    <ListTypes categories={categories} setCategories={setCategories} handlerCategory={handlerCategory}/>
                 </Grid> {/*  Список типов техникик */}
             </Grid>
             <Modal open={open} handleClose={handleClose} title={"Добавить тип"}>

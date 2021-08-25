@@ -18,8 +18,7 @@ const AppWithRouter = () => {
             <Route exact path='/' render={() => <Redirect to='/types'/>}/>
             <Route exact path='/profile' render={() => <Profile/>}/>
             <Route path='/profile/:uID' render={() => <Profile/>}/>
-            <Route exact path='/types' render={() => <TypesPage/>}/>
-            <Route path='/types/:type' render={() => <TypePage/>}/>
+            <Route exact path='/technics' render={() => <TypePage/>}/>
             <Route path='/technics/:id' render={() => <TechnicPage/>}/>
             <Route exact path='/room' render={() => <div>По кабинетам</div>}/>
             <Route path='/room/:room' render={() => <RoomPage/>}/>

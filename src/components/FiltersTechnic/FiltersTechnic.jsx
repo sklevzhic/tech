@@ -67,6 +67,10 @@ const FiltersTechnics = ({getStatistic, technics, paramsTechnics, statistics, ca
                         {
                             statistics.map((obj,i) => {
                                 let prop = getProperty(obj)
+                                let abbreviation = obj.[val]
+                                if (val === 'faculty') {
+                                    abbreviation = obj.[val]
+                                }
                                 const isContains = () => {
                                     let a = categories.some(el => {
                                         if (obj[prop] === el[prop]) {
@@ -75,11 +79,11 @@ const FiltersTechnics = ({getStatistic, technics, paramsTechnics, statistics, ca
                                     })
                                     return a
                                 }
-                                return <ListItem key={i} onClick={() => handlerCategory(val, obj.[val])} button
+                                return <ListItem key={i} onClick={() => handlerCategory(val, (obj.[val]))} button
                                                  className={isContains() ? classes.active : null}>
                                     <Icon type={val}/>
                                     <ListItemText
-                                        primary={`${obj.[val] || 'Не указано'} - ${obj.properties.length} шт`}/>
+                                        primary={`${abbreviation || 'Не указано'} - ${obj.properties.length} шт`}/>
                                 </ListItem>
                             })
                         }

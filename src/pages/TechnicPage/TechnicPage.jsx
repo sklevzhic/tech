@@ -136,7 +136,7 @@ const TechnicPage = ({
     const deleteTech = (id) => {
         deleteTechnic(id)
         history.goBack()
-    }
+    } // Удалить объект по id / Переход на предыдущую страницу
 
     return (
         <Container>
@@ -175,7 +175,7 @@ const TechnicPage = ({
                         <IconButton aria-label="delete" onClick={() => deleteTech(params.id)}>
                             <DeleteIcon/>
                         </IconButton>
-                    </div>
+                    </div> //Кнопки показать/скрыть
 
                 </Grid>
                 <Grid item xs={4}>
@@ -241,7 +241,8 @@ const TechnicPage = ({
 
                 </Paper>
 
-            </Grid>}
+            </Grid>}  {/*//Комментарии*/}
+
             {bbb && <Grid container className={classes.margin} spacing={2}>
                 <Paper className={classes.paper}>
                     <div style={{display: "flex"}}>
@@ -273,7 +274,7 @@ const TechnicPage = ({
                     </div>
                 </Paper>
 
-            </Grid>}
+            </Grid>} {/*//Заявки на ремонт*/}
             {ccc && <Grid container className={classes.margin} spacing={2}>
                 {
                     ((activeTechnic.type === 'Принтер') || (activeTechnic.type === 'МФУ') || (activeTechnic.type === 'Ксерокс')) &&
@@ -296,7 +297,7 @@ const TechnicPage = ({
                         </> : <Button component={Link} to={"/printers"}>Заполнить</Button>}
                     </Paper>
                 }
-            </Grid>}
+            </Grid>} {/*//Последние заправки*/}
 
             <Grid container className={classes.margin} spacing={2}>
                 <Paper className={classes.paper}>
@@ -312,7 +313,7 @@ const TechnicPage = ({
 
                 </Paper>
 
-            </Grid>
+            </Grid> {/*//Техника в этом кабинете*/}
 
         </Container>
     )

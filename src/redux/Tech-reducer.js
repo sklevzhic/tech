@@ -150,8 +150,7 @@ const TechReducer = (state = initialState, action) => {
         case SET_TECHNICS: {
             return {
                 ...state,
-                technics: action.payload,
-                technicsByCategory: groupElements("room", action.payload),
+                technics: action.payload
             }
         }
         case SET_ADDED_TECHNIC: {
@@ -259,15 +258,13 @@ export const deleteTypeAC = (payload) => {
 export const updateTechnicAC = (payload) => {
     return {type: UPDATE_TECHNIC, payload}
 }
-export const setActiveTypeAC = (payload) => {
-    return {type: SET_ACTIVE_TYPE, payload}
+export const setTechnicsAC = (payload) => {
+    return {type: SET_TECHNICS, payload}
 }
 export const toogleLoadingInForTypeAC = (payload) => {
     return {type: TOOGLE_LOADING_IN_FOR_TYPE, payload}
 }
-export const setTechnicsAC = (payload) => {
-    return {type: SET_TECHNICS, payload}
-}
+
 export const setTechnic = (payload) => {
     return {type: SET_TECHNIC, payload}
 }
@@ -328,25 +325,19 @@ export const deleteType = (id) => {
         }
     }
 }
-export const getActiveType = (value, years, builds) => {
+export const getTechnics = (val) => {
     return async (dispatch) => {
-        dispatch(toogleLoadingInForTypeAC(true))
-        let response = await techAPI.getActiveType(value)
-        if (response) {
-            dispatch(setActiveTypeAC(response))
-            dispatch(getTechnicsForType(response.name, years, builds))
+        let response
+        if (val === '') {
+            response = []
+
+        } else {
+            response = await techAPI.getTechnics(val)
         }
-    }
-}
-export const getTechnicsForType = (value) => {
-    return async (dispatch) => {
-        let response = await techAPI.getTechnicsForType(value)
-
         dispatch(setTechnicsAC(response))
-        dispatch(toogleLoadingInForTypeAC(false))
-
     }
 }
+
 export const getTechnicInfo = (id) => {
     return async (dispatch) => {
         let response = await techAPI.getTechnicInfo(id)

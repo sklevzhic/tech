@@ -81,32 +81,18 @@ export const techAPI = {
     editType(id, obj) {
         return axios.put(`${URL}/types/${id}`, obj).then(response => response)
     },
-    getActiveType(value) {
-        return axios.get(`${URL}/types?type=${value}`).then(response => response.data[0])
+    getTechnics(val) {
+        return axios.get(`${URL}/technics?${val || '?_page=1&_limit=10'}`).then(response => response.data)
     },
-    getTechnicsForType(value) {
-        // const arrayToQuery = (property, arr) => {
-        //     if ((arr[0] === "") || (arr.length === 0)) {
-        //         return ``
-        //     }
-        //     else {
-        //         return (arr.map(el => {
-        //             return `&${property}=${el}`
-        //         })).join('')
-        //     }
-        // }
-        // let queryYears = arrayToQuery("year", years)
-        // let buildsYears = arrayToQuery("korpus", builds)
-        return axios.get(`${URL}/technics?type_like=${value}`).then(response => response.data)
-    },
+
     getTechnicInfo(id) {
         return axios.get(`${URL}/technics/${id}`).then(response => response.data)
     },
+
     updateTechnic(id, data) {
         return axios.patch(`${URL}/technics/${id}`, data).then(response => response)
     },
-    // id = "18", data = {date: "2019-01-01"}
-    // id = "18", data = {print: true}
+
     getUsers() {
         return axios.get(`${URL}/users`).then(responce => responce.data)
     },
