@@ -17,6 +17,7 @@ import ActiveCategories from "../../components/ActiveCategories";
 import FiltersTechnic from "../../components/FiltersTechnic";
 import Modal from "../../components/Modal";
 import {useForm} from "react-hook-form";
+import Choose from "../../assets/img/undraw_Choose_re_7d5a.svg"
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -105,7 +106,7 @@ const TypePage = ({getTechnics, addTechnic, toogleLoadingInfoFotType, technicsLe
     const params = useParams();
     const [categories, setCategories] = useState(() => [])
     const [open, setOpen] = React.useState(false);
-    const [activeTypes, setActiveTypes] = React.useState('');
+    const [activeTypes, setActiveTypes] = React.useState([]);
     const {register, handleSubmit} = useForm();
     const handleClickOpen = () => {
         setOpen(true);
@@ -127,63 +128,74 @@ const TypePage = ({getTechnics, addTechnic, toogleLoadingInfoFotType, technicsLe
     }
 
 
-
     useEffect(() => {
+            let a = activeTypes.map(el => {
+                return `type=${el}&`
+            })
+            getTechnics(a.join(""))
 
-        getTechnics(activeTypes)
     }, [activeTypes]) // получение техники
 
     return (
         <Container>
-            <Grid container className={classes.wrapperInfo} spacing={3}>
-                <Grid item xs={3}>
-                    <Paper className={classes.paper}>
-                        {toogleLoadingInfoFotType ? <SceletonInfoType/> : <>
-                            <div className={classes.typeInfoWrapper}>
-                                <div className={classes.typeInfo}>
-                                    <Icon type={activeType.type} size={3}/>
-                                    <Typography color={"primary"}>Тип</Typography>
-                                    <Typography variant="h6">{activeType.name}</Typography>
-                                    <Typography variant="body2" gutterBottom>
-                                        [ {activeType.type} ]
-                                    </Typography>
-                                    <Divider/>
-                                    <Typography
-                                        variant={"subtitle2"}>
-                                        Всего:
+            {
+                (activeTypes.length !== 0) && <Grid container className={classes.wrapperInfo} spacing={3}>
+                    <Grid item xs={3}>
+                        <Paper className={classes.paper}>
+                            {toogleLoadingInfoFotType ? <SceletonInfoType/> : <>
+                                <div className={classes.typeInfoWrapper}>
+                                    <div className={classes.typeInfo}>
+                                        {/*<Icon type={activeType.type} size={3}/>*/}
+                                        {/*<Typography color={"primary"}>Тип</Typography>*/}
+                                        {/*<Typography variant="h6">{activeType.name}</Typography>*/}
+                                        {/*<Typography variant="body2" gutterBottom>*/}
+                                        {/*    [ {activeType.type} ]*/}
+                                        {/*</Typography>*/}
+                                        <Divider/>
                                         <Typography
-                                            variant={"subtitle1"}
-                                            component={"span"}
-                                        >
-                                            {technicsLength}
+                                            variant={"subtitle2"}>
+                                            Всего:
+                                            <Typography
+                                                variant={"subtitle1"}
+                                                component={"span"}
+                                            >
+                                                {technicsLength}
+                                            </Typography>
                                         </Typography>
-                                    </Typography>
-                                    <Button color={"primary"} variant={"contained"}
-                                            onClick={handleClickOpen}> Добавить</Button>
-                                </div>
+                                        <Button color={"primary"} variant={"contained"}
+                                                onClick={handleClickOpen}> Добавить</Button>
+                                    </div>
 
-                            </div>
-                        </>
-                        }
-                    </Paper>
-                </Grid> {/*  Тип, картинка */}
-                <Grid item xs={9}>
-                    <Paper className={classes.paper}>
-                        <Typography color={"primary"}>Фильтрация</Typography>
-                        <Divider/>
-                        <FiltersTechnic categories={categories} handlerCategory={handlerCategory}/>
-                    </Paper>
-                </Grid> {/*  Фильтрация*/}
-            </Grid> {/*  Сводная информация*/}
-            {activeType ? <>
-            </> : ""}
+                                </div>
+                            </>
+                            }
+                        </Paper>
+                    </Grid> {/*  Тип, картинка */}
+                    <Grid item xs={9}>
+                        <Paper className={classes.paper}>
+                            <Typography color={"primary"}>Фильтрация</Typography>
+                            <Divider/>
+                            <FiltersTechnic categories={categories} handlerCategory={handlerCategory}/>
+                        </Paper>
+                    </Grid> {/*  Фильтрация*/}
+                </Grid>
+
+            }
             <Grid container spacing={3}>
                 <Grid item xs={8}>
                     <ActiveCategories categories={categories} handlerCategory={handlerCategory}/>
-                    <ListTechnics categories={categories} setCategories={setCategories}/>
+                    {
+                        (activeTypes.length !== 0)
+                            ? <ListTechnics categories={categories} setCategories={setCategories}/>
+                            : <Paper style={{padding: "50px 180px", marginTop: "50px"}}>
+                                <img width={400} src={Choose} alt="Выберите"/>
+                                <Typography style={{marginTop: "30px"}} variant={"h5"}>Необходимо выбрать тип техники =></Typography>
+                            </Paper>
+                    }
+
                 </Grid> {/*  Список техники по кабинетам*/}
                 <Grid item xs={4}>
-                    <ListTypes categories={categories} setCategories={setCategories} handlerCategory={handlerCategory}/>
+                    <ListTypes activeTypes={activeTypes} setActiveTypes={setActiveTypes}/>
                 </Grid> {/*  Список типов техникик */}
             </Grid>
             <Modal open={open} handleClose={handleClose} title={"Добавить тип"}>

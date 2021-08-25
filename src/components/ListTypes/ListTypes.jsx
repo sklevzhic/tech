@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const ListTypes = ({types, deleteType, getTypes, addType, categories, setCategories, handlerCategory}) => {
+const ListTypes = ({types, deleteType, getTypes, addType, activeTypes, setActiveTypes, handlerCategory}) => {
     const params = useParams();
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
@@ -34,20 +34,25 @@ const ListTypes = ({types, deleteType, getTypes, addType, categories, setCategor
     const handleClickOpen = () => {
         setOpen(true);
     };
-
     const handleClose = () => {
         setOpen(false);
     };
-
     useEffect(() => {
         getTypes()
     }, [])
+    const isContains = () => {
+
+    }
+
     return (
         <>
             {types &&
             <List subheader={<ListSubheader>Settings</ListSubheader>}>
                 {types.map(el => {
-                    return <ListItem component={Link} to={`/technics`} onClick={() => handlerCategory('type', 'Принтер')} key={el.id}>
+                        return <ListItem
+                            className={(activeTypes.includes(el.name)) ? classes.activeType : null}
+                            component={Link} to={`/technics`}
+                            onClick={() => setActiveTypes((prev => (!activeTypes.includes(el.name)) ? [...prev, el.name] : prev.filter(elem => elem !== el.name)))} key={el.id}>
                             <ListItemIcon>
                                 <Icon type={el.type}/>
                             </ListItemIcon>
