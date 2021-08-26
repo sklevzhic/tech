@@ -15,7 +15,7 @@ import LastRefuelingPage from "../../../pages/LastRefuelingPage";
 const AppWithRouter = () => {
     return (
         <Switch>
-            <Route exact path='/' render={() => <Redirect to='/types'/>}/>
+            <Route exact path='/' render={() => <Redirect to='/technics'/>}/>
             <Route exact path='/profile' render={() => <Profile/>}/>
             <Route path='/profile/:uID' render={() => <Profile/>}/>
             <Route exact path='/technics' render={() => <TypePage/>}/>

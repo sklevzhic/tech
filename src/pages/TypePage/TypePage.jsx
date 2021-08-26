@@ -1,23 +1,23 @@
-import {withRouter, useParams, useLocation, useHistory} from "react-router-dom";
+import {withRouter, useParams, useHistory, useLocation} from "react-router-dom";
 import {
     Button,
     Container, DialogActions, DialogContent,
     Divider,
-    Grid,
+    Grid, List, ListItem, ListItemIcon, ListItemText,
     Paper, TextField
 } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import React, {useEffect, useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import ListTypes from "../../components/ListTypes";
-import {Skeleton} from "@material-ui/lab";
-import Icon from "../../components/Icon";
+
 import ListTechnics from "../../components/ListTechnics1";
 import ActiveCategories from "../../components/ActiveCategories";
 import FiltersTechnic from "../../components/FiltersTechnic";
 import Modal from "../../components/Modal";
 import {useForm} from "react-hook-form";
 import Choose from "../../assets/img/undraw_Choose_re_7d5a.svg"
+import * as queryString from "querystring";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -100,8 +100,9 @@ const schema = [
 ]
 
 const TypePage = ({getTechnics, addTechnic, toogleLoadingInfoFotType, technicsLength}) => {
-    // const {search} = useLocation()
-    // const {years, builds} = queryString.parse(search)
+    let history = useHistory();
+    const {search} = useLocation()
+    const searchData = queryString.parse(search)
     const classes = useStyles();
     const params = useParams();
     const [categories, setCategories] = useState(() => [])
@@ -127,14 +128,26 @@ const TypePage = ({getTechnics, addTechnic, toogleLoadingInfoFotType, technicsLe
         setCategories(prevState => (property()) ? [...prevState, {[prop]: value}] : prevState.filter(el => ((Object.keys(el)[0], Object.values(el)[0]) !== (prop, value))))
     }
 
+    const generateUrlForGetTechnics = (obj) => {
+        // Object.keys(obj).forEach(el => {
+        //     if (el === '?type') {
+        //         setActiveTypes(obj[el].split(","))
+        //     } else {
+        //         let a = obj[el]
+        //         console.log(a)
+        //         setCategories(obj[el].split(","))
+        //     }
+        // })
+        let typesURL = ''
+        let filterURL = ''
+    }
+    useEffect(() => {
+
+    }, [activeTypes, categories])
 
     useEffect(() => {
-            let a = activeTypes.map(el => {
-                return `type=${el}&`
-            })
-            getTechnics(a.join(""))
-
-    }, [activeTypes]) // получение техники
+        generateUrlForGetTechnics(searchData)
+    }, [searchData])
 
     return (
         <Container>
@@ -142,33 +155,20 @@ const TypePage = ({getTechnics, addTechnic, toogleLoadingInfoFotType, technicsLe
                 (activeTypes.length !== 0) && <Grid container className={classes.wrapperInfo} spacing={3}>
                     <Grid item xs={3}>
                         <Paper className={classes.paper}>
-                            {toogleLoadingInfoFotType ? <SceletonInfoType/> : <>
-                                <div className={classes.typeInfoWrapper}>
-                                    <div className={classes.typeInfo}>
-                                        {/*<Icon type={activeType.type} size={3}/>*/}
-                                        {/*<Typography color={"primary"}>Тип</Typography>*/}
-                                        {/*<Typography variant="h6">{activeType.name}</Typography>*/}
-                                        {/*<Typography variant="body2" gutterBottom>*/}
-                                        {/*    [ {activeType.type} ]*/}
-                                        {/*</Typography>*/}
-                                        <Divider/>
-                                        <Typography
-                                            variant={"subtitle2"}>
-                                            Всего:
-                                            <Typography
-                                                variant={"subtitle1"}
-                                                component={"span"}
-                                            >
-                                                {technicsLength}
-                                            </Typography>
-                                        </Typography>
-                                        <Button color={"primary"} variant={"contained"}
-                                                onClick={handleClickOpen}> Добавить</Button>
-                                    </div>
+                            <Typography color={"primary"}>Активные типы техники</Typography>
+                            <Divider/>
+                            <div className={classes.typeInfoWrapper}>
+                                <List>
+                                    {
+                                        activeTypes.map(el => {
+                                            return <ListItem>
+                                                <ListItemText primary={el}/>
+                                            </ListItem>
+                                        })
+                                    }
+                                </List>
 
-                                </div>
-                            </>
-                            }
+                            </div>
                         </Paper>
                     </Grid> {/*  Тип, картинка */}
                     <Grid item xs={9}>
@@ -189,7 +189,8 @@ const TypePage = ({getTechnics, addTechnic, toogleLoadingInfoFotType, technicsLe
                             ? <ListTechnics categories={categories} setCategories={setCategories}/>
                             : <Paper style={{padding: "50px 180px", marginTop: "50px"}}>
                                 <img width={400} src={Choose} alt="Выберите"/>
-                                <Typography style={{marginTop: "30px"}} variant={"h5"}>Необходимо выбрать тип техники =></Typography>
+                                <Typography style={{marginTop: "30px"}} variant={"h5"}>Необходимо выбрать тип техники
+                                    =></Typography>
                             </Paper>
                     }
 
@@ -241,12 +242,3 @@ const TypePage = ({getTechnics, addTechnic, toogleLoadingInfoFotType, technicsLe
 }
 
 export default withRouter(TypePage)
-
-export const SceletonInfoType = () => {
-    return <div>
-        <Skeleton/>
-        <Skeleton animation={false}/>
-        <Skeleton animation="wave"/>
-    </div>
-}
-

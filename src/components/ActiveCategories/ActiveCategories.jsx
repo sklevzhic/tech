@@ -23,13 +23,13 @@ const ActiveCategories = ({categories, handlerCategory}) => {
         })
         return str.filter(n => n).join('&')
     } // Генерация URL на основе активных категорий
-    useEffect(() => {
-        let urlData = generateUrl(categories)
-        history.push({
-            search: `${(urlData === '&') ? '' : urlData}`
-        });
-    }, [categories])
-    let a = generateUrl(categories)
+    // useEffect(() => {
+    //     let urlData = generateUrl(categories)
+    //     history.push({
+    //         search: `${(urlData === '&') ? '' : urlData}`
+    //     });
+    // }, [categories])
+    // let a = generateUrl(categories)
     return (
         <>
             {categoriesElements}
