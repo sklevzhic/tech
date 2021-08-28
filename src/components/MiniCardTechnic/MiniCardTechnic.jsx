@@ -1,4 +1,3 @@
-// import {makeStyles} from "@material-ui/core/styles";
 import {
         Button,
     Chip,
@@ -9,15 +8,12 @@ import {
 } from "@material-ui/core";
 import {Link} from "react-router-dom";
 import React from "react";
-import Icon from "../Icon";
 import images from "../global/images";
 import Avatar from "@material-ui/core/Avatar";
 
-// const useStyles = makeStyles((theme) => ({}))
 
 const MiniCardTechnic = ({el, keys}) => {
 
-    // const classes = useStyles();
     return (
         <ListItem component={Link} key={el} to={`/technics/${el.id}`} button>
 

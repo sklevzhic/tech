@@ -1,6 +1,6 @@
 import {IconButton, TextField} from "@material-ui/core";
 import Autocomplete, {createFilterOptions} from "@material-ui/lab/Autocomplete";
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Controller, useForm} from "react-hook-form";
 import {makeStyles} from "@material-ui/core/styles";
 import SaveIcon from '@material-ui/icons/Save';

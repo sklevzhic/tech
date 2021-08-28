@@ -2,8 +2,6 @@ import {Route, Switch, Redirect} from "react-router-dom";
 import React from "react";
 import Profile from "../../../pages/Profile";
 import SignInPage from "../../../pages/SignInPage";
-import UsersPage from "../../../pages/UsersPage";
-import TypesPage from "../../../pages/TypesTechnicsPage";
 import TypePage from "../../../pages/TypePage";
 import TechnicPage from "../../../pages/TechnicPage";
 import RoomPage from "../../../pages/RoomPage";

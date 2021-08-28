@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {makeStyles} from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
@@ -75,6 +75,8 @@ const FiltersTechnics = ({getStatistic, technics, paramsTechnics, statistics, ca
                                     let a = categories.some(el => {
                                         if (obj[prop] === el[prop]) {
                                             return true
+                                        } else {
+                                            return false
                                         }
                                     })
                                     return a

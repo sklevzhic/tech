@@ -1,68 +1,80 @@
-import {Card, CardContent, Divider, List} from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
-import MiniCardTechnic from "../MiniCardTechnic";
-import MiniCardTechnicSkeleton from "../MiniCardTechnic/MiniCardTechnicSceleton";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
-import groupArray from "../global/groupArray";
+import Typography from "@material-ui/core/Typography";
+import {Divider, List, Paper} from "@material-ui/core";
+import Title from "../Title";
+import MiniCardTechnic from "../MiniCardTechnic";
 import {Link} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
-    roomItem: {
-        marginTop: "20px",
-        padding: "7px"
+    "address": {
+        textAlign: "center"
     },
-    roomNumber: {}
+    "paper": {
+        marginBottom: "20px"
+    }
 }));
 
+const ListTechnics = ({getSchemaTechnics, schema, tech, categories}) => {
+
+    const classes = useStyles()
+
+    const [schemaTechnics, setSchemaTechnics] = useState('')
+    const [technics, setTechnics] = useState([])
 
 
-const ListTechnics = ({technicsByCategory, toogleLoadingInfoFotType, categories}) => {
-    const classes = useStyles();
-    const generateCondition = (el) => {
-        let groupCategories = groupArray(categories)
-
-        return Object.keys(groupCategories).every(key => {
-            return groupCategories[key].some(elArr => elArr === el[key])
-        })
-    }
-    const checkItem = (el) => {
-        return (generateCondition(el)) ? true : false
-    }
-    const checkObj = (obj) => {
-        let a = obj.some(el => checkItem(el))
-        return a
-    }
-    const Cardd = ({el}) => {
-        return <Card key={el.room} className={classes.roomItem}>
-            <Typography component={Link} to={`/room/${el.room}`} variant={"h5"} className={`${classes.roomNumber}`}>
-                {!(Number.parseInt(el.room)) ? el.room : `${el.room} кабинет`}
-            </Typography>
-
-            <List dense>
-                {el.properties.map((el1, i) => {
-                    return !toogleLoadingInfoFotType
-                        ? <MiniCardTechnic key={i} el={el1}/>
-                        : <MiniCardTechnicSkeleton key={i}/>
-                })}
-            </List>
-        </Card>
-    }
-    const filteredTechnics = technicsByCategory.map((obj, i) => {
-        if (categories.length === 0) {
-            return <Cardd key={i} el={obj}/>
-        } else {
-            if (checkObj(obj.properties)) {
-                return <Cardd key={i} el={obj}/>
-            } else {
-                return null
+    useEffect(() => {
+        getSchemaTechnics()
+    }, []) // Получение схемы кабинетов
+    useEffect(() => {
+        setSchemaTechnics(schema)
+    }, [schema]) // Записываем в useState схему
+    useEffect(() => {
+        if (tech.length !== 0) {
+            const isVisibleMinicard = (el) => {
+                let result = categories.some(element => {
+                    let aa = el.[Object.keys(element)]
+                    let bb = element.[Object.keys(element)]
+                    if (aa === bb) {
+                        return true
+                    } else {
+                        return false
+                    }
+                })
+                return result
             }
+            let bbb = tech.map(el => {
+                if (isVisibleMinicard(el)) {
+                    return {...el, "visible": true}
+                } else {
+                    if (categories.length === 0) {
+                        return {...el, "visible": true}
+                    } else {
+                        return {...el, "visible": false}
+                    }
+                }
+            })
+            setTechnics(bbb)
         }
-    })
+    }, [tech]) // Скрываем элементы при фильтрации
+
 
     return (
+
+
         <>
-            {filteredTechnics}
+            {
+                (schemaTechnics) && <>
+                    {schemaTechnics.map(build => {
+                            if (technics.some(buildElement => buildElement.build === build.build)) {
+                                return <CardBuild key={build.build} classes={classes} build={build} technics={technics}/>
+                            } else {
+                                return null
+                            }
+                        }
+                    )}
+                </>
+            }
         </>
     )
 }
@@ -70,43 +82,59 @@ const ListTechnics = ({technicsByCategory, toogleLoadingInfoFotType, categories}
 export default ListTechnics
 
 
-// {schema.map(obj => {
-//     return <Card key={obj.build} className={classes.roomItem}>
-//         <CardContent>
-//             <Typography variant={"h5"} className={`${classes.roomNumber}`}>
-//                 {obj.address}
-//             </Typography>
-//             <div>
-//                 {obj.blocks.map((block) => {
-//                     return <Card className={classes.roomItem}>
-//                         <Divider/>
-//                         <Typography variant={"h6"} className={`${classes.roomNumber}`}>
-//                             {block.name}</Typography>
-//                         <div>
-//                             {block.rooms.map(room => {
-//                                 { console.log(technics) }
-//                                 return <div>
-//                                     <Typography component={Link} to={`/room/${room}`} variant={"h5"} className={`${classes.roomNumber}`}>
-//                                         {!(Number.parseInt(room)) ? room : `${room} кабинет`}
-//                                     </Typography>
-//
-//                                     <List dense>
-//                                         {technics.map((el,i) => {
-//                                             if (room == el.room) {
-//                                                 return <MiniCardTechnic key={i} el={el}/>
-//                                             }
-//                                         })
-//                                         }
-//                                     </List>
-//                                 </div>
-{/*                            })*/}
-{/*                            }*/}
-//                         </div>
-//                     </Card>
-//
-{/*                })}*/}
-{/*            </div>*/}
-{/*        </CardContent>*/}
+const CardBuild = ({classes, build, technics}) => {
+    const isDisplayedBlock = (obj) => {
+        let b = technics.some(element => {
+            if (obj.rooms.includes(element.room)) {
+                return true
+            } else {
+                return false
+            }
+        })
+        return b
+    } // Проверка, отображаем ли пустой блок
 
-//     </Card>
-// })}
+    return <Paper className={classes.paper}>
+        <Title className={classes.address} text={build.address}/>
+        {
+            build.blocks.map((block, i) => {
+                    if (isDisplayedBlock(block)) {
+                        return <CardBlock key={i} block={block} technics={technics} build={build}/>
+                    } else {
+                        return false
+                    }
+
+                }
+            )
+        }
+        <Divider/>
+    </Paper>
+}
+const CardBlock = ({block, technics, build}) => {
+    return <>
+        {
+            block.rooms.map(room => {
+                if (technics.some(el => ((el.room === room) && (el.visible !== false)))) {
+                    return <div key={room}>
+                        <Typography>{block.name} <Link to={`/room/${room}`}>{room} кабинет</Link></Typography>
+                        {
+                            technics && <CardRoom technics={technics} room={room} build={build}/>
+                        }
+                        <Divider/>
+                    </div>
+                } else {
+                    return false
+                }
+            })}</>
+}
+const CardRoom = ({technics, room, build}) => {
+    return <List dense>
+        {
+            technics.map((element, i) => {
+                if ((element.room === room) && (element.build === build.build) && (element.visible !== false)) {
+                    return <MiniCardTechnic key={i} el={element}/>
+                }
+            })
+        }
+    </List>
+}

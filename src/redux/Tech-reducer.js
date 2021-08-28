@@ -328,9 +328,8 @@ export const deleteType = (id) => {
 export const getTechnics = (val) => {
     return async (dispatch) => {
         let response
-        if (val === '') {
+        if ((val === undefined) || (val === "") || (val.length === 0)) {
             response = []
-
         } else {
             response = await techAPI.getTechnics(val)
         }
@@ -441,7 +440,7 @@ export const getSchemaTechnics = () => {
 }
 export const deleteTechnic = (id) => {
     return async (dispatch) => {
-        let response = await techAPI.deleteTechnic(id)
+        await techAPI.deleteTechnic(id)
     }
 }
 

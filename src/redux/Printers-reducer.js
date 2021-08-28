@@ -1,4 +1,4 @@
-import {printersAPI, techAPI} from "../api/api";
+import {printersAPI} from "../api/api";
 
 const GET_REFILLS = 'GET_REFILLS';
 const GET_ALL_REFILLS = 'GET_ALL_REFILLS'
@@ -91,7 +91,7 @@ export const sendOrder = (id) => async (dispatch) => {
 }
 
 export const updateCurrentRefills = (data) => async (dispatch) => {
-    let response = await printersAPI.updateCurrentRefills(data)
+    await printersAPI.updateCurrentRefills(data)
 }
 
 export const addRefillForPrinter = (id, data) => {

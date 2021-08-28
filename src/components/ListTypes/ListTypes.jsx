@@ -7,7 +7,6 @@ import {
     ListItemText,
     ListSubheader, TextField
 } from "@material-ui/core";
-import {Link, useParams} from "react-router-dom";
 import {DeleteOutline} from "@material-ui/icons";
 import React, {useEffect} from "react";
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
@@ -25,8 +24,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const ListTypes = ({types, deleteType, getTypes, addType, activeTypes, setActiveTypes, handlerCategory}) => {
-    const params = useParams();
+const ListTypes = ({types, deleteType, getTypes, addType, handlerCategory, activeTypes}) => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const {register, handleSubmit} = useForm();
@@ -40,19 +38,14 @@ const ListTypes = ({types, deleteType, getTypes, addType, activeTypes, setActive
     useEffect(() => {
         getTypes()
     }, [])
-    const isContains = () => {
-
-    }
-
+    console.log(activeTypes === undefined)
     return (
         <>
             {types &&
             <List subheader={<ListSubheader>Settings</ListSubheader>}>
                 {types.map(el => {
-                        return <ListItem
-                            className={(activeTypes.includes(el.name)) ? classes.activeType : null}
-                            component={Link} to={`/technics`}
-                            onClick={() => setActiveTypes((prev => (!activeTypes.includes(el.name)) ? [...prev, el.name] : prev.filter(elem => elem !== el.name)))} key={el.id}>
+                        return <ListItem button onClick={() => handlerCategory("?type", el.name)}
+                            >
                             <ListItemIcon>
                                 <Icon type={el.type}/>
                             </ListItemIcon>

@@ -3,15 +3,14 @@ import {
     Button,
     Container, DialogActions, DialogContent,
     Divider,
-    Grid, List, ListItem, ListItemIcon, ListItemText,
+    Grid, List,
     Paper, TextField
 } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import React, {useEffect, useState} from "react";
-import {makeStyles} from "@material-ui/core/styles";
 import ListTypes from "../../components/ListTypes";
 
-import ListTechnics from "../../components/ListTechnics1";
+import ListTechnics from "../../components/ListTechnics";
 import ActiveCategories from "../../components/ActiveCategories";
 import FiltersTechnic from "../../components/FiltersTechnic";
 import Modal from "../../components/Modal";
@@ -19,65 +18,7 @@ import {useForm} from "react-hook-form";
 import Choose from "../../assets/img/undraw_Choose_re_7d5a.svg"
 import * as queryString from "querystring";
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
-    },
-    paper: {
-        padding: theme.spacing(2),
-        color: theme.palette.text.secondary,
-        position: "relative",
-        height: "250px",
-        whiteSpace: "nowrap",
-        overflow: "hidden",
-        textOverflow: "ellipsis",
-    },
-    years: {
-        height: "80%",
-        overflow: "overlay"
-
-    },
-    typeInfoWrapper: {
-        display: "flex",
-        textAlign: "center"
-
-    },
-    typeInfo: {
-        width: "100%"
-    },
-    imageType: {
-        background: "#3f51b5",
-        color: "white",
-        display: "block",
-        width: "60px",
-        height: "60px",
-        textAlign: "center",
-        marginRight: "20px",
-    },
-    wrapperInfo: {
-        marginTop: "50px"
-    },
-    icon: {
-        fontSize: "2.5em",
-        paddingTop: "10px"
-    },
-    button: {
-        margin: theme.spacing(1),
-    },
-    textField: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
-        width: '25ch',
-    },
-    roomItem: {
-        marginTop: "20px",
-        padding: "7px"
-    },
-    activeItem: {
-        background: "red",
-    },
-    roomNumber: {}
-}));
+import {useStyles} from "./TypePageStyle";
 
 const schema = [
     [
@@ -99,75 +40,82 @@ const schema = [
     ]
 ]
 
-const TypePage = ({getTechnics, addTechnic, toogleLoadingInfoFotType, technicsLength}) => {
+const TypePage = ({getTechnics, addTechnic}) => {
+
     let history = useHistory();
     const {search} = useLocation()
     const searchData = queryString.parse(search)
     const classes = useStyles();
-    const params = useParams();
     const [categories, setCategories] = useState(() => [])
-    const [open, setOpen] = React.useState(false);
-    const [activeTypes, setActiveTypes] = React.useState([]);
+    const [activeTypes, setActiveTypes] = useState(() => [])
+    const [open, setOpen] = useState(false);
     const {register, handleSubmit} = useForm();
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
+    // const handleClickOpen = () => {
+    //     setOpen(true);
+    // };
     const handleClose = () => {
         setOpen(false);
     };
     const onSubmit = data => addTechnic(data);
     const handlerCategory = (prop, value) => {
-        let property = () => {
-            let obj = {[prop]: value}
-            if (JSON.stringify(categories).includes(JSON.stringify(obj))) {
-                return false
+        let checkValueInObj = () => {
+            if (searchData[prop] === undefined) {
+                return value
             } else {
-                return true
+                if (searchData[prop].includes(value)) {
+                    return searchData[prop].split(',').filter(el => el !== value).join(',')
+                } else {
+                    return searchData[prop] + `,${value}`
+                }
             }
-        } // Проверка наличия выбранной кабегории в массиве категорий
-        setCategories(prevState => (property()) ? [...prevState, {[prop]: value}] : prevState.filter(el => ((Object.keys(el)[0], Object.values(el)[0]) !== (prop, value))))
+        }
+        let a = {...searchData, [prop]: checkValueInObj()}
+
+        let d = queryString
+            .stringify(a)
+            .replaceAll("%2C", ",")
+            .replaceAll("%3F", "")
+        history.push({
+            search: d
+        })
     }
 
-    const generateUrlForGetTechnics = (obj) => {
-        // Object.keys(obj).forEach(el => {
-        //     if (el === '?type') {
-        //         setActiveTypes(obj[el].split(","))
-        //     } else {
-        //         let a = obj[el]
-        //         console.log(a)
-        //         setCategories(obj[el].split(","))
-        //     }
-        // })
-        let typesURL = ''
-        let filterURL = ''
+    const mergeObj = (obj) => {
+        let a = Object.keys(obj).map(el => {
+            if (el === `?type`) {
+                return ""
+            } else {
+                return obj[el].map((key) => {
+                    return {[el]: key}
+                })
+            }
+
+        }).flat().filter(n => n)
+        return a
     }
-    useEffect(() => {
-
-    }, [activeTypes, categories])
 
     useEffect(() => {
-        generateUrlForGetTechnics(searchData)
-    }, [searchData])
+        let obj = Object.keys(searchData).reduce(function (accum, currentVal) {
+            accum[currentVal] = searchData[currentVal].split(',');
+            return accum;
+        }, {})
+        setActiveTypes(obj.["?type"])
+        setCategories(mergeObj(obj))
+    }, [search])
+
+    useEffect(() => {
+        getTechnics(activeTypes)  //Получение техники с сервера
+    }, [activeTypes])
 
     return (
         <Container>
             {
-                (activeTypes.length !== 0) && <Grid container className={classes.wrapperInfo} spacing={3}>
+                (activeTypes !== undefined) && <Grid container className={classes.wrapperInfo} spacing={3}>
                     <Grid item xs={3}>
                         <Paper className={classes.paper}>
                             <Typography color={"primary"}>Активные типы техники</Typography>
                             <Divider/>
                             <div className={classes.typeInfoWrapper}>
-                                <List>
-                                    {
-                                        activeTypes.map(el => {
-                                            return <ListItem>
-                                                <ListItemText primary={el}/>
-                                            </ListItem>
-                                        })
-                                    }
-                                </List>
-
                             </div>
                         </Paper>
                     </Grid> {/*  Тип, картинка */}
@@ -185,7 +133,7 @@ const TypePage = ({getTechnics, addTechnic, toogleLoadingInfoFotType, technicsLe
                 <Grid item xs={8}>
                     <ActiveCategories categories={categories} handlerCategory={handlerCategory}/>
                     {
-                        (activeTypes.length !== 0)
+                        (activeTypes)
                             ? <ListTechnics categories={categories} setCategories={setCategories}/>
                             : <Paper style={{padding: "50px 180px", marginTop: "50px"}}>
                                 <img width={400} src={Choose} alt="Выберите"/>
@@ -196,7 +144,7 @@ const TypePage = ({getTechnics, addTechnic, toogleLoadingInfoFotType, technicsLe
 
                 </Grid> {/*  Список техники по кабинетам*/}
                 <Grid item xs={4}>
-                    <ListTypes activeTypes={activeTypes} setActiveTypes={setActiveTypes}/>
+                    <ListTypes activeTypes={activeTypes} handlerCategory={handlerCategory}/>
                 </Grid> {/*  Список типов техникик */}
             </Grid>
             <Modal open={open} handleClose={handleClose} title={"Добавить тип"}>
@@ -226,7 +174,6 @@ const TypePage = ({getTechnics, addTechnic, toogleLoadingInfoFotType, technicsLe
                                 }
                             </div>
                         </div>
-
 
                     </DialogContent>
                     <DialogActions>

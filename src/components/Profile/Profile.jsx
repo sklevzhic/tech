@@ -1,8 +1,8 @@
 import {
     Avatar, Divider,
-    Grid, Paper, Typography,
+    Grid, Typography,
 } from "@material-ui/core";
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {makeStyles} from "@material-ui/styles";
 import {withRouter} from 'react-router-dom';
 import klevzhits from '../../assets/img/technics/klevzhits.jpg'
@@ -40,7 +40,7 @@ const Profile = ({user}) => {
                     <Typography>
                         {
                             Object.keys(user.socialLinks).map(key => {
-                                return <a href={user.socialLinks[key]}>{key}</a>
+                                return <a key={key} href={user.socialLinks[key]}>{key}</a>
                             })
                         }
                     </Typography>
@@ -58,17 +58,7 @@ const Profile = ({user}) => {
                     <Divider/>
 
                     <Title text="Опыт работы"></Title>
-                    <Typography>{user.workExperience.map(el => {
-                        return <Typography>{el.company}</Typography>
-                    })
-                    }</Typography>
-                    <Divider/>
 
-                    <Title text="Образование"></Title>
-                    <Typography>{user.education.map(el => {
-                        return <Typography>{el.company}</Typography>
-                    })
-                    }</Typography>
                 </Grid>
             </>
         </Grid>

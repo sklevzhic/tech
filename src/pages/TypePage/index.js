@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
 import TypePage from "./TypePage";
-import {addUser, getTechnics, addTechnic} from "../../redux/Tech-reducer";
+import {getTechnics, addTechnic} from "../../redux/Tech-reducer";
 
 
 const mapStateToProps = (state) => {

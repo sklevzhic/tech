@@ -1,8 +1,7 @@
 import axios from "axios";
-import {sendOrder, updateCurrentRefills} from "../redux/Printers-reducer";
 
-const URL = 'https://technicsklevzhits.herokuapp.com'
-// const URL = 'http://localhost:3004'
+// const URL = 'https://technicsklevzhits.herokuapp.com'
+const URL = 'http://localhost:3004'
 let instance = axios.create({
     withCredentials: true,
     baseURL: 'https://social-network.samuraijs.com/api/1.0',
@@ -82,7 +81,10 @@ export const techAPI = {
         return axios.put(`${URL}/types/${id}`, obj).then(response => response)
     },
     getTechnics(val) {
-        return axios.get(`${URL}/technics?${val || '?_page=1&_limit=10'}`).then(response => response.data)
+                let str = val.map(el => {
+            return `type=${el}`
+        }).join('&')
+        return axios.get(`${URL}/technics?${str}`).then(response => response.data)
     },
 
     getTechnicInfo(id) {
