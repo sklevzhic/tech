@@ -5,11 +5,8 @@ import {
 } from "@material-ui/core";
 import React, {useEffect, useState} from "react";
 
-import groupElementsByDate from "../../components/global/groupElementsByDate";
-import {makeStyles} from "@material-ui/styles";
 import StagesFueling from "../../components/StagesFueling";
-import LastRefueling from "../../components/LastRefueling";
-import {Link} from "react-router-dom";
+import ListTechnics from "../../components/ListTechnics";
 
 const PrintersPage = ({
                           allRefills,
@@ -32,6 +29,7 @@ const PrintersPage = ({
     }
 
     const handlerRefills = (el) => {
+        debugger
         let obj = {
             "technicId": el.id,
             "name": el.name,
@@ -101,12 +99,8 @@ const PrintersPage = ({
                 currentRefill={currentRefill}
                 setCurrentRefill={setCurrentRefill}
             />
-            {/*<Divider/>*/}
-            {/*<Button variant={"contained"} color={"primary"}>Добавить</Button>*/}
-            {/*<Button variant={"contained"} color={"primary"} component={Link} to={"/printers/lastrefueling"}>Список*/}
-            {/*    последних заправок</Button>*/}
-            {/*<Divider/>*/}
-            <LastRefueling printers={printers} handlerRefills={handlerRefills}/>
+
+            <ListTechnics tech={printers} filters={false} handlerRefills={handlerRefills}/>
         </Container>
     )
 }

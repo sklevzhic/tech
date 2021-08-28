@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const ListTechnics = ({getSchemaTechnics, schema, tech, categories}) => {
+const ListTechnics = ({getSchemaTechnics, schema, tech, categories, filters = true, handlerRefills}) => {
 
     const classes = useStyles()
 
@@ -32,16 +32,21 @@ const ListTechnics = ({getSchemaTechnics, schema, tech, categories}) => {
     useEffect(() => {
         if (tech.length !== 0) {
             const isVisibleMinicard = (el) => {
-                let result = categories.some(element => {
-                    let aa = el.[Object.keys(element)]
-                    let bb = element.[Object.keys(element)]
-                    if (aa === bb) {
-                        return true
-                    } else {
-                        return false
-                    }
-                })
-                return result
+                if (filters === false) {
+                    return true
+                } else {
+                    let result = categories.some(element => {
+                        let aa = el.[Object.keys(element)]
+                        let bb = element.[Object.keys(element)]
+                        if (aa === bb) {
+                            return true
+                        } else {
+                            return false
+                        }
+                    })
+                    return result
+                }
+
             }
             let bbb = tech.map(el => {
                 if (isVisibleMinicard(el)) {
@@ -58,7 +63,6 @@ const ListTechnics = ({getSchemaTechnics, schema, tech, categories}) => {
         }
     }, [tech]) // Скрываем элементы при фильтрации
 
-
     return (
 
 
@@ -67,7 +71,8 @@ const ListTechnics = ({getSchemaTechnics, schema, tech, categories}) => {
                 (schemaTechnics) && <>
                     {schemaTechnics.map(build => {
                             if (technics.some(buildElement => buildElement.build === build.build)) {
-                                return <CardBuild key={build.build} classes={classes} build={build} technics={technics}/>
+                                return <CardBuild key={build.build} classes={classes} build={build} technics={technics}
+                                                  filters={filters} handlerRefills={handlerRefills}/>
                             } else {
                                 return null
                             }
@@ -82,7 +87,7 @@ const ListTechnics = ({getSchemaTechnics, schema, tech, categories}) => {
 export default ListTechnics
 
 
-const CardBuild = ({classes, build, technics}) => {
+const CardBuild = ({classes, build, technics, handlerRefills, filters}) => {
     const isDisplayedBlock = (obj) => {
         let b = technics.some(element => {
             if (obj.rooms.includes(element.room)) {
@@ -99,7 +104,7 @@ const CardBuild = ({classes, build, technics}) => {
         {
             build.blocks.map((block, i) => {
                     if (isDisplayedBlock(block)) {
-                        return <CardBlock key={i} block={block} technics={technics} build={build}/>
+                        return <CardBlock key={i} block={block} technics={technics} build={build} filters={filters}  handlerRefills={handlerRefills}/>
                     } else {
                         return false
                     }
@@ -110,7 +115,7 @@ const CardBuild = ({classes, build, technics}) => {
         <Divider/>
     </Paper>
 }
-const CardBlock = ({block, technics, build}) => {
+const CardBlock = ({block, technics, build, handlerRefills, filters}) => {
     return <>
         {
             block.rooms.map(room => {
@@ -118,7 +123,7 @@ const CardBlock = ({block, technics, build}) => {
                     return <div key={room}>
                         <Typography>{block.name} <Link to={`/room/${room}`}>{room} кабинет</Link></Typography>
                         {
-                            technics && <CardRoom technics={technics} room={room} build={build}/>
+                            technics && <CardRoom technics={technics} room={room} filters={filters}  build={build} handlerRefills={handlerRefills}/>
                         }
                         <Divider/>
                     </div>
@@ -127,12 +132,12 @@ const CardBlock = ({block, technics, build}) => {
                 }
             })}</>
 }
-const CardRoom = ({technics, room, build}) => {
+const CardRoom = ({technics, room, build, handlerRefills, filters}) => {
     return <List dense>
         {
             technics.map((element, i) => {
                 if ((element.room === room) && (element.build === build.build) && (element.visible !== false)) {
-                    return <MiniCardTechnic key={i} el={element}/>
+                    return <MiniCardTechnic key={i} el={element} filters={filters}  handlerRefills={handlerRefills}/>
                 }
             })
         }

@@ -55,7 +55,7 @@ export const useStyles = makeStyles((theme) => ({
         padding: "7px"
     },
     activeItem: {
-        background: "red",
+        background: "#d5d5d5"
     },
     roomNumber: {}
 }));

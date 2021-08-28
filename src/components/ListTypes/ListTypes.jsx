@@ -38,14 +38,25 @@ const ListTypes = ({types, deleteType, getTypes, addType, handlerCategory, activ
     useEffect(() => {
         getTypes()
     }, [])
-    console.log(activeTypes === undefined)
+    const isActiveType = (name) => {
+        if (activeTypes) {
+            if (activeTypes.includes(name)) {
+                return true
+            }
+        }
+        return false
+    }
     return (
         <>
             {types &&
             <List subheader={<ListSubheader>Settings</ListSubheader>}>
                 {types.map(el => {
-                        return <ListItem button onClick={() => handlerCategory("?type", el.name)}
-                            >
+                        return <ListItem
+                            button
+                            onClick={() => handlerCategory("?type", el.name)}
+                            className={isActiveType(el.name) ? classes.activeType : ""}
+
+                        >
                             <ListItemIcon>
                                 <Icon type={el.type}/>
                             </ListItemIcon>

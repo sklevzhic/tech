@@ -5,9 +5,7 @@ import {getSchemaTechnics} from "../../redux/Tech-reducer";
 
 const mapStateToProps = (state) => {
     return {
-        tech: state.techs.technics,
-        technicsByCategory: state.techs.technicsByCategory,
-        toogleLoadingInfoFotType: state.techs.toogleLoadingInfoFotType,
+
         schema: state.techs.schema,
     }
 }

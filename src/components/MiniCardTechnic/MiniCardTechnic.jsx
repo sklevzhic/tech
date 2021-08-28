@@ -1,6 +1,6 @@
 import {
-        Button,
-    Chip,
+    Button,
+    Chip, IconButton,
     ListItem,
     ListItemIcon,
     ListItemSecondaryAction,
@@ -10,16 +10,17 @@ import {Link} from "react-router-dom";
 import React from "react";
 import images from "../global/images";
 import Avatar from "@material-ui/core/Avatar";
+import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
+import ReportProblemIcon from '@material-ui/icons/ReportProblem';
+import WarningData from "../WarningData/WarningData";
 
-
-const MiniCardTechnic = ({el, keys}) => {
+const MiniCardTechnic = ({el, keys, handlerRefills, filters}) => {
 
     return (
         <ListItem component={Link} key={el} to={`/technics/${el.id}`} button>
 
             <ListItemIcon>
                 <Avatar variant={"square"} src={images[el.name]}></Avatar>
-                {/*<Icon type={el.type} />*/}
             </ListItemIcon>
             <ListItemText
                 primary={`[${!el.invent ?
@@ -27,18 +28,15 @@ const MiniCardTechnic = ({el, keys}) => {
                 secondary={`${el.year} ${el.user}`}
             />
             <ListItemSecondaryAction style={{display: "flex"}}>
-                {Object.keys(keys).map(key => {
-                    if (!el[keys[key].key]) {
-                        return <Tooltip key={key} title={keys[key].name}><span style={{
-                            display: "block",
-                            width: "10px",
-                            textAlign: "center",
-                            color: "white",
-                            marginRight: "2px",
-                            background: keys[key].bg
-                        }}>!</span></Tooltip>
-                    }
-                })}
+                <WarningData keys={keys} el={el}/>
+                {
+                    (filters === false) && <IconButton onClick={() => handlerRefills(el)}>
+                        <PlaylistAddIcon/>
+                    </IconButton>
+
+                }
+
+
             </ListItemSecondaryAction>
         </ListItem>
     )
