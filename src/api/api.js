@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const URL = 'https://technicsklevzhits.herokuapp.com'
-const URL = 'http://localhost:3004'
+const URL = 'https://technicsklevzhits.herokuapp.com'
+// const URL = 'http://localhost:3004'
 let instance = axios.create({
     withCredentials: true,
     baseURL: 'https://social-network.samuraijs.com/api/1.0',
