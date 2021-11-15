@@ -9,7 +9,6 @@ const mapStateToProps = (state) => {
 }
 const mapToDispatch = {
     getAllRefills,
-
 }
 
 export default connect(mapStateToProps, mapToDispatch)(LastRefuelingPage)
