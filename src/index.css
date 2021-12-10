@@ -21,3 +21,23 @@ code {
   align-items: center;
   justify-content: center;
 }
+
+.table {
+  width: 100%;
+  margin-bottom: 20px;
+  border: 1px solid #dddddd;
+  border-collapse: collapse;
+  font-size: 10px;
+  font-weight: 400;
+}
+.table th {
+  font-weight: bold;
+  padding: 5px;
+  background: #efefef;
+
+  border: 1px solid #dddddd;
+}
+.table td {
+  border: 1px solid #dddddd;
+  padding: 5px;
+}

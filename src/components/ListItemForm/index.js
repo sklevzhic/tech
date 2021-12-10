@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 
 const mapStateToProps = (state) => {
     return {
-        users: state.techs.users
+        db: state.profilePage
     }
 }
 const mapToDispatch = {

@@ -7,6 +7,7 @@ import React, {useEffect, useState} from "react";
 
 import StagesFueling from "../../components/StagesFueling";
 import ListTechnics from "../../components/ListTechnics";
+import {Link} from "react-router-dom";
 
 const PrintersPage = ({
                           allRefills,
@@ -99,7 +100,7 @@ const PrintersPage = ({
                 currentRefill={currentRefill}
                 setCurrentRefill={setCurrentRefill}
             />
-
+            <Button component={Link} to={"/printers/lastrefueling"} variant="contained">Последние заправки</Button>
             <ListTechnics tech={printers} filters={false} handlerRefills={handlerRefills}/>
         </Container>
     )
