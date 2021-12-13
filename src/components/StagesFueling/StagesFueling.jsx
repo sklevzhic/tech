@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const StagesFueling = ({getCurrentRefills, addRefillForPrinter, setCurrentRefill, currentRefill, changeCategory}) => {
+const StagesFueling = ({getCurrentRefills, deleteRefill, setCurrentRefill, currentRefill, changeCategory}) => {
     const classes = useStyles();
 
     useEffect(() => {
@@ -48,9 +48,14 @@ const StagesFueling = ({getCurrentRefills, addRefillForPrinter, setCurrentRefill
 
     const handleClick = (event, el) => {
         setActiveElement(el)
-        setOpen(true)
+        // setOpen(true)
         setAnchorEl(event.currentTarget);
     };
+
+    const handlerDeleteRefill = () => {
+        deleteRefill(activeElement.createDate)
+    }
+
     const handleClose = () => {
         setAnchorEl(null);
     };
@@ -97,7 +102,7 @@ const StagesFueling = ({getCurrentRefills, addRefillForPrinter, setCurrentRefill
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
-                <MenuItem onClick={handleClose}>Далее</MenuItem>
+                <MenuItem onClick={handlerDeleteRefill}>Далее</MenuItem>
                 <MenuItem onClick={handleClose}>Информация</MenuItem>
                 <MenuItem onClick={handleClose}>Удалить</MenuItem>
             </Menu>

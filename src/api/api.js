@@ -152,6 +152,9 @@ export const printersAPI = {
             "receiverDate": Date.now(),
         }
         return axios.post(`${URL}/technics/${id}/refills`, obj).then(response => response.data)
+    },
+    deleteRefill(id) {
+        return axios.get(`${URL}/refillsCurrent/`)
     }
 
 

@@ -82,7 +82,9 @@ const ProfilePage = ({db}) => {
         }
     })
     //
-    let tempResult = []
+    let tempResult16 = []
+    let tempResult712 = []
+    let tempResultother = []
 
     const groupElements = (property, arr) => {
         return arr.reduce((previousValue, currentValue) => {
@@ -102,13 +104,27 @@ const ProfilePage = ({db}) => {
     }
 
     let groupThemes16 = groupElements("Дисциплина(ы) учебного плана", season16)
-    let groupThemesandGroups = groupThemes.map(el => {
+    let groupThemes712 = groupElements("Дисциплина(ы) учебного плана", season712)
+    let groupThemesOther = groupElements("Дисциплина(ы) учебного плана", other)
+
+    let groupThemesandGroups16 = groupThemes16.map(el => {
         return {
             theme: el["Дисциплина(ы) учебного плана"],
             arr: groupElements("№ группы", el.properties)
         }
     })
-
+    let groupThemesandGroups712 = groupThemes712.map(el => {
+        return {
+            theme: el["Дисциплина(ы) учебного плана"],
+            arr: groupElements("№ группы", el.properties)
+        }
+    })
+    let groupThemesandGroupsOther = groupThemesOther.map(el => {
+        return {
+            theme: el["Дисциплина(ы) учебного плана"],
+            arr: groupElements("№ группы", el.properties)
+        }
+    })
 
     const summHours = (arr) => {
         let result = []
@@ -129,9 +145,30 @@ const ProfilePage = ({db}) => {
 
 
 
-    groupThemesandGroups.forEach(el => {
+    groupThemesandGroups16.forEach(el => {
         el.arr.forEach(el1 => {
-            tempResult.push({
+            tempResult16.push({
+                theme: el.theme,
+                group: el1["№ группы"],
+                date: el.arr[0].properties[0]["Дата проведения занятия"],
+                arr: summHours(el1.properties)
+            })
+
+        })
+    })
+    groupThemesandGroups712.forEach(el => {
+        el.arr.forEach(el1 => {
+            tempResult712.push({
+                theme: el.theme,
+                group: el1["№ группы"],
+                date: el.arr[0].properties[0]["Дата проведения занятия"],
+                arr: summHours(el1.properties)
+            })
+        })
+    })
+    groupThemesandGroupsOther.forEach(el => {
+        el.arr.forEach(el1 => {
+            tempResultother.push({
                 theme: el.theme,
                 group: el1["№ группы"],
                 date: el.arr[0].properties[0]["Дата проведения занятия"],
@@ -182,8 +219,41 @@ const ProfilePage = ({db}) => {
                         </tr>
                     </thead>
                     <tbody>
+                    <p>Перенос часов</p>
+                    {
+                        tempResultother.map(theme => {
+                            return <tr key={theme.theme}>
+                                <th>{theme.theme}</th>
+                                <th>{theme.group}</th>
+                                <th>{theme.date}</th>
+                                {
+                                    names.map(el => {
+                                        return <th>{getValue(el.full, theme.arr)}</th>
+                                    })
+                                }
+                                <th>date</th>
+                            </tr>
+                        })
+                    }
+                    <p>Первое полугодие</p>
                         {
-                            tempResult.map(theme => {
+                            tempResult16.map(theme => {
+                                return <tr key={theme.theme}>
+                                    <th>{theme.theme}</th>
+                                    <th>{theme.group}</th>
+                                    <th>{theme.date}</th>
+                                    {
+                                        names.map(el => {
+                                            return <th>{getValue(el.full, theme.arr)}</th>
+                                        })
+                                    }
+                                    <th>date</th>
+                                </tr>
+                            })
+                        }
+                    <p>Второе полугодие</p>
+                        {
+                            tempResult712.map(theme => {
                                 return <tr key={theme.theme}>
                                     <th>{theme.theme}</th>
                                     <th>{theme.group}</th>

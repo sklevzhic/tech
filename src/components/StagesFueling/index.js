@@ -1,6 +1,6 @@
 import StagesFueling from './StagesFueling'
 import {connect} from "react-redux";
-import {addRefillForPrinter, getCurrentRefills, updateCurrentRefills} from "../../redux/Printers-reducer";
+import {addRefillForPrinter, deleteRefill, getCurrentRefills, updateCurrentRefills} from "../../redux/Printers-reducer";
 
 const mapStateToProps = (state) => {
     return {
@@ -10,7 +10,8 @@ const mapStateToProps = (state) => {
 const mapToDispatch = {
     getCurrentRefills,
     addRefillForPrinter,
-    updateCurrentRefills
+    updateCurrentRefills,
+    deleteRefill
 }
 
 export default connect(mapStateToProps, mapToDispatch)(StagesFueling)

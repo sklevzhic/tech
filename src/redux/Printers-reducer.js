@@ -101,4 +101,20 @@ export const addRefillForPrinter = (id, data) => {
     }
 }
 
+export const deleteRefill = (id) => {
+    return async (dispatch) => {
+        let { data } = await printersAPI.deleteRefill(id)
+        let idv = data
+        // let newObj = Object.keys(data[0]).forEach(key => {
+        //     console.log(data[0][key])
+        // })
+
+        // let newObj = data[0].arr.map(el => {
+        //     return el.arr.filter(el1 => el1.createDate !== id)
+        // })
+        console.log(idv)
+        // dispatch(setRefillAC(response))
+    }
+}
+
 export default PrintersReducer
