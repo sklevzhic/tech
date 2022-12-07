@@ -5,7 +5,7 @@ import React from "react";
 import {Button, Card, Container, FormControlLabel, Icon} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import {Checkbox, TextField} from 'formik-material-ui';
-import s from './SignInPage.module.scss'
+import s from './SignInPage.module.css'
 import {Redirect} from "react-router-dom";
 
 const SignInPage = ({captchaUrl, isAuth, login, isButtonDisabled}) => {
